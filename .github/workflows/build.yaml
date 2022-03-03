@@ -37,7 +37,7 @@ jobs:
        run: chmod +x ./TpkCreator/bin/Release/net6.0/TpkCreator
      - name: Make tpk file
        shell: bash
-       run: ./TpkCreator/bin/Release/net6/TpkCreator ./TypeTreeDumps
+       run: ./TpkCreator/bin/Release/net6.0/TpkCreator ./TypeTreeDumps
      - name: Upload file
        uses: actions/upload-artifact@v2
        with:
