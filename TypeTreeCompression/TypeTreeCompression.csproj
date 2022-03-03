@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>AssetRipper.TypeTreeCompression</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="K4os.Compression.LZ4" Version="1.2.16" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="VersionUtilities">
+			<SpecificVersion>False</SpecificVersion>
+			<HintPath>Libraries\VersionUtilities.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+</Project>

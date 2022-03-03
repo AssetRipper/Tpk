@@ -1,0 +1,6 @@
+obj
+bin
+.vs
+.idea
+*.csproj.user
+.vscode
