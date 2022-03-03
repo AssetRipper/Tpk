@@ -21,12 +21,6 @@ jobs:
      - name: Build
        run: dotnet build /p:Configuration=Release
        working-directory: ./TpkCreator/
-     - name: Upload TpkCreator
-       uses: actions/upload-artifact@v2
-       with:
-         name: TpkCreator
-         path: /home/runner/work/TypeTreeCompression/TypeTreeCompression/TpkCreator/bin/Release/net6.0/*
-         if-no-files-found: error
      - name: Checkout TypeTreeDumps Repository
        uses: actions/checkout@v3
        with:
@@ -41,7 +35,13 @@ jobs:
      - name: Upload file
        uses: actions/upload-artifact@v2
        with:
-         name: tpk_file
-         path: /home/runner/work/TypeTreeCompression/TypeTreeCompression/classes.tpk
+         name: uncompressed_file
+         path: /home/runner/work/TypeTreeCompression/TypeTreeCompression/uncompressed.tpk
+         if-no-files-found: error
+     - name: Upload file
+       uses: actions/upload-artifact@v2
+       with:
+         name: lz4_file
+         path: /home/runner/work/TypeTreeCompression/TypeTreeCompression/compressed.tpk
          if-no-files-found: error
       

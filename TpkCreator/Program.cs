@@ -13,7 +13,7 @@ namespace AssetRipper.TpkCreator
 			try
 			{
 				Stopwatch sw = Stopwatch.StartNew();
-				MakeTpk(args[0], "classes.tpk");
+				MakeTpk(args[0], "uncompressed.tpk", "compressed.tpk");
 				//MakeTpk(InfoJsonPath, "classes.tpk");
 				//ReadTpk("classes.tpk");
 				sw.Stop();
@@ -34,10 +34,16 @@ namespace AssetRipper.TpkCreator
 			return file.GetDataBlob();
 		}
 
-		private static void MakeTpk(string inputDirectory, string outputPath)
+		private static void MakeTpk(string inputDirectory, string uncompressedPath, string lz4Path)
 		{
 			TpkDataBlob blob = TpkDataBlob.Create(inputDirectory);
-			TpkFile file = new TpkFile(blob, TpkCompressionType.None);
+			WriteBlobToFile(blob, uncompressedPath, TpkCompressionType.None);
+			WriteBlobToFile(blob, lz4Path, TpkCompressionType.Lz4);
+		}
+
+		private static void WriteBlobToFile(TpkDataBlob blob, string outputPath, TpkCompressionType compressionType)
+		{
+			TpkFile file = new TpkFile(blob, compressionType);
 			using FileStream stream = File.Create(outputPath);
 			using BinaryWriter writer = new BinaryWriter(stream);
 			file.Write(writer);
