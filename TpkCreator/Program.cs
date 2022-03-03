@@ -15,7 +15,7 @@ namespace AssetRipper.TpkCreator
 				Stopwatch sw = Stopwatch.StartNew();
 				MakeTpk(args[0], "uncompressed.tpk", "compressed.tpk");
 				//MakeTpk(InfoJsonPath, "classes.tpk");
-				//ReadTpk("classes.tpk");
+				//ReadTpk("compressed.tpk");
 				sw.Stop();
 				Console.WriteLine($"Done in {sw.Elapsed.TotalSeconds} seconds!");
 			}

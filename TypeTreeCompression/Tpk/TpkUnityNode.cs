@@ -4,8 +4,8 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 {
 	public sealed class TpkUnityNode
 	{
-		public int TypeName { get; set; }
-		public int Name { get; set; }
+		public ushort TypeName { get; set; }
+		public ushort Name { get; set; }
 		//Level is redundant
 		public int ByteSize { get; set; }
 		//Index is redundant
@@ -16,8 +16,8 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 
 		public void Read(BinaryReader reader)
 		{
-			TypeName = reader.ReadInt32();
-			Name = reader.ReadInt32();
+			TypeName = reader.ReadUInt16();
+			Name = reader.ReadUInt16();
 			ByteSize = reader.ReadInt32();
 			Version = reader.ReadInt16();
 			TypeFlags = reader.ReadByte();

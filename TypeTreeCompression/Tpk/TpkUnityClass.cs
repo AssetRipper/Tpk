@@ -7,34 +7,34 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 		/// <summary>
 		/// string
 		/// </summary>
-		public int Name { get; set; }
+		public ushort Name { get; set; }
 
 		/// <summary>
 		/// string
 		/// </summary>
-		public int Namespace { get; set; }
+		public ushort Namespace { get; set; }
 
 		/// <summary>
 		/// string
 		/// </summary>
-		public int FullName { get; set; }
+		public ushort FullName { get; set; }
 
 		/// <summary>
 		/// string
 		/// </summary>
-		public int Module { get; set; }
+		public ushort Module { get; set; }
 
 		//TypeID excluded here because it's included elsewhere
 
 		/// <summary>
 		/// string
 		/// </summary>
-		public int Base { get; set; }
+		public ushort Base { get; set; }
 
 		/// <summary>
 		/// strings
 		/// </summary>
-		public int[] Derived { get; set; } = Array.Empty<int>();
+		public ushort[] Derived { get; set; } = Array.Empty<ushort>();
 
 		/// <summary>
 		/// The count of all classes that descend from this class<br/>
@@ -55,16 +55,16 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 
 		public void Read(BinaryReader reader)
 		{
-			Name = reader.ReadInt32();
-			Namespace = reader.ReadInt32();
-			FullName = reader.ReadInt32();
-			Module = reader.ReadInt32();
-			Base = reader.ReadInt32();
+			Name = reader.ReadUInt16();
+			Namespace = reader.ReadUInt16();
+			FullName = reader.ReadUInt16();
+			Module = reader.ReadUInt16();
+			Base = reader.ReadUInt16();
 			int derivedCount = reader.ReadInt32();
-			Derived = new int[derivedCount];
+			Derived = new ushort[derivedCount];
 			for (int i = 0; i < derivedCount; i++)
 			{
-				Derived[i] = reader.ReadInt32();
+				Derived[i] = reader.ReadUInt16();
 			}
 			DescendantCount = reader.ReadUInt32();
 			Flags = (TpkUnityClassFlags)reader.ReadByte();
@@ -134,7 +134,7 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 			result.Module = buffer.AddString(source.Module);
 			result.Base = buffer.AddString(source.Base);
 			int derivedCount = source.Derived.Count;
-			result.Derived = new int[derivedCount];
+			result.Derived = new ushort[derivedCount];
 			for (int i = 0; i < derivedCount; i++)
 			{
 				result.Derived[i] = buffer.AddString(source.Derived[i]);

@@ -9,7 +9,7 @@
 		/// </summary>
 		/// <param name="str">The string to be added</param>
 		/// <returns>The index at which that string appears</returns>
-		public int AddString(string str)
+		public ushort AddString(string str)
 		{
 			int index = Strings.IndexOf(str);
 			if (index == -1)
@@ -17,7 +17,7 @@
 				index = Strings.Count;
 				Strings.Add(str);
 			}
-			return index;
+			return (ushort)index;
 		}
 
 		public string this[int index]
@@ -30,7 +30,7 @@
 		public void Read(BinaryReader reader)
 		{
 			Strings.Clear();
-			int stringCount = reader.ReadInt32();
+			ushort stringCount = reader.ReadUInt16();
 			for (int i = 0; i < stringCount; i++)
 			{
 				Strings.Add(reader.ReadString());
@@ -39,7 +39,7 @@
 
 		public void Write(BinaryWriter writer)
 		{
-			int count = Strings.Count;
+			ushort count = (ushort)Strings.Count;
 			writer.Write(count);
 			for(int i = 0; i < count; i++)
 			{

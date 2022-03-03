@@ -7,7 +7,7 @@
 		/// Sequential by ascending Unity version
 		/// </summary>
 		public List<KeyValuePair<CompactUnityVersion32, byte>> VersionInformation { get; } = new();
-		public List<int> StringBufferIndices { get; } = new();
+		public List<ushort> StringBufferIndices { get; } = new();
 
 		public void SetIndices(TpkStringBuffer buffer, List<string> strings)
 		{
@@ -64,7 +64,7 @@
 			StringBufferIndices.Capacity = indicesCount;
 			for (int j = 0; j < indicesCount; j++)
 			{
-				StringBufferIndices.Add(reader.ReadInt32());
+				StringBufferIndices.Add(reader.ReadUInt16());
 			}
 		}
 
