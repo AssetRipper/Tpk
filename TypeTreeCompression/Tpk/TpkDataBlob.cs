@@ -55,6 +55,7 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 			byte latestCommonStringCount = 0;
 			List<string> commonStrings = new List<string>();
 			Dictionary<int, string> latestUnityClassesDumped = new Dictionary<int, string>();
+			Dictionary<int, TpkClassInformation> classDictionary = new Dictionary<int, TpkClassInformation>();
 
 			foreach(string path in pathsOrderedByUnityVersion)
 			{
@@ -90,13 +91,18 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 					if (!latestUnityClassesDumped.TryGetValue(unityClass.TypeID, out string? cachedDump) || cachedDump != dump)
 					{
 						latestUnityClassesDumped[unityClass.TypeID] = dump;
-						TpkClassInformation tpkClassInformation = new TpkClassInformation(unityClass.TypeID);
+						if(!classDictionary.TryGetValue(unityClass.TypeID, out TpkClassInformation? tpkClassInformation))
+						{
+							tpkClassInformation = new TpkClassInformation(unityClass.TypeID);
+							classDictionary.Add(unityClass.TypeID, tpkClassInformation);
+						}
 						TpkUnityClass tpkUnityClass = TpkUnityClass.Convert(unityClass, blob.StringBuffer);
 						tpkClassInformation.Classes.Add(new VersionClassPair(version, tpkUnityClass));
-						blob.ClassInfo.Add(tpkClassInformation);
 					}
 				}
 			}
+
+			blob.ClassInfo.AddRange(classDictionary.Values);
 
 			blob.CommonString.SetIndices(blob.StringBuffer, commonStrings);
 			Console.WriteLine($"String buffer has {blob.StringBuffer.Count} entries");
