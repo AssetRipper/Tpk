@@ -25,7 +25,7 @@ jobs:
        uses: actions/upload-artifact@v2
        with:
          name: TpkCreator
-         path: /home/runner/work/TypeTreeCompression/TypeTreeCompression/TpkCreator/bin/Release/net6/*
+         path: /home/runner/work/TypeTreeCompression/TypeTreeCompression/TpkCreator/bin/Release/net6.0/*
          if-no-files-found: error
      - name: Checkout TypeTreeDumps Repository
        uses: actions/checkout@v2
@@ -34,7 +34,7 @@ jobs:
         path: TypeTreeDumps
      - name: Make files executable
        shell: bash
-       run: chmod +x ./TpkCreator/bin/Release/net6/TpkCreator
+       run: chmod +x ./TpkCreator/bin/Release/net6.0/TpkCreator
      - name: Make tpk file
        shell: bash
        run: ./TpkCreator/bin/Release/net6/TpkCreator ./TypeTreeDumps

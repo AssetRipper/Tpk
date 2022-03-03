@@ -1,6 +1,6 @@
 # Type Tree Compression
 
-A tool for compression [type tree dumps](https://github.com/AssetRipper/TypeTreeDumps)
+A tool for compressing [type tree dumps](https://github.com/AssetRipper/TypeTreeDumps)
 
 ## Credits
 
