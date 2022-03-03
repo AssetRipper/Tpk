@@ -37,7 +37,7 @@ namespace AssetRipper.TpkCreator
 		private static void MakeTpk(string inputDirectory, string outputPath)
 		{
 			TpkDataBlob blob = TpkDataBlob.Create(inputDirectory);
-			TpkFile file = new TpkFile(blob, TpkCompressionType.Lz4);
+			TpkFile file = new TpkFile(blob, TpkCompressionType.None);
 			using FileStream stream = File.Create(outputPath);
 			using BinaryWriter writer = new BinaryWriter(stream);
 			file.Write(writer);
