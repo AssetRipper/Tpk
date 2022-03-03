@@ -93,6 +93,7 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 						TpkClassInformation tpkClassInformation = new TpkClassInformation(unityClass.TypeID);
 						TpkUnityClass tpkUnityClass = TpkUnityClass.Convert(unityClass, blob.StringBuffer);
 						tpkClassInformation.Classes.Add(new VersionClassPair(version, tpkUnityClass));
+						blob.ClassInfo.Add(tpkClassInformation);
 					}
 				}
 			}
