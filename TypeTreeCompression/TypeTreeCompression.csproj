@@ -8,14 +8,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="AssetRipper.VersionUtilities" Version="1.2.0" />
 		<PackageReference Include="K4os.Compression.LZ4" Version="1.2.16" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Reference Include="VersionUtilities">
-			<SpecificVersion>False</SpecificVersion>
-			<HintPath>Libraries\VersionUtilities.dll</HintPath>
-		</Reference>
 	</ItemGroup>
 
 </Project>
