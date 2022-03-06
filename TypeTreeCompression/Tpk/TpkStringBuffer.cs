@@ -30,7 +30,7 @@
 		public void Read(BinaryReader reader)
 		{
 			Strings.Clear();
-			ushort stringCount = reader.ReadUInt16();
+			int stringCount = reader.ReadInt32();
 			for (int i = 0; i < stringCount; i++)
 			{
 				Strings.Add(reader.ReadString());
@@ -39,7 +39,7 @@
 
 		public void Write(BinaryWriter writer)
 		{
-			ushort count = (ushort)Strings.Count;
+			int count = Strings.Count;
 			writer.Write(count);
 			for(int i = 0; i < count; i++)
 			{
