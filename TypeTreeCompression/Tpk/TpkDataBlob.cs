@@ -14,9 +14,17 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 		public List<TpkClassInformation> ClassInfo { get; } = new();
 		public TpkCommonString CommonString { get; } = new();
 		public TpkStringBuffer StringBuffer { get; } = new();
+		public List<UnityVersion> Versions { get; } = new();
 
 		public void Read(BinaryReader reader)
 		{
+			int versionCount = reader.ReadInt32();
+			Versions.Clear();
+			Versions.Capacity = versionCount;
+			for(int i = 0; i < versionCount; i++)
+			{
+				Versions.Add(reader.ReadUnityVersion());
+			}
 			int classCount = reader.ReadInt32();
 			ClassInfo.Clear();
 			ClassInfo.Capacity = classCount;
@@ -32,6 +40,12 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 
 		public void Write(BinaryWriter writer)
 		{
+			int versionCount = Versions.Count;
+			writer.Write(versionCount);
+			for(int i = 0; i < versionCount; i++)
+			{
+				writer.Write(Versions[i]);
+			}
 			int classCount = ClassInfo.Count;
 			writer.Write(classCount);
 			for(int i = 0; i < classCount; i++)
@@ -63,6 +77,7 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 				Console.WriteLine(path);
 				UnityInfo info = UnityInfo.ReadFromJsonFile(path);
 				UnityVersion version = UnityVersion.Parse(info.Version);
+				blob.Versions.Add(version);
 
 				if (info.Strings.Count != latestCommonStringCount)
 				{
