@@ -1,5 +1,5 @@
 ﻿using VersionClassPair = System.Collections.Generic.KeyValuePair<
-	AssetRipper.VersionUtilities.CompactUnityVersion32,
+	AssetRipper.VersionUtilities.UnityVersion,
 	AssetRipper.TypeTreeCompression.Tpk.TpkUnityClass?>;
 
 namespace AssetRipper.TypeTreeCompression.Tpk
@@ -24,7 +24,7 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 			Classes.Capacity = count;
 			for(int i = 0; i < count; i++)
 			{
-				CompactUnityVersion32 version = reader.ReadCompactUnityVersion32();
+				UnityVersion version = reader.ReadUnityVersion();
 				bool hasClassData = reader.ReadBoolean();
 				TpkUnityClass? classData = null;
 				if (hasClassData)

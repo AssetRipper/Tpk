@@ -1,10 +1,10 @@
 ﻿using AssetRipper.TypeTreeCompression.UnitySerialization;
 using System.Text.Json;
 using VersionClassPair = System.Collections.Generic.KeyValuePair<
-	AssetRipper.VersionUtilities.CompactUnityVersion32,
+	AssetRipper.VersionUtilities.UnityVersion,
 	AssetRipper.TypeTreeCompression.Tpk.TpkUnityClass?>;
 using VersionBytePair = System.Collections.Generic.KeyValuePair<
-	AssetRipper.VersionUtilities.CompactUnityVersion32,
+	AssetRipper.VersionUtilities.UnityVersion,
 	byte>;
 
 namespace AssetRipper.TypeTreeCompression.Tpk
@@ -50,7 +50,7 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 		private static TpkDataBlob Create(IEnumerable<string> pathsOrderedByUnityVersion)
 		{
 			TpkDataBlob blob = new TpkDataBlob();
-			blob.CommonString.VersionInformation.Add(new VersionBytePair(CompactUnityVersion32.MinVersion, 0));
+			blob.CommonString.VersionInformation.Add(new VersionBytePair(UnityVersion.MinVersion, 0));
 
 			byte latestCommonStringCount = 0;
 			List<string> commonStrings = new List<string>();
@@ -62,7 +62,7 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 				//System.Threading.Thread.Sleep(500);
 				Console.WriteLine(path);
 				UnityInfo info = UnityInfo.ReadFromJsonFile(path);
-				CompactUnityVersion32 version = (CompactUnityVersion32)UnityVersion.Parse(info.Version);
+				UnityVersion version = UnityVersion.Parse(info.Version);
 
 				if (info.Strings.Count != latestCommonStringCount)
 				{
