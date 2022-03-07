@@ -133,7 +133,7 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 			blob.CommonString.SetIndices(blob.StringBuffer, commonStrings);
 			Console.WriteLine($"String buffer has {blob.StringBuffer.Count} entries");
 
-			blob.CreationTime = DateTime.Now;
+			blob.CreationTime = DateTime.Now.ToUniversalTime();
 
 			return blob;
 		}
