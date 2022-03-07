@@ -11,13 +11,17 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 {
 	public sealed class TpkDataBlob
 	{
+		public DateTime CreationTime { get; set; }
+		public List<UnityVersion> Versions { get; } = new();
 		public List<TpkClassInformation> ClassInfo { get; } = new();
 		public TpkCommonString CommonString { get; } = new();
 		public TpkStringBuffer StringBuffer { get; } = new();
-		public List<UnityVersion> Versions { get; } = new();
 
 		public void Read(BinaryReader reader)
 		{
+			long creationTimeBinary = reader.ReadInt64();
+			CreationTime = DateTime.FromBinary(creationTimeBinary);
+
 			int versionCount = reader.ReadInt32();
 			Versions.Clear();
 			Versions.Capacity = versionCount;
@@ -25,6 +29,7 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 			{
 				Versions.Add(reader.ReadUnityVersion());
 			}
+
 			int classCount = reader.ReadInt32();
 			ClassInfo.Clear();
 			ClassInfo.Capacity = classCount;
@@ -34,25 +39,32 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 				classInformation.Read(reader);
 				ClassInfo.Add(classInformation);
 			}
+
 			CommonString.Read(reader);
+
 			StringBuffer.Read(reader);
 		}
 
 		public void Write(BinaryWriter writer)
 		{
+			writer.Write(CreationTime.ToBinary());
+
 			int versionCount = Versions.Count;
 			writer.Write(versionCount);
 			for(int i = 0; i < versionCount; i++)
 			{
 				writer.Write(Versions[i]);
 			}
+
 			int classCount = ClassInfo.Count;
 			writer.Write(classCount);
 			for(int i = 0; i < classCount; i++)
 			{
 				ClassInfo[i].Write(writer);
 			}
+
 			CommonString.Write(writer);
+
 			StringBuffer.Write(writer);
 		}
 
@@ -73,7 +85,6 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 
 			foreach(string path in pathsOrderedByUnityVersion)
 			{
-				//System.Threading.Thread.Sleep(500);
 				Console.WriteLine(path);
 				UnityInfo info = UnityInfo.ReadFromJsonFile(path);
 				UnityVersion version = UnityVersion.Parse(info.Version);
@@ -121,6 +132,9 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 
 			blob.CommonString.SetIndices(blob.StringBuffer, commonStrings);
 			Console.WriteLine($"String buffer has {blob.StringBuffer.Count} entries");
+
+			blob.CreationTime = DateTime.Now;
+
 			return blob;
 		}
 
