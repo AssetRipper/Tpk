@@ -1,13 +1,12 @@
-﻿using AssetRipper.TypeTreeCompression.UnitySerialization;
-using System.Text.Json;
+﻿using System.Text.Json;
 using VersionClassPair = System.Collections.Generic.KeyValuePair<
 	AssetRipper.VersionUtilities.UnityVersion,
-	AssetRipper.TypeTreeCompression.Tpk.TpkUnityClass?>;
+	AssetRipper.TypeTreeCompression.TypeTrees.TpkUnityClass?>;
 using VersionBytePair = System.Collections.Generic.KeyValuePair<
 	AssetRipper.VersionUtilities.UnityVersion,
 	byte>;
 
-namespace AssetRipper.TypeTreeCompression.Tpk
+namespace AssetRipper.TypeTreeCompression.TypeTrees
 {
 	public sealed class TpkDataBlob
 	{

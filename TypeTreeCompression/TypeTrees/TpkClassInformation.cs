@@ -1,8 +1,8 @@
 ﻿using VersionClassPair = System.Collections.Generic.KeyValuePair<
 	AssetRipper.VersionUtilities.UnityVersion,
-	AssetRipper.TypeTreeCompression.Tpk.TpkUnityClass?>;
+	AssetRipper.TypeTreeCompression.TypeTrees.TpkUnityClass?>;
 
-namespace AssetRipper.TypeTreeCompression.Tpk
+namespace AssetRipper.TypeTreeCompression.TypeTrees
 {
 	public class TpkClassInformation
 	{

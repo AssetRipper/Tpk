@@ -1,7 +1,8 @@
 ﻿using AssetRipper.TypeTreeCompression.Exceptions;
+using AssetRipper.TypeTreeCompression.TypeTrees;
 using K4os.Compression.LZ4;
 
-namespace AssetRipper.TypeTreeCompression.Tpk
+namespace AssetRipper.TypeTreeCompression
 {
 	public sealed class TpkFile
 	{
@@ -48,7 +49,7 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 			CompressedSize = reader.ReadInt32();
 			DecompressedSize = reader.ReadInt32();
 			CompressedBytes = reader.ReadBytes(CompressedSize);
-			if(CompressedBytes.Length != CompressedSize)
+			if (CompressedBytes.Length != CompressedSize)
 			{
 				throw new InvalidByteCountException(CompressedBytes.Length, CompressedSize);
 			}

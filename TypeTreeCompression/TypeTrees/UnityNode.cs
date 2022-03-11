@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace AssetRipper.TypeTreeCompression.UnitySerialization
+namespace AssetRipper.TypeTreeCompression.TypeTrees
 {
 	public sealed class UnityNode
 	{

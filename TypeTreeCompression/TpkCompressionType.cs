@@ -1,4 +1,4 @@
-﻿namespace AssetRipper.TypeTreeCompression.Tpk
+﻿namespace AssetRipper.TypeTreeCompression
 {
 	public enum TpkCompressionType : byte
 	{

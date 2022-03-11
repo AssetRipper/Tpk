@@ -1,4 +1,4 @@
-﻿namespace AssetRipper.TypeTreeCompression.Tpk
+﻿namespace AssetRipper.TypeTreeCompression.TypeTrees
 {
 	[Flags]
 	public enum TpkUnityClassFlags : byte

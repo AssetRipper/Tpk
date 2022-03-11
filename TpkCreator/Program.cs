@@ -1,4 +1,5 @@
-﻿using AssetRipper.TypeTreeCompression.Tpk;
+﻿using AssetRipper.TypeTreeCompression;
+using AssetRipper.TypeTreeCompression.TypeTrees;
 using System.Diagnostics;
 
 namespace AssetRipper.TpkCreator

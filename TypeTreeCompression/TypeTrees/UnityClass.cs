@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace AssetRipper.TypeTreeCompression.UnitySerialization
+namespace AssetRipper.TypeTreeCompression.TypeTrees
 {
 	public sealed class UnityClass
 	{
@@ -143,7 +143,7 @@ namespace AssetRipper.TypeTreeCompression.UnitySerialization
 
 		private static void AssertEquality(string str1, string str2)
 		{
-			if(str1 != str2)
+			if (str1 != str2)
 			{
 				throw new Exception($"{str1} does not equal {str2}");
 			}
