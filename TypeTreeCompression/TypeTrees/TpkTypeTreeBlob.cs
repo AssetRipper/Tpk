@@ -8,7 +8,7 @@ using VersionBytePair = System.Collections.Generic.KeyValuePair<
 
 namespace AssetRipper.TypeTreeCompression.TypeTrees
 {
-	public sealed class TpkDataBlob
+	public sealed class TpkTypeTreeBlob : TpkDataBlob
 	{
 		public DateTime CreationTime { get; set; }
 		public List<UnityVersion> Versions { get; } = new();
@@ -16,7 +16,9 @@ namespace AssetRipper.TypeTreeCompression.TypeTrees
 		public TpkCommonString CommonString { get; } = new();
 		public TpkStringBuffer StringBuffer { get; } = new();
 
-		public void Read(BinaryReader reader)
+		public override TpkDataType DataType => TpkDataType.TypeTreeInformation;
+
+		public override void Read(BinaryReader reader)
 		{
 			long creationTimeBinary = reader.ReadInt64();
 			CreationTime = DateTime.FromBinary(creationTimeBinary);
@@ -44,7 +46,7 @@ namespace AssetRipper.TypeTreeCompression.TypeTrees
 			StringBuffer.Read(reader);
 		}
 
-		public void Write(BinaryWriter writer)
+		public override void Write(BinaryWriter writer)
 		{
 			writer.Write(CreationTime.ToBinary());
 
@@ -67,14 +69,14 @@ namespace AssetRipper.TypeTreeCompression.TypeTrees
 			StringBuffer.Write(writer);
 		}
 
-		public static TpkDataBlob Create(string directoryPath)
+		public static TpkTypeTreeBlob Create(string directoryPath)
 		{
 			return Create(GetOrderedFilePaths(directoryPath));
 		}
 
-		private static TpkDataBlob Create(IEnumerable<string> pathsOrderedByUnityVersion)
+		private static TpkTypeTreeBlob Create(IEnumerable<string> pathsOrderedByUnityVersion)
 		{
-			TpkDataBlob blob = new TpkDataBlob();
+			TpkTypeTreeBlob blob = new TpkTypeTreeBlob();
 			blob.CommonString.VersionInformation.Add(new VersionBytePair(UnityVersion.MinVersion, 0));
 
 			byte latestCommonStringCount = 0;

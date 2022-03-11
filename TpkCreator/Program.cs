@@ -37,12 +37,12 @@ namespace AssetRipper.TpkCreator
 
 		private static void MakeTpk(string inputDirectory, string uncompressedPath, string lz4Path)
 		{
-			TpkDataBlob blob = TpkDataBlob.Create(inputDirectory);
+			TpkTypeTreeBlob blob = TpkTypeTreeBlob.Create(inputDirectory);
 			WriteBlobToFile(blob, uncompressedPath, TpkCompressionType.None);
 			WriteBlobToFile(blob, lz4Path, TpkCompressionType.Lz4);
 		}
 
-		private static void WriteBlobToFile(TpkDataBlob blob, string outputPath, TpkCompressionType compressionType)
+		private static void WriteBlobToFile(TpkTypeTreeBlob blob, string outputPath, TpkCompressionType compressionType)
 		{
 			TpkFile file = new TpkFile(blob, compressionType);
 			using FileStream stream = File.Create(outputPath);

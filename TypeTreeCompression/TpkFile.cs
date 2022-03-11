@@ -10,6 +10,7 @@ namespace AssetRipper.TypeTreeCompression
 		public const byte TpkVersionNumber = 2;
 
 		public TpkCompressionType CompressionType { get; private set; }
+		public TpkDataType DataType { get; private set; }
 		public int CompressedSize { get; private set; }
 		public int DecompressedSize { get; private set; }
 		public byte[] CompressedBytes { get; private set; } = Array.Empty<byte>();
@@ -44,7 +45,8 @@ namespace AssetRipper.TypeTreeCompression
 			}
 
 			CompressionType = (TpkCompressionType)reader.ReadByte();
-			reader.ReadUInt16();//Reserved bytes
+			DataType = (TpkDataType)reader.ReadByte();
+			reader.ReadByte();//Reserved byte
 			reader.ReadUInt32();//Reserved bytes
 			CompressedSize = reader.ReadInt32();
 			DecompressedSize = reader.ReadInt32();
@@ -60,7 +62,8 @@ namespace AssetRipper.TypeTreeCompression
 			writer.Write(TpkMagicBytes);
 			writer.Write(TpkVersionNumber);
 			writer.Write((byte)CompressionType);
-			writer.Write((ushort)0);//Reserved bytes
+			writer.Write((byte)DataType);
+			writer.Write((byte)0);//Reserved byte
 			writer.Write((uint)0);//Reserved bytes
 			writer.Write(CompressedSize);
 			writer.Write(DecompressedSize);
@@ -72,7 +75,11 @@ namespace AssetRipper.TypeTreeCompression
 			byte[] data = GetDecompressedData();
 			using MemoryStream memoryStream = new MemoryStream(data);
 			using BinaryReader reader = new BinaryReader(memoryStream);
-			TpkDataBlob result = new TpkDataBlob();
+			TpkDataBlob result = DataType switch
+			{
+				TpkDataType.TypeTreeInformation => new TpkTypeTreeBlob(),
+				_ => throw new NotSupportedException($"Data type {DataType} not supported"),
+			};
 			result.Read(reader);
 			return result;
 		}
@@ -83,6 +90,7 @@ namespace AssetRipper.TypeTreeCompression
 			using BinaryWriter writer = new BinaryWriter(memoryStream);
 			blob.Write(writer);
 			StoreData(memoryStream.ToArray(), compressionType);
+			DataType = blob.DataType;
 		}
 
 		public byte[] GetDecompressedData()
