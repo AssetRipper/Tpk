@@ -74,7 +74,7 @@ namespace AssetRipper.TypeTreeCompression
 		{
 			byte[] data = GetDecompressedData();
 			using MemoryStream memoryStream = new MemoryStream(data);
-			using BinaryReader reader = new BinaryReader(memoryStream);
+			using SealedBinaryReader reader = new SealedBinaryReader(memoryStream);
 			TpkDataBlob result = DataType switch
 			{
 				TpkDataType.TypeTreeInformation => new TpkTypeTreeBlob(),
@@ -87,7 +87,7 @@ namespace AssetRipper.TypeTreeCompression
 		public void StoreDataBlob(TpkDataBlob blob, TpkCompressionType compressionType)
 		{
 			using MemoryStream memoryStream = new MemoryStream();
-			using BinaryWriter writer = new BinaryWriter(memoryStream);
+			using SealedBinaryWriter writer = new SealedBinaryWriter(memoryStream);
 			blob.Write(writer);
 			StoreData(memoryStream.ToArray(), compressionType);
 			DataType = blob.DataType;
