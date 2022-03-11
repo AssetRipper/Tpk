@@ -44,6 +44,7 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 
 			CompressionType = (TpkCompressionType)reader.ReadByte();
 			reader.ReadUInt16();//Reserved bytes
+			reader.ReadUInt32();//Reserved bytes
 			CompressedSize = reader.ReadInt32();
 			DecompressedSize = reader.ReadInt32();
 			CompressedBytes = reader.ReadBytes(CompressedSize);
@@ -59,6 +60,7 @@ namespace AssetRipper.TypeTreeCompression.Tpk
 			writer.Write(TpkVersionNumber);
 			writer.Write((byte)CompressionType);
 			writer.Write((ushort)0);//Reserved bytes
+			writer.Write((uint)0);//Reserved bytes
 			writer.Write(CompressedSize);
 			writer.Write(DecompressedSize);
 			writer.Write(CompressedBytes);
