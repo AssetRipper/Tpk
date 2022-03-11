@@ -1,12 +1,12 @@
 ﻿using System.Text.Json;
 using VersionClassPair = System.Collections.Generic.KeyValuePair<
 	AssetRipper.VersionUtilities.UnityVersion,
-	AssetRipper.TypeTreeCompression.TypeTrees.TpkUnityClass?>;
+	AssetRipper.TpkCreation.TypeTrees.TpkUnityClass?>;
 using VersionBytePair = System.Collections.Generic.KeyValuePair<
 	AssetRipper.VersionUtilities.UnityVersion,
 	byte>;
 
-namespace AssetRipper.TypeTreeCompression.TypeTrees
+namespace AssetRipper.TpkCreation.TypeTrees
 {
 	public sealed class TpkTypeTreeBlob : TpkDataBlob
 	{

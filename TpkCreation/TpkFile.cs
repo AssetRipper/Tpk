@@ -1,8 +1,8 @@
-﻿using AssetRipper.TypeTreeCompression.Exceptions;
-using AssetRipper.TypeTreeCompression.TypeTrees;
+﻿using AssetRipper.TpkCreation.Exceptions;
+using AssetRipper.TpkCreation.TypeTrees;
 using K4os.Compression.LZ4;
 
-namespace AssetRipper.TypeTreeCompression
+namespace AssetRipper.TpkCreation
 {
 	public sealed class TpkFile
 	{

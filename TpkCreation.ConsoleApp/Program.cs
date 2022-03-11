@@ -1,8 +1,7 @@
-﻿using AssetRipper.TypeTreeCompression;
-using AssetRipper.TypeTreeCompression.TypeTrees;
+﻿using AssetRipper.TpkCreation.TypeTrees;
 using System.Diagnostics;
 
-namespace AssetRipper.TpkCreator
+namespace AssetRipper.TpkCreation.ConsoleApp
 {
 	internal class Program
 	{

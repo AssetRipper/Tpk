@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace AssetRipper.TypeTreeCompression
+namespace AssetRipper.TpkCreation
 {
 	internal sealed class SealedBinaryWriter : BinaryWriter
 	{

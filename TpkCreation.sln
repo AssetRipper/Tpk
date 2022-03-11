@@ -15,14 +15,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{D4
 		Licenses\VersionUtilities.md = Licenses\VersionUtilities.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TpkCreator", "TpkCreator\TpkCreator.csproj", "{FB57712D-06B3-43CC-B470-FACD4B265A49}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypeTreeCompression", "TypeTreeCompression\TypeTreeCompression.csproj", "{734B97D8-5B36-4EC8-803B-4AD1E69160E9}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{33E54A6F-8689-4D4A-AA4F-CB68BDEE8FF4}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\build.yaml = .github\workflows\build.yaml
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TpkCreation.ConsoleApp", "TpkCreation.ConsoleApp\TpkCreation.ConsoleApp.csproj", "{27C24C51-2FE7-4490-8A7A-5E97D17E958E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TpkCreation", "TpkCreation\TpkCreation.csproj", "{61873C1F-176E-43D4-AFF1-E92988D8C1C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,14 +30,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FB57712D-06B3-43CC-B470-FACD4B265A49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB57712D-06B3-43CC-B470-FACD4B265A49}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB57712D-06B3-43CC-B470-FACD4B265A49}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB57712D-06B3-43CC-B470-FACD4B265A49}.Release|Any CPU.Build.0 = Release|Any CPU
-		{734B97D8-5B36-4EC8-803B-4AD1E69160E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{734B97D8-5B36-4EC8-803B-4AD1E69160E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{734B97D8-5B36-4EC8-803B-4AD1E69160E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{734B97D8-5B36-4EC8-803B-4AD1E69160E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27C24C51-2FE7-4490-8A7A-5E97D17E958E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27C24C51-2FE7-4490-8A7A-5E97D17E958E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27C24C51-2FE7-4490-8A7A-5E97D17E958E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27C24C51-2FE7-4490-8A7A-5E97D17E958E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61873C1F-176E-43D4-AFF1-E92988D8C1C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61873C1F-176E-43D4-AFF1-E92988D8C1C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61873C1F-176E-43D4-AFF1-E92988D8C1C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61873C1F-176E-43D4-AFF1-E92988D8C1C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

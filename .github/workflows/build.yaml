@@ -12,7 +12,7 @@ jobs:
     build:
      runs-on: ubuntu-latest
      steps:
-     - name: Checkout TypeTreeCompression Repository
+     - name: Checkout TpkCreation Repository
        uses: actions/checkout@v3
      - name: Setup .NET
        uses: actions/setup-dotnet@v2
@@ -20,7 +20,7 @@ jobs:
          dotnet-version: 6.0.x
      - name: Build
        run: dotnet build /p:Configuration=Release
-       working-directory: ./TpkCreator/
+       working-directory: ./TpkCreation.ConsoleApp/
      - name: Checkout TypeTreeDumps Repository
        uses: actions/checkout@v3
        with:
@@ -28,10 +28,10 @@ jobs:
         path: TypeTreeDumps
      - name: Make files executable
        shell: bash
-       run: chmod +x ./TpkCreator/bin/Release/net6.0/TpkCreator
+       run: chmod +x ./TpkCreation.ConsoleApp/bin/Release/net6.0/TpkCreation.ConsoleApp
      - name: Make tpk file
        shell: bash
-       run: ./TpkCreator/bin/Release/net6.0/TpkCreator ./TypeTreeDumps/InfoJson
+       run: ./TpkCreation.ConsoleApp/bin/Release/net6.0/TpkCreation.ConsoleApp ./TypeTreeDumps/InfoJson
      - name: Upload file
        uses: actions/upload-artifact@v2
        with:

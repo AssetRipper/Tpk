@@ -1,4 +1,4 @@
-﻿namespace AssetRipper.TypeTreeCompression.Exceptions
+﻿namespace AssetRipper.TpkCreation.Exceptions
 {
 	public sealed class InvalidByteCountException : Exception
 	{
