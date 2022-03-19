@@ -1,5 +1,4 @@
 ﻿using AssetRipper.TpkCreation.Exceptions;
-using AssetRipper.TpkCreation.TypeTrees;
 using AssetRipper.TpkCreation.Utilities;
 using K4os.Compression.LZ4;
 
@@ -76,11 +75,7 @@ namespace AssetRipper.TpkCreation
 			byte[] data = GetDecompressedData();
 			using MemoryStream memoryStream = new MemoryStream(data);
 			using SealedBinaryReader reader = new SealedBinaryReader(memoryStream);
-			TpkDataBlob result = DataType switch
-			{
-				TpkDataType.TypeTreeInformation => new TpkTypeTreeBlob(),
-				_ => throw new NotSupportedException($"Data type {DataType} not supported"),
-			};
+			TpkDataBlob result = DataType.ToNewBlob();
 			result.Read(reader);
 			return result;
 		}
