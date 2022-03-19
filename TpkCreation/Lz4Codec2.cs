@@ -11,9 +11,9 @@ namespace AssetRipper.TpkCreation
 			settings.CompressionLevel = LZ4Level.L12_MAX;
 			settings.ChainBlocks = false;
 			using MemoryStream inputStream = new MemoryStream(data);
-			using LZ4EncoderStream encoderStream = LZ4Stream.Encode(inputStream, settings);
 			using MemoryStream outputStream = new MemoryStream();
-			encoderStream.CopyTo(outputStream);
+			using LZ4EncoderStream encoderStream = LZ4Stream.Encode(outputStream, settings, true);
+			inputStream.CopyTo(encoderStream);
 			return outputStream.ToArray();
 		}
 	}
