@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.IO;
 
 namespace AssetRipper.TpkCreation.Tests
 {
@@ -10,26 +9,9 @@ namespace AssetRipper.TpkCreation.Tests
 		public void ReadAndWriteAreTheSame()
 		{
 			TpkFileSystemBlob originalBlob = MakeRandomBlob();
-			byte[] writtenData = ConvertToData(originalBlob);
-			TpkFileSystemBlob readBlob = ConvertFromData(writtenData);
+			byte[] writtenData = originalBlob.ToBinary();
+			TpkFileSystemBlob readBlob = TpkDataBlob.FromBinary<TpkFileSystemBlob>(writtenData);
 			Assert.AreEqual(originalBlob.Files, readBlob.Files);
-		}
-
-		private static byte[] ConvertToData(TpkFileSystemBlob blob)
-		{
-			using MemoryStream memoryStream = new MemoryStream();
-			using BinaryWriter writer = new BinaryWriter(memoryStream);
-			blob.Write(writer);
-			return memoryStream.ToArray();
-		}
-
-		private static TpkFileSystemBlob ConvertFromData(byte[] data)
-		{
-			using MemoryStream memoryStream = new MemoryStream(data);
-			using BinaryReader reader = new BinaryReader(memoryStream);
-			TpkFileSystemBlob blob = new TpkFileSystemBlob();
-			blob.Read(reader);
-			return blob;
 		}
 
 		private static TpkFileSystemBlob MakeRandomBlob()

@@ -5,5 +5,20 @@
 		public abstract TpkDataType DataType { get; }
 		public abstract void Read(BinaryReader reader);
 		public abstract void Write(BinaryWriter writer);
+		public byte[] ToBinary()
+		{
+			using MemoryStream memoryStream = new MemoryStream();
+			using BinaryWriter writer = new BinaryWriter(memoryStream);
+			Write(writer);
+			return memoryStream.ToArray();
+		}
+		public static T FromBinary<T>(byte[] data) where T : TpkDataBlob, new()
+		{
+			using MemoryStream memoryStream = new MemoryStream(data);
+			using BinaryReader reader = new BinaryReader(memoryStream);
+			T blob = new T();
+			blob.Read(reader);
+			return blob;
+		}
 	}
 }
