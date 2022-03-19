@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace AssetRipper.TpkCreation
+namespace AssetRipper.TpkCreation.Utilities
 {
 	internal sealed class SealedBinaryReader : BinaryReader
 	{

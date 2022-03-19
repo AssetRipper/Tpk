@@ -1,5 +1,6 @@
 ﻿using AssetRipper.TpkCreation.Exceptions;
 using AssetRipper.TpkCreation.TypeTrees;
+using AssetRipper.TpkCreation.Utilities;
 using K4os.Compression.LZ4;
 
 namespace AssetRipper.TpkCreation
