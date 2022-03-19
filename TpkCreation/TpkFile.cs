@@ -69,6 +69,21 @@ namespace AssetRipper.TpkCreation
 			writer.Write(CompressedBytes);
 		}
 
+		public byte[] WriteToMemory()
+		{
+			using MemoryStream memoryStream = new MemoryStream();
+			using BinaryWriter writer = new BinaryWriter(memoryStream);
+			Write(writer);
+			return memoryStream.ToArray();
+		}
+
+		public void WriteToFile(string path)
+		{
+			using FileStream stream = File.Create(path);
+			using BinaryWriter writer = new BinaryWriter(stream);
+			Write(writer);
+		}
+
 		public TpkDataBlob GetDataBlob()
 		{
 			byte[] data = GetDecompressedData();

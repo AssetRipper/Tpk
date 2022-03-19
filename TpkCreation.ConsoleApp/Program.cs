@@ -46,9 +46,7 @@ namespace AssetRipper.TpkCreation.ConsoleApp
 		private static void WriteBlobToFile(TpkTypeTreeBlob blob, string outputPath, TpkCompressionType compressionType)
 		{
 			TpkFile file = new TpkFile(blob, compressionType);
-			using FileStream stream = File.Create(outputPath);
-			using BinaryWriter writer = new BinaryWriter(stream);
-			file.Write(writer);
+			file.WriteToFile(outputPath);
 		}
 
 		private static void Convert(string path)
@@ -66,9 +64,7 @@ namespace AssetRipper.TpkCreation.ConsoleApp
 			{
 				byte[] fileData = File.ReadAllBytes(path);
 				TpkFile file = new TpkFile(fileData, TpkCompressionType.Lz4);
-				using FileStream stream = File.Create($"{fileNameNoExtension}.tpk");
-				using BinaryWriter writer = new BinaryWriter(stream);
-				file.Write(writer);
+				file.WriteToFile($"{fileNameNoExtension}.tpk");
 			}
 			else
 			{
