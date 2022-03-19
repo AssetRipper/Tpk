@@ -38,5 +38,10 @@
 				pair.Value.Write(writer);
 			}
 		}
+
+		public void Add(string name, TpkDataBlob blob)
+		{
+			Blobs.Add(new KeyValuePair<string, TpkDataBlob>(name, blob));
+		}
 	}
 }

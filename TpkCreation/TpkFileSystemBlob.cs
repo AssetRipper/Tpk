@@ -37,5 +37,10 @@
 				writer.Write(file.Value);
 			}
 		}
+
+		public void Add(string relativePath, byte[] data)
+		{
+			Files.Add(new KeyValuePair<string, byte[]>(relativePath, data));
+		}
 	}
 }

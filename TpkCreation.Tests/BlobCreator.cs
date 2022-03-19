@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using AssetRipper.TpkCreation.TypeTrees;
 
 namespace AssetRipper.TpkCreation.Tests
 {
@@ -17,8 +17,28 @@ namespace AssetRipper.TpkCreation.Tests
 			{
 				string name = RandomUtils.RandomString();
 				byte[] data = RandomUtils.RandomBytes();
-				blob.Files.Add(new KeyValuePair<string, byte[]>(name, data));
+				blob.Add(name, data);
 			}
+		}
+
+		internal static TpkCollectionBlob MakeRandomCollectionBlob()
+		{
+			TpkCollectionBlob collection = new TpkCollectionBlob();
+			collection.Add(RandomUtils.RandomString(), new TpkTypeTreeBlob());
+			collection.Add(RandomUtils.RandomString(), MakeRandomFileSystemBlob());
+			collection.Add(RandomUtils.RandomString(), new TpkCollectionBlob());
+			collection.Add(RandomUtils.RandomString(), MakeRandomFileSystemBlob());
+			collection.Add(RandomUtils.RandomString(), MakeRandomFileSystemBlob());
+			collection.Add(RandomUtils.RandomString(), new TpkTypeTreeBlob());
+
+			TpkCollectionBlob subCollection = new TpkCollectionBlob();
+			subCollection.Add(RandomUtils.RandomString(), new TpkTypeTreeBlob());
+			subCollection.Add(RandomUtils.RandomString(), MakeRandomFileSystemBlob());
+			collection.Add(RandomUtils.RandomString(), subCollection);
+
+			collection.Add(RandomUtils.RandomString(), MakeRandomFileSystemBlob());
+
+			return collection;
 		}
 	}
 }
