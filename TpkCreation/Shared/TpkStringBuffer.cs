@@ -1,4 +1,4 @@
-﻿namespace AssetRipper.TpkCreation.TypeTrees
+﻿namespace AssetRipper.TpkCreation.Shared
 {
 	public sealed class TpkStringBuffer
 	{
@@ -41,7 +41,7 @@
 		{
 			int count = Strings.Count;
 			writer.Write(count);
-			for(int i = 0; i < count; i++)
+			for (int i = 0; i < count; i++)
 			{
 				writer.Write(Strings[i]);
 			}

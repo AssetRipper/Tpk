@@ -1,4 +1,6 @@
-﻿namespace AssetRipper.TpkCreation.TypeTrees
+﻿using AssetRipper.TpkCreation.Shared;
+
+namespace AssetRipper.TpkCreation.TypeTrees
 {
 	public sealed class TpkUnityNode
 	{

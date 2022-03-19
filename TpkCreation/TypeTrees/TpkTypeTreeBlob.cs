@@ -5,6 +5,7 @@ using VersionClassPair = System.Collections.Generic.KeyValuePair<
 using VersionBytePair = System.Collections.Generic.KeyValuePair<
 	AssetRipper.VersionUtilities.UnityVersion,
 	byte>;
+using AssetRipper.TpkCreation.Shared;
 
 namespace AssetRipper.TpkCreation.TypeTrees
 {
