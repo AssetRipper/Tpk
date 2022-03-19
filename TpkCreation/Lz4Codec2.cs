@@ -10,7 +10,7 @@ namespace AssetRipper.TpkCreation
 			LZ4EncoderSettings settings = new LZ4EncoderSettings();
 			settings.CompressionLevel = LZ4Level.L12_MAX;
 			settings.ChainBlocks = false;
-			settings.BlockSize = 65536 * 4;
+			settings.BlockSize = 65536 * 16;
 			using MemoryStream inputStream = new MemoryStream(data);
 			using MemoryStream outputStream = new MemoryStream();
 			using LZ4EncoderStream encoderStream = LZ4Stream.Encode(outputStream, settings, true);
