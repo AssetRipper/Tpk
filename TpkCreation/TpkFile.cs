@@ -72,11 +72,7 @@ namespace AssetRipper.TpkCreation
 		public TpkDataBlob GetDataBlob()
 		{
 			byte[] data = GetDecompressedData();
-			using MemoryStream memoryStream = new MemoryStream(data);
-			using BinaryReader reader = new BinaryReader(memoryStream);
-			TpkDataBlob result = DataType.ToNewBlob();
-			result.Read(reader);
-			return result;
+			return DataType.ToBlob(data);
 		}
 
 		public void StoreDataBlob(TpkDataBlob blob, TpkCompressionType compressionType)

@@ -21,7 +21,7 @@
 			{
 				string name = reader.ReadString();
 				TpkDataType blobType = (TpkDataType)reader.ReadByte(); 
-				TpkDataBlob blob = blobType.ToNewBlob();
+				TpkDataBlob blob = blobType.ToBlob();
 				blob.Read(reader);
 				Blobs.Add(new KeyValuePair<string, TpkDataBlob>(name, blob));
 			}

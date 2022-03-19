@@ -20,7 +20,7 @@ namespace AssetRipper.TpkCreation
 
 	public static class TpkDataTypeExtensions
 	{
-		public static TpkDataBlob ToNewBlob(this TpkDataType dataType)
+		public static TpkDataBlob ToBlob(this TpkDataType dataType)
 		{
 			return dataType switch
 			{
@@ -29,6 +29,15 @@ namespace AssetRipper.TpkCreation
 				TpkDataType.FileSystem => new TpkFileSystemBlob(),
 				_ => throw new NotSupportedException($"Data type {dataType} not supported"),
 			};
+		}
+
+		public static TpkDataBlob ToBlob(this TpkDataType dataType, byte[] blobData)
+		{
+			TpkDataBlob blob = dataType.ToBlob();
+			using MemoryStream memoryStream = new MemoryStream(blobData);
+			using BinaryReader reader = new BinaryReader(memoryStream);
+			blob.Read(reader);
+			return blob;
 		}
 	}
 }
