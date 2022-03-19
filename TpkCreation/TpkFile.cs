@@ -1,5 +1,4 @@
 ﻿using AssetRipper.TpkCreation.Exceptions;
-using AssetRipper.TpkCreation.Utilities;
 using K4os.Compression.LZ4;
 
 namespace AssetRipper.TpkCreation
@@ -74,7 +73,7 @@ namespace AssetRipper.TpkCreation
 		{
 			byte[] data = GetDecompressedData();
 			using MemoryStream memoryStream = new MemoryStream(data);
-			using SealedBinaryReader reader = new SealedBinaryReader(memoryStream);
+			using BinaryReader reader = new BinaryReader(memoryStream);
 			TpkDataBlob result = DataType.ToNewBlob();
 			result.Read(reader);
 			return result;
@@ -83,7 +82,7 @@ namespace AssetRipper.TpkCreation
 		public void StoreDataBlob(TpkDataBlob blob, TpkCompressionType compressionType)
 		{
 			using MemoryStream memoryStream = new MemoryStream();
-			using SealedBinaryWriter writer = new SealedBinaryWriter(memoryStream);
+			using BinaryWriter writer = new BinaryWriter(memoryStream);
 			blob.Write(writer);
 			StoreData(memoryStream.ToArray(), compressionType);
 			DataType = blob.DataType;
