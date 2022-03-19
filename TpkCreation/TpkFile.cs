@@ -125,7 +125,7 @@ namespace AssetRipper.TpkCreation
 					StoreWithNoCompression(uncompressedData);
 					return;
 				case TpkCompressionType.Lz4:
-					CompressWithLz4Blocks(uncompressedData);
+					CompressWithLz4(uncompressedData);
 					return;
 				default:
 					throw new ArgumentOutOfRangeException(nameof(compressionType));
@@ -143,13 +143,6 @@ namespace AssetRipper.TpkCreation
 			CompressedBytes = new byte[compressedSize];
 			Array.Copy(buffer, CompressedBytes, compressedSize);
 			CompressedSize = compressedSize;
-			DecompressedSize = uncompressedBytes.Length;
-		}
-
-		private void CompressWithLz4Blocks(byte[] uncompressedBytes)
-		{
-			CompressedBytes = Lz4Codec2.Compress(uncompressedBytes);
-			CompressedSize = CompressedBytes.Length;
 			DecompressedSize = uncompressedBytes.Length;
 		}
 
