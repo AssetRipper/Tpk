@@ -33,6 +33,7 @@
 			{
 				KeyValuePair<string, byte[]> file = Files[i];
 				writer.Write(file.Key);
+				writer.Write(file.Value.Length);
 				writer.Write(file.Value);
 			}
 		}
