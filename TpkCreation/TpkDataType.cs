@@ -34,9 +34,7 @@ namespace AssetRipper.TpkCreation
 		public static TpkDataBlob ToBlob(this TpkDataType dataType, byte[] blobData)
 		{
 			TpkDataBlob blob = dataType.ToBlob();
-			using MemoryStream memoryStream = new MemoryStream(blobData);
-			using BinaryReader reader = new BinaryReader(memoryStream);
-			blob.Read(reader);
+			blob.Read(blobData);
 			return blob;
 		}
 	}

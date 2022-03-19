@@ -4,6 +4,12 @@
 	{
 		public abstract TpkDataType DataType { get; }
 		public abstract void Read(BinaryReader reader);
+		public void Read(byte[] data)
+		{
+			using MemoryStream memoryStream = new MemoryStream(data);
+			using BinaryReader reader = new BinaryReader(memoryStream);
+			Read(reader);
+		}
 		public abstract void Write(BinaryWriter writer);
 		public byte[] ToBinary()
 		{
@@ -14,10 +20,8 @@
 		}
 		public static T FromBinary<T>(byte[] data) where T : TpkDataBlob, new()
 		{
-			using MemoryStream memoryStream = new MemoryStream(data);
-			using BinaryReader reader = new BinaryReader(memoryStream);
 			T blob = new T();
-			blob.Read(reader);
+			blob.Read(data);
 			return blob;
 		}
 	}
