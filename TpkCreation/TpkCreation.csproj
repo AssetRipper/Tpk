@@ -10,6 +10,7 @@
 	<ItemGroup>
 		<PackageReference Include="AssetRipper.VersionUtilities" Version="1.2.0" />
 		<PackageReference Include="K4os.Compression.LZ4" Version="1.2.16" />
+		<PackageReference Include="K4os.Compression.LZ4.Streams" Version="1.2.16" />
 	</ItemGroup>
 
 </Project>

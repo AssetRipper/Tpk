@@ -16,6 +16,18 @@ namespace AssetRipper.TpkCreation
 		/// A file system archive
 		/// </summary>
 		FileSystem = 2,
+		/// <summary>
+		/// Custom json data
+		/// </summary>
+		Json = 3,
+		/// <summary>
+		/// Lists of reference assemblies in the editor
+		/// </summary>
+		ReferenceAssemblies = 4,
+		/// <summary>
+		/// Lists of default Unity assets and their
+		/// </summary>
+		EngineAssets = 5,
 	}
 
 	public static class TpkDataTypeExtensions
