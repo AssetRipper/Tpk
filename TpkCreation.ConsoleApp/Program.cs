@@ -38,7 +38,9 @@ namespace AssetRipper.TpkCreation.ConsoleApp
 		{
 			TpkTypeTreeBlob blob = TpkTypeTreeBlob.Create(inputDirectory);
 			WriteBlobToFile(blob, uncompressedPath, TpkCompressionType.None);
+			Console.WriteLine($"Uncompressed file saved to {Path.GetFullPath(uncompressedPath)}");
 			WriteBlobToFile(blob, lz4Path, TpkCompressionType.Lz4);
+			Console.WriteLine($"Lz4 file saved to {Path.GetFullPath(lz4Path)}");
 		}
 
 		private static void WriteBlobToFile(TpkTypeTreeBlob blob, string outputPath, TpkCompressionType compressionType)

@@ -36,12 +36,12 @@ jobs:
        uses: actions/upload-artifact@v2
        with:
          name: uncompressed_file
-         path: /home/runner/work/TypeTreeCompression/TypeTreeCompression/uncompressed.tpk
+         path: /home/runner/work/TpkCreation/TpkCreation/uncompressed.tpk
          if-no-files-found: error
      - name: Upload file
        uses: actions/upload-artifact@v2
        with:
          name: lz4_file
-         path: /home/runner/work/TypeTreeCompression/TypeTreeCompression/compressed.tpk
+         path: /home/runner/work/TpkCreation/TpkCreation/compressed.tpk
          if-no-files-found: error
       
