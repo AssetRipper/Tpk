@@ -17,7 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{D4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{33E54A6F-8689-4D4A-AA4F-CB68BDEE8FF4}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\build.yaml = .github\workflows\build.yaml
+		.github\workflows\make_tpk.yml = .github\workflows\make_tpk.yml
+		.github\workflows\test.yml = .github\workflows\test.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TpkCreation.ConsoleApp", "TpkCreation.ConsoleApp\TpkCreation.ConsoleApp.csproj", "{27C24C51-2FE7-4490-8A7A-5E97D17E958E}"
