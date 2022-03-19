@@ -25,7 +25,7 @@ namespace AssetRipper.TpkCreation
 		/// </summary>
 		ReferenceAssemblies = 4,
 		/// <summary>
-		/// Lists of default Unity assets and their
+		/// Lists of default Unity assets and their export ids
 		/// </summary>
 		EngineAssets = 5,
 	}
@@ -39,6 +39,7 @@ namespace AssetRipper.TpkCreation
 				TpkDataType.TypeTreeInformation => new TpkTypeTreeBlob(),
 				TpkDataType.Collection => new TpkCollectionBlob(),
 				TpkDataType.FileSystem => new TpkFileSystemBlob(),
+				TpkDataType.Json => new TpkJsonBlob(),
 				_ => throw new NotSupportedException($"Data type {dataType} not supported"),
 			};
 		}
