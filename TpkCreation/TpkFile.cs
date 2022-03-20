@@ -1,5 +1,5 @@
-﻿using AssetRipper.TpkCreation.Exceptions;
-using K4os.Compression.LZ4;
+﻿using AssetRipper.TpkCreation.Compression;
+using AssetRipper.TpkCreation.Exceptions;
 
 namespace AssetRipper.TpkCreation
 {
@@ -104,52 +104,21 @@ namespace AssetRipper.TpkCreation
 			return CompressionType switch
 			{
 				TpkCompressionType.None => CompressedBytes,
-				TpkCompressionType.Lz4 => DecompressWithLz4(),
+				TpkCompressionType.Lz4 => Lz4Handler.Decompress(CompressedBytes, DecompressedSize),
 				_ => throw new NotSupportedException($"Compression type {CompressionType} is not supported"),
 			};
 		}
 
-		private byte[] DecompressWithLz4()
-		{
-			byte[] decompressedBytes = new byte[DecompressedSize];
-			LZ4Codec.Decode(CompressedBytes, decompressedBytes);
-			return decompressedBytes;
-		}
-
-		private void StoreData(byte[] uncompressedData, TpkCompressionType compressionType)
+		private void StoreData(byte[] uncompressedBytes, TpkCompressionType compressionType)
 		{
 			CompressionType = compressionType;
-			switch (compressionType)
+			CompressedBytes = compressionType switch
 			{
-				case TpkCompressionType.None:
-					StoreWithNoCompression(uncompressedData);
-					return;
-				case TpkCompressionType.Lz4:
-					CompressWithLz4(uncompressedData);
-					return;
-				default:
-					throw new ArgumentOutOfRangeException(nameof(compressionType));
-			}
-		}
-
-		private void CompressWithLz4(byte[] uncompressedBytes)
-		{
-			byte[] buffer = new byte[LZ4Codec.MaximumOutputSize(uncompressedBytes.Length)];
-			int compressedSize = LZ4Codec.Encode(uncompressedBytes, buffer, LZ4Level.L12_MAX);
-
-			if (compressedSize < 0)
-				throw new Exception("Could not compress data");
-
-			CompressedBytes = new byte[compressedSize];
-			Array.Copy(buffer, CompressedBytes, compressedSize);
-			CompressedSize = compressedSize;
-			DecompressedSize = uncompressedBytes.Length;
-		}
-
-		private void StoreWithNoCompression(byte[] uncompressedBytes)
-		{
-			CompressedBytes = uncompressedBytes;
-			CompressedSize = uncompressedBytes.Length;
+				TpkCompressionType.None => uncompressedBytes,
+				TpkCompressionType.Lz4 => Lz4Handler.Compress(uncompressedBytes),
+				_ => throw new ArgumentOutOfRangeException(nameof(compressionType)),
+			};
+			CompressedSize = CompressedBytes.Length;
 			DecompressedSize = uncompressedBytes.Length;
 		}
 	}
