@@ -42,6 +42,12 @@ jobs:
        uses: actions/upload-artifact@v2
        with:
          name: lz4_file
-         path: /home/runner/work/TpkCreation/TpkCreation/compressed.tpk
+         path: /home/runner/work/TpkCreation/TpkCreation/lz4.tpk
+         if-no-files-found: error
+     - name: Upload file
+       uses: actions/upload-artifact@v2
+       with:
+         name: lz4_file
+         path: /home/runner/work/TpkCreation/TpkCreation/lzma.tpk
          if-no-files-found: error
       

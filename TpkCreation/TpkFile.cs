@@ -105,6 +105,10 @@ namespace AssetRipper.TpkCreation
 			{
 				TpkCompressionType.None => CompressedBytes,
 				TpkCompressionType.Lz4 => Lz4Handler.Decompress(CompressedBytes, DecompressedSize),
+				TpkCompressionType.Lzma => LzmaHandler.Decompress(CompressedBytes, DecompressedSize),
+#if DEBUG
+				TpkCompressionType.Brotli => BrotliHandler.Decompress(CompressedBytes),
+#endif
 				_ => throw new NotSupportedException($"Compression type {CompressionType} is not supported"),
 			};
 		}
@@ -116,6 +120,10 @@ namespace AssetRipper.TpkCreation
 			{
 				TpkCompressionType.None => uncompressedBytes,
 				TpkCompressionType.Lz4 => Lz4Handler.Compress(uncompressedBytes),
+				TpkCompressionType.Lzma => LzmaHandler.Compress(uncompressedBytes),
+#if DEBUG
+				TpkCompressionType.Brotli => BrotliHandler.Compress(uncompressedBytes),
+#endif
 				_ => throw new ArgumentOutOfRangeException(nameof(compressionType)),
 			};
 			CompressedSize = CompressedBytes.Length;

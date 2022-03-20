@@ -4,5 +4,9 @@
 	{
 		None,
 		Lz4,
+		Lzma,
+#if DEBUG
+		Brotli,
+#endif
 	}
 }
