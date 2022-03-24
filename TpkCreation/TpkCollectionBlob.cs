@@ -20,7 +20,8 @@
 			for (int i = 0; i < count; i++)
 			{
 				string name = reader.ReadString();
-				TpkDataType blobType = (TpkDataType)reader.ReadByte(); 
+				TpkDataType blobType = (TpkDataType)reader.ReadByte();
+				reader.ReadInt32(); //blob size
 				TpkDataBlob blob = blobType.ToBlob();
 				blob.Read(reader);
 				Blobs.Add(new KeyValuePair<string, TpkDataBlob>(name, blob));
@@ -29,13 +30,16 @@
 
 		public override void Write(BinaryWriter writer)
 		{
-			writer.Write(Blobs.Count);
-			for (int i = 0; i < Blobs.Count; i++)
+			int count = Blobs.Count;
+			writer.Write(count);
+			for (int i = 0; i < count; i++)
 			{
 				KeyValuePair<string, TpkDataBlob> pair = Blobs[i];
 				writer.Write(pair.Key);
 				writer.Write((byte)pair.Value.DataType);
-				pair.Value.Write(writer);
+				byte[] data = pair.Value.ToBinary();
+				writer.Write(data.Length);
+				writer.Write(data);
 			}
 		}
 
