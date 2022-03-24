@@ -9,7 +9,7 @@
 		/// </summary>
 		/// <param name="node">The node to be added</param>
 		/// <returns>The index at which that node appears</returns>
-		public int AddNode(TpkUnityNodeData node)
+		public ushort AddNode(TpkUnityNodeData node)
 		{
 			int index = Nodes.IndexOf(node);
 			if (index == -1)
@@ -17,7 +17,7 @@
 				index = Nodes.Count;
 				Nodes.Add(node);
 			}
-			return index;
+			return (ushort)index;
 		}
 
 		public TpkUnityNodeData this[int index]

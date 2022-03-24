@@ -138,7 +138,9 @@ namespace AssetRipper.TpkCreation.TypeTrees
 			blob.ClassInfo.AddRange(classDictionary.Values);
 
 			blob.CommonString.SetIndices(blob.StringBuffer, commonStrings);
+			//About 10k
 			Console.WriteLine($"Node buffer has {blob.NodeBuffer.Count} entries");
+			//About 7k
 			Console.WriteLine($"String buffer has {blob.StringBuffer.Count} entries");
 
 			blob.CreationTime = DateTime.Now.ToUniversalTime();

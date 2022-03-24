@@ -4,12 +4,12 @@ namespace AssetRipper.TpkCreation.TypeTrees
 {
 	public sealed class TpkUnityNode
 	{
-		public int NodeData { get; set; }
+		public ushort NodeData { get; set; }
 		public TpkUnityNode[] SubNodes { get; set; } = Array.Empty<TpkUnityNode>();
 
 		public void Read(BinaryReader reader)
 		{
-			NodeData = reader.ReadInt32();
+			NodeData = reader.ReadUInt16();
 			int count = reader.ReadInt32();
 			SubNodes = new TpkUnityNode[count];
 			for (int i = 0; i < count; i++)
