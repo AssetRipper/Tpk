@@ -30,8 +30,9 @@
 		public void Read(BinaryReader reader)
 		{
 			Strings.Clear();
-			int stringCount = reader.ReadInt32();
-			for (int i = 0; i < stringCount; i++)
+			int count = reader.ReadInt32();
+			Strings.Capacity = count;
+			for (int i = 0; i < count; i++)
 			{
 				Strings.Add(reader.ReadString());
 			}

@@ -30,8 +30,9 @@
 		public void Read(BinaryReader reader)
 		{
 			Nodes.Clear();
-			int stringCount = reader.ReadInt32();
-			for (int i = 0; i < stringCount; i++)
+			int count = reader.ReadInt32();
+			Nodes.Capacity = count;
+			for (int i = 0; i < count; i++)
 			{
 				TpkUnityNodeData data = new();
 				data.Read(reader);
