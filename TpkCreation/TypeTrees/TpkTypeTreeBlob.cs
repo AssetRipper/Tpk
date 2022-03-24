@@ -15,7 +15,7 @@ namespace AssetRipper.TpkCreation.TypeTrees
 		public List<UnityVersion> Versions { get; } = new();
 		public List<TpkClassInformation> ClassInfo { get; } = new();
 		public TpkCommonString CommonString { get; } = new();
-		public TpkUnityNodeDataBuffer NodeBuffer { get; } = new();
+		public TpkUnityNodeBuffer NodeBuffer { get; } = new();
 		public TpkStringBuffer StringBuffer { get; } = new();
 
 		public override TpkDataType DataType => TpkDataType.TypeTreeInformation;

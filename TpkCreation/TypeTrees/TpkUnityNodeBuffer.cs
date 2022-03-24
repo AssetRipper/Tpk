@@ -1,15 +1,15 @@
 ﻿namespace AssetRipper.TpkCreation.TypeTrees
 {
-	public sealed class TpkUnityNodeDataBuffer
+	public sealed class TpkUnityNodeBuffer
 	{
-		private List<TpkUnityNodeData> Nodes { get; } = new();
+		private List<TpkUnityNode> Nodes { get; } = new();
 
 		/// <summary>
 		/// Ensures a node is in the buffer
 		/// </summary>
 		/// <param name="node">The node to be added</param>
 		/// <returns>The index at which that node appears</returns>
-		public ushort AddNode(TpkUnityNodeData node)
+		public ushort AddNode(TpkUnityNode node)
 		{
 			int index = Nodes.IndexOf(node);
 			if (index == -1)
@@ -20,7 +20,7 @@
 			return (ushort)index;
 		}
 
-		public TpkUnityNodeData this[int index]
+		public TpkUnityNode this[int index]
 		{
 			get => Nodes[index];
 		}
@@ -34,7 +34,7 @@
 			Nodes.Capacity = count;
 			for (int i = 0; i < count; i++)
 			{
-				TpkUnityNodeData data = new();
+				TpkUnityNode data = new();
 				data.Read(reader);
 				Nodes.Add(data);
 			}

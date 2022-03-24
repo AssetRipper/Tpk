@@ -50,8 +50,8 @@ namespace AssetRipper.TpkCreation.TypeTrees
 		/// </summary>
 		public TpkUnityClassFlags Flags { get; set; }
 
-		public TpkUnityNode? EditorRootNode { get; set; }
-		public TpkUnityNode? ReleaseRootNode { get; set; }
+		public ushort EditorRootNode { get; set; } = ushort.MaxValue;
+		public ushort ReleaseRootNode { get; set; } = ushort.MaxValue;
 
 		public void Read(BinaryReader reader)
 		{
@@ -68,16 +68,8 @@ namespace AssetRipper.TpkCreation.TypeTrees
 			}
 			DescendantCount = reader.ReadUInt32();
 			Flags = (TpkUnityClassFlags)reader.ReadByte();
-			if (Flags.HasEditorRootNode())
-			{
-				EditorRootNode = new TpkUnityNode();
-				EditorRootNode.Read(reader);
-			}
-			if (Flags.HasReleaseRootNode())
-			{
-				ReleaseRootNode = new TpkUnityNode();
-				ReleaseRootNode.Read(reader);
-			}
+			EditorRootNode = Flags.HasEditorRootNode() ? reader.ReadUInt16() : ushort.MaxValue;
+			ReleaseRootNode = Flags.HasReleaseRootNode() ? reader.ReadUInt16() : ushort.MaxValue;
 		}
 
 		public void Write(BinaryWriter writer)
@@ -97,11 +89,11 @@ namespace AssetRipper.TpkCreation.TypeTrees
 			writer.Write((byte)Flags);
 			if (Flags.HasEditorRootNode())
 			{
-				EditorRootNode!.Write(writer);
+				writer.Write(EditorRootNode);
 			}
 			if (Flags.HasReleaseRootNode())
 			{
-				ReleaseRootNode!.Write(writer);
+				writer.Write(ReleaseRootNode);
 			}
 		}
 
@@ -125,7 +117,7 @@ namespace AssetRipper.TpkCreation.TypeTrees
 			return result;
 		}
 
-		public static TpkUnityClass Convert(UnityClass source, TpkStringBuffer stringBuffer, TpkUnityNodeDataBuffer nodeBuffer)
+		public static TpkUnityClass Convert(UnityClass source, TpkStringBuffer stringBuffer, TpkUnityNodeBuffer nodeBuffer)
 		{
 			TpkUnityClass result = new TpkUnityClass();
 			result.Name = stringBuffer.AddString(source.Name);
@@ -152,7 +144,7 @@ namespace AssetRipper.TpkCreation.TypeTrees
 			return result;
 		}
 
-		public static UnityClass Convert(TpkUnityClass source, TpkStringBuffer stringBuffer, TpkUnityNodeDataBuffer nodeBuffer)
+		public static UnityClass Convert(TpkUnityClass source, TpkStringBuffer stringBuffer, TpkUnityNodeBuffer nodeBuffer)
 		{
 			UnityClass result = new UnityClass();
 			result.Name = stringBuffer[source.Name];
@@ -174,13 +166,13 @@ namespace AssetRipper.TpkCreation.TypeTrees
 			result.IsEditorOnly = source.Flags.IsEditorOnly();
 			result.IsReleaseOnly = source.Flags.IsReleaseOnly();
 			result.IsStripped = source.Flags.IsStripped();
-			if (source.EditorRootNode != null)
+			if (source.EditorRootNode != ushort.MaxValue)
 			{
-				result.EditorRootNode = TpkUnityNode.Convert(source.EditorRootNode, stringBuffer, nodeBuffer, 0, 0, out var _);
+				result.EditorRootNode = TpkUnityNode.Convert(nodeBuffer[source.EditorRootNode], stringBuffer, nodeBuffer, 0, 0, out var _);
 			}
-			if (source.ReleaseRootNode != null)
+			if (source.ReleaseRootNode != ushort.MaxValue)
 			{
-				result.ReleaseRootNode = TpkUnityNode.Convert(source.ReleaseRootNode, stringBuffer, nodeBuffer, 0, 0, out var _);
+				result.ReleaseRootNode = TpkUnityNode.Convert(nodeBuffer[source.ReleaseRootNode], stringBuffer, nodeBuffer, 0, 0, out var _);
 			}
 			return result;
 		}
