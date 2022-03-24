@@ -86,10 +86,10 @@ namespace AssetRipper.TpkCreation
 
 		public TpkDataBlob GetDataBlob()
 		{
-			//Stream stream = GetDecompressedStream();
-			//return DataType.ToBlob(stream);
-			byte[] data = GetDecompressedData();
-			return DataType.ToBlob(data);
+			Stream stream = GetDecompressedStream();
+			return DataType.ToBlob(stream);
+			//byte[] data = GetDecompressedData();
+			//return DataType.ToBlob(data);
 		}
 
 		public void StoreDataBlob(TpkDataBlob blob, TpkCompressionType compressionType)
@@ -120,7 +120,7 @@ namespace AssetRipper.TpkCreation
 			return CompressionType switch
 			{
 				TpkCompressionType.None => new MemoryStream(CompressedBytes),
-				TpkCompressionType.Lz4 => Lz4Handler.Decompress(new MemoryStream(CompressedBytes)),
+				TpkCompressionType.Lz4 => new MemoryStream(Lz4Handler.Decompress(CompressedBytes, DecompressedSize)),
 				TpkCompressionType.Lzma => LzmaHandler.DecompressStream(CompressedBytes, DecompressedSize),
 #if DEBUG
 				TpkCompressionType.Brotli => BrotliHandler.Decompress(new MemoryStream(CompressedBytes)),

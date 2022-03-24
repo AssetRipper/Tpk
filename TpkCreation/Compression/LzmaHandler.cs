@@ -36,7 +36,7 @@ namespace AssetRipper.TpkCreation.Compression
 				throw new ArgumentException($"Compressed size {compressedBytes.Length} cannot be less than 5", nameof(compressedBytes));
 
 			byte[] properties = new Span<byte>(compressedBytes, 0, 5).ToArray();
-			using MemoryStream inputStream = new MemoryStream(compressedBytes);
+			MemoryStream inputStream = new MemoryStream(compressedBytes);
 			inputStream.Position = 5;
 			return new LzmaStream(properties, inputStream, compressedBytes.Length - 5, decompressedSize);
 		}
