@@ -22,5 +22,10 @@ namespace AssetRipper.TpkCreation.Compression
 			decompressionStream.CopyTo(outputStream);
 			return outputStream.ToArray();
 		}
+
+		public static BrotliStream Decompress(Stream compressedStream)
+		{
+			return new BrotliStream(compressedStream, CompressionMode.Decompress);
+		}
 	}
 }

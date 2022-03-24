@@ -29,5 +29,16 @@ namespace AssetRipper.TpkCreation.Compression
 			lzmaStream.CopyTo(outputStream);
 			return outputStream.ToArray();
 		}
+
+		public static LzmaStream DecompressStream(byte[] compressedBytes, int decompressedSize)
+		{
+			if (compressedBytes.Length < 5)
+				throw new ArgumentException($"Compressed size {compressedBytes.Length} cannot be less than 5", nameof(compressedBytes));
+
+			byte[] properties = new Span<byte>(compressedBytes, 0, 5).ToArray();
+			using MemoryStream inputStream = new MemoryStream(compressedBytes);
+			inputStream.Position = 5;
+			return new LzmaStream(properties, inputStream, compressedBytes.Length - 5, decompressedSize);
+		}
 	}
 }

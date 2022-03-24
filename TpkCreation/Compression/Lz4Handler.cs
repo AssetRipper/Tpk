@@ -1,4 +1,5 @@
 ﻿using K4os.Compression.LZ4;
+using K4os.Compression.LZ4.Streams;
 
 namespace AssetRipper.TpkCreation.Compression
 {
@@ -9,6 +10,11 @@ namespace AssetRipper.TpkCreation.Compression
 			byte[] decompressedBytes = new byte[decompressedSize];
 			LZ4Codec.Decode(compressedBytes, decompressedBytes);
 			return decompressedBytes;
+		}
+
+		public static LZ4DecoderStream Decompress(Stream compressedStream)
+		{
+			return LZ4Stream.Decode(compressedStream, 0, true);
 		}
 
 		public static byte[] Compress(byte[] uncompressedBytes)

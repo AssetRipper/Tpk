@@ -86,6 +86,8 @@ namespace AssetRipper.TpkCreation
 
 		public TpkDataBlob GetDataBlob()
 		{
+			//Stream stream = GetDecompressedStream();
+			//return DataType.ToBlob(stream);
 			byte[] data = GetDecompressedData();
 			return DataType.ToBlob(data);
 		}
@@ -108,6 +110,20 @@ namespace AssetRipper.TpkCreation
 				TpkCompressionType.Lzma => LzmaHandler.Decompress(CompressedBytes, DecompressedSize),
 #if DEBUG
 				TpkCompressionType.Brotli => BrotliHandler.Decompress(CompressedBytes),
+#endif
+				_ => throw new NotSupportedException($"Compression type {CompressionType} is not supported"),
+			};
+		}
+
+		public Stream GetDecompressedStream()
+		{
+			return CompressionType switch
+			{
+				TpkCompressionType.None => new MemoryStream(CompressedBytes),
+				TpkCompressionType.Lz4 => Lz4Handler.Decompress(new MemoryStream(CompressedBytes)),
+				TpkCompressionType.Lzma => LzmaHandler.DecompressStream(CompressedBytes, DecompressedSize),
+#if DEBUG
+				TpkCompressionType.Brotli => BrotliHandler.Decompress(new MemoryStream(CompressedBytes)),
 #endif
 				_ => throw new NotSupportedException($"Compression type {CompressionType} is not supported"),
 			};

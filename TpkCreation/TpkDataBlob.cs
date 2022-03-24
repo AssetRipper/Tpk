@@ -10,6 +10,11 @@
 			using BinaryReader reader = new BinaryReader(memoryStream);
 			Read(reader);
 		}
+		public void Read(Stream stream)
+		{
+			using BinaryReader reader = new BinaryReader(stream);
+			Read(reader);
+		}
 		public abstract void Write(BinaryWriter writer);
 		public byte[] ToBinary()
 		{

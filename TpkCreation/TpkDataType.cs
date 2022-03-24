@@ -50,5 +50,12 @@ namespace AssetRipper.TpkCreation
 			blob.Read(blobData);
 			return blob;
 		}
+
+		public static TpkDataBlob ToBlob(this TpkDataType dataType, Stream blobDataStream)
+		{
+			TpkDataBlob blob = dataType.ToBlob();
+			blob.Read(blobDataStream);
+			return blob;
+		}
 	}
 }
