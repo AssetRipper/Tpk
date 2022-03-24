@@ -125,46 +125,46 @@ namespace AssetRipper.TpkCreation.TypeTrees
 			return result;
 		}
 
-		public static TpkUnityClass Convert(UnityClass source, TpkStringBuffer buffer)
+		public static TpkUnityClass Convert(UnityClass source, TpkStringBuffer stringBuffer, TpkUnityNodeDataBuffer nodeBuffer)
 		{
 			TpkUnityClass result = new TpkUnityClass();
-			result.Name = buffer.AddString(source.Name);
-			result.Namespace = buffer.AddString(source.Namespace);
-			result.FullName = buffer.AddString(source.FullName);
-			result.Module = buffer.AddString(source.Module);
-			result.Base = buffer.AddString(source.Base);
+			result.Name = stringBuffer.AddString(source.Name);
+			result.Namespace = stringBuffer.AddString(source.Namespace);
+			result.FullName = stringBuffer.AddString(source.FullName);
+			result.Module = stringBuffer.AddString(source.Module);
+			result.Base = stringBuffer.AddString(source.Base);
 			int derivedCount = source.Derived.Count;
 			result.Derived = new ushort[derivedCount];
 			for (int i = 0; i < derivedCount; i++)
 			{
-				result.Derived[i] = buffer.AddString(source.Derived[i]);
+				result.Derived[i] = stringBuffer.AddString(source.Derived[i]);
 			}
 			result.DescendantCount = source.DescendantCount;
 			result.Flags = GetFlags(source);
 			if (source.EditorRootNode != null)
 			{
-				result.EditorRootNode = TpkUnityNode.Convert(source.EditorRootNode, buffer);
+				result.EditorRootNode = TpkUnityNode.Convert(source.EditorRootNode, stringBuffer, nodeBuffer);
 			}
 			if (source.ReleaseRootNode != null)
 			{
-				result.ReleaseRootNode = TpkUnityNode.Convert(source.ReleaseRootNode, buffer);
+				result.ReleaseRootNode = TpkUnityNode.Convert(source.ReleaseRootNode, stringBuffer, nodeBuffer);
 			}
 			return result;
 		}
 
-		public static UnityClass Convert(TpkUnityClass source, TpkStringBuffer buffer)
+		public static UnityClass Convert(TpkUnityClass source, TpkStringBuffer stringBuffer, TpkUnityNodeDataBuffer nodeBuffer)
 		{
 			UnityClass result = new UnityClass();
-			result.Name = buffer[source.Name];
-			result.Namespace = buffer[source.Namespace];
-			result.FullName = buffer[source.FullName];
-			result.Module = buffer[source.Module];
+			result.Name = stringBuffer[source.Name];
+			result.Namespace = stringBuffer[source.Namespace];
+			result.FullName = stringBuffer[source.FullName];
+			result.Module = stringBuffer[source.Module];
 			//TypeID gets set elsewhere
-			result.Base = buffer[source.Base];
+			result.Base = stringBuffer[source.Base];
 			result.Derived = new List<string>(source.Derived.Length);
 			for (int i = 0;i < source.Derived.Length; i++)
 			{
-				result.Derived.Add(buffer[source.Derived[i]]);
+				result.Derived.Add(stringBuffer[source.Derived[i]]);
 			}
 			result.DescendantCount = source.DescendantCount;
 			result.Size = -1;
@@ -176,11 +176,11 @@ namespace AssetRipper.TpkCreation.TypeTrees
 			result.IsStripped = source.Flags.IsStripped();
 			if (source.EditorRootNode != null)
 			{
-				result.EditorRootNode = TpkUnityNode.Convert(source.EditorRootNode, buffer, 0, 0, out var _);
+				result.EditorRootNode = TpkUnityNode.Convert(source.EditorRootNode, stringBuffer, nodeBuffer, 0, 0, out var _);
 			}
 			if (source.ReleaseRootNode != null)
 			{
-				result.ReleaseRootNode = TpkUnityNode.Convert(source.ReleaseRootNode, buffer, 0, 0, out var _);
+				result.ReleaseRootNode = TpkUnityNode.Convert(source.ReleaseRootNode, stringBuffer, nodeBuffer, 0, 0, out var _);
 			}
 			return result;
 		}

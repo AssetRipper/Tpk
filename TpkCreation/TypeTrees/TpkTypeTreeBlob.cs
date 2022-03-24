@@ -15,6 +15,7 @@ namespace AssetRipper.TpkCreation.TypeTrees
 		public List<UnityVersion> Versions { get; } = new();
 		public List<TpkClassInformation> ClassInfo { get; } = new();
 		public TpkCommonString CommonString { get; } = new();
+		public TpkUnityNodeDataBuffer NodeBuffer { get; } = new();
 		public TpkStringBuffer StringBuffer { get; } = new();
 
 		public override TpkDataType DataType => TpkDataType.TypeTreeInformation;
@@ -44,6 +45,8 @@ namespace AssetRipper.TpkCreation.TypeTrees
 
 			CommonString.Read(reader);
 
+			NodeBuffer.Read(reader);
+
 			StringBuffer.Read(reader);
 		}
 
@@ -66,6 +69,8 @@ namespace AssetRipper.TpkCreation.TypeTrees
 			}
 
 			CommonString.Write(writer);
+
+			NodeBuffer.Write(writer);
 
 			StringBuffer.Write(writer);
 		}
@@ -124,7 +129,7 @@ namespace AssetRipper.TpkCreation.TypeTrees
 							tpkClassInformation = new TpkClassInformation(unityClass.TypeID);
 							classDictionary.Add(unityClass.TypeID, tpkClassInformation);
 						}
-						TpkUnityClass tpkUnityClass = TpkUnityClass.Convert(unityClass, blob.StringBuffer);
+						TpkUnityClass tpkUnityClass = TpkUnityClass.Convert(unityClass, blob.StringBuffer, blob.NodeBuffer);
 						tpkClassInformation.Classes.Add(new VersionClassPair(version, tpkUnityClass));
 					}
 				}
@@ -133,6 +138,7 @@ namespace AssetRipper.TpkCreation.TypeTrees
 			blob.ClassInfo.AddRange(classDictionary.Values);
 
 			blob.CommonString.SetIndices(blob.StringBuffer, commonStrings);
+			Console.WriteLine($"Node buffer has {blob.NodeBuffer.Count} entries");
 			Console.WriteLine($"String buffer has {blob.StringBuffer.Count} entries");
 
 			blob.CreationTime = DateTime.Now.ToUniversalTime();

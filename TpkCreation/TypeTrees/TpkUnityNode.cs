@@ -4,24 +4,12 @@ namespace AssetRipper.TpkCreation.TypeTrees
 {
 	public sealed class TpkUnityNode
 	{
-		public ushort TypeName { get; set; }
-		public ushort Name { get; set; }
-		//Level is redundant
-		public int ByteSize { get; set; }
-		//Index is redundant
-		public short Version { get; set; }
-		public byte TypeFlags { get; set; }
-		public uint MetaFlag { get; set; }
+		public int NodeData { get; set; }
 		public TpkUnityNode[] SubNodes { get; set; } = Array.Empty<TpkUnityNode>();
 
 		public void Read(BinaryReader reader)
 		{
-			TypeName = reader.ReadUInt16();
-			Name = reader.ReadUInt16();
-			ByteSize = reader.ReadInt32();
-			Version = reader.ReadInt16();
-			TypeFlags = reader.ReadByte();
-			MetaFlag = reader.ReadUInt32();
+			NodeData = reader.ReadInt32();
 			int count = reader.ReadInt32();
 			SubNodes = new TpkUnityNode[count];
 			for (int i = 0; i < count; i++)
@@ -33,12 +21,7 @@ namespace AssetRipper.TpkCreation.TypeTrees
 
 		public void Write(BinaryWriter writer)
 		{
-			writer.Write(TypeName);
-			writer.Write(Name);
-			writer.Write(ByteSize);
-			writer.Write(Version);
-			writer.Write(TypeFlags);
-			writer.Write(MetaFlag);
+			writer.Write(NodeData);
 			int count = SubNodes.Length;
 			writer.Write(count);
 			for (int i = 0;i < count; i++)
@@ -47,30 +30,33 @@ namespace AssetRipper.TpkCreation.TypeTrees
 			}
 		}
 
-		public static TpkUnityNode Convert(UnityNode node, TpkStringBuffer buffer)
+		public static TpkUnityNode Convert(UnityNode node, TpkStringBuffer stringBuffer, TpkUnityNodeDataBuffer nodeBuffer)
 		{
+			TpkUnityNodeData nodeData = new TpkUnityNodeData();
+			nodeData.TypeName = stringBuffer.AddString(node.TypeName);
+			nodeData.Name = stringBuffer.AddString(node.Name);
+			nodeData.ByteSize = node.ByteSize;
+			nodeData.Version = node.Version;
+			nodeData.TypeFlags = node.TypeFlags;
+			nodeData.MetaFlag = node.MetaFlag;
 			TpkUnityNode result = new TpkUnityNode();
-			result.TypeName = buffer.AddString(node.TypeName);
-			result.Name = buffer.AddString(node.Name);
-			result.ByteSize = node.ByteSize;
-			result.Version = node.Version;
-			result.TypeFlags = node.TypeFlags;
-			result.MetaFlag = node.MetaFlag;
-			result.SubNodes = node.SubNodes.Select(n => Convert(n, buffer)).ToArray();
+			result.NodeData = nodeBuffer.AddNode(nodeData);
+			result.SubNodes = node.SubNodes.Select(n => Convert(n, stringBuffer, nodeBuffer)).ToArray();
 			return result;
 		}
 
-		public static UnityNode Convert(TpkUnityNode node, TpkStringBuffer buffer, byte level, int index, out int lastIndexUsed)
+		public static UnityNode Convert(TpkUnityNode node, TpkStringBuffer stringBuffer, TpkUnityNodeDataBuffer nodeBuffer, byte level, int index, out int lastIndexUsed)
 		{
+			TpkUnityNodeData nodeData = nodeBuffer[node.NodeData];
 			UnityNode result = new UnityNode();
-			result.TypeName = buffer[node.TypeName];
-			result.Name = buffer[node.Name];
+			result.TypeName = stringBuffer[nodeData.TypeName];
+			result.Name = stringBuffer[nodeData.Name];
 			result.Level = level;
-			result.ByteSize = node.ByteSize;
+			result.ByteSize = nodeData.ByteSize;
 			result.Index = index;
-			result.Version = node.Version;
-			result.TypeFlags = node.TypeFlags;
-			result.MetaFlag = node.MetaFlag;
+			result.Version = nodeData.Version;
+			result.TypeFlags = nodeData.TypeFlags;
+			result.MetaFlag = nodeData.MetaFlag;
 
 			byte levelPlus = unchecked((byte)(level + 1U));
 			lastIndexUsed = index;
@@ -78,7 +64,7 @@ namespace AssetRipper.TpkCreation.TypeTrees
 			result.SubNodes = new List<UnityNode>(subNodeCount);
 			for(int i = 0; i < subNodeCount; i++)
 			{
-				result.SubNodes.Add(Convert(node.SubNodes[i], buffer, levelPlus, index + 1, out lastIndexUsed));
+				result.SubNodes.Add(Convert(node.SubNodes[i], stringBuffer, nodeBuffer, levelPlus, index + 1, out lastIndexUsed));
 				index = lastIndexUsed;
 			}
 
