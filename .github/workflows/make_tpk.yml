@@ -12,7 +12,7 @@ jobs:
     build:
      runs-on: ubuntu-latest
      steps:
-     - name: Checkout TpkCreation Repository
+     - name: Checkout Tpk Repository
        uses: actions/checkout@v3
      - name: Setup .NET
        uses: actions/setup-dotnet@v2
@@ -20,7 +20,7 @@ jobs:
          dotnet-version: 6.0.x
      - name: Build
        run: dotnet build /p:Configuration=Release
-       working-directory: ./TpkCreation.ConsoleApp/
+       working-directory: ./Tpk.ConsoleApp/
      - name: Checkout TypeTreeDumps Repository
        uses: actions/checkout@v3
        with:
@@ -28,26 +28,26 @@ jobs:
         path: TypeTreeDumps
      - name: Make files executable
        shell: bash
-       run: chmod +x ./TpkCreation.ConsoleApp/bin/Release/net6.0/TpkCreation.ConsoleApp
+       run: chmod +x ./Tpk.ConsoleApp/bin/Release/net6.0/Tpk.ConsoleApp
      - name: Make tpk file
        shell: bash
-       run: ./TpkCreation.ConsoleApp/bin/Release/net6.0/TpkCreation.ConsoleApp ./TypeTreeDumps/InfoJson
+       run: ./Tpk.ConsoleApp/bin/Release/net6.0/Tpk.ConsoleApp ./TypeTreeDumps/InfoJson
      - name: Upload uncompressed file
        uses: actions/upload-artifact@v2
        with:
          name: uncompressed_file
-         path: /home/runner/work/TpkCreation/TpkCreation/uncompressed.tpk
+         path: /home/runner/work/Tpk/Tpk/uncompressed.tpk
          if-no-files-found: error
      - name: Upload Lz4 file
        uses: actions/upload-artifact@v2
        with:
          name: lz4_file
-         path: /home/runner/work/TpkCreation/TpkCreation/lz4.tpk
+         path: /home/runner/work/Tpk/Tpk/lz4.tpk
          if-no-files-found: error
      - name: Upload Lzma file
        uses: actions/upload-artifact@v2
        with:
          name: lzma_file
-         path: /home/runner/work/TpkCreation/TpkCreation/lzma.tpk
+         path: /home/runner/work/Tpk/Tpk/lzma.tpk
          if-no-files-found: error
       

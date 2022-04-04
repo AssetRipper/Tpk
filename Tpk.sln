@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B80E65C0-145A-4034-9EC8-E2D03ECAE732}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		License.md = License.md
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{D494F115-A854-4C6F-B859-9D1834AC861B}"
+	ProjectSection(SolutionItems) = preProject
+		Licenses\VersionUtilities.md = Licenses\VersionUtilities.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{33E54A6F-8689-4D4A-AA4F-CB68BDEE8FF4}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\make_tpk.yml = .github\workflows\make_tpk.yml
+		.github\workflows\test.yml = .github\workflows\test.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tpk", "Tpk\Tpk.csproj", "{E209C981-9B4C-4F85-94D1-BE3BE279FFE9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tpk.ConsoleApp", "Tpk.ConsoleApp\Tpk.ConsoleApp.csproj", "{C72B5264-B6E5-4182-A0D1-D0D95D310C26}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tpk.Tests", "Tpk.Tests\Tpk.Tests.csproj", "{35439820-AA58-4808-9CB0-C749A72E6E84}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E209C981-9B4C-4F85-94D1-BE3BE279FFE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E209C981-9B4C-4F85-94D1-BE3BE279FFE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E209C981-9B4C-4F85-94D1-BE3BE279FFE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E209C981-9B4C-4F85-94D1-BE3BE279FFE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C72B5264-B6E5-4182-A0D1-D0D95D310C26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C72B5264-B6E5-4182-A0D1-D0D95D310C26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C72B5264-B6E5-4182-A0D1-D0D95D310C26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C72B5264-B6E5-4182-A0D1-D0D95D310C26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35439820-AA58-4808-9CB0-C749A72E6E84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35439820-AA58-4808-9CB0-C749A72E6E84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35439820-AA58-4808-9CB0-C749A72E6E84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35439820-AA58-4808-9CB0-C749A72E6E84}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D494F115-A854-4C6F-B859-9D1834AC861B} = {B80E65C0-145A-4034-9EC8-E2D03ECAE732}
+		{33E54A6F-8689-4D4A-AA4F-CB68BDEE8FF4} = {B80E65C0-145A-4034-9EC8-E2D03ECAE732}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B4F6071A-E37E-4782-9BDD-92C8A73D4820}
+	EndGlobalSection
+EndGlobal
