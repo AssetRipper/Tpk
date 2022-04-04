@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace AssetRipper.Tpk.TypeTrees
+namespace AssetRipper.Tpk.TypeTrees.Json
 {
 	public sealed class UnityInfo
 	{

@@ -1,4 +1,4 @@
-﻿namespace AssetRipper.Tpk.TypeTrees
+﻿namespace AssetRipper.Tpk.TypeTrees.Json
 {
 	public sealed class UnityString
 	{

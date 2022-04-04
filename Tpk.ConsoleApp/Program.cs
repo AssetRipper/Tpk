@@ -45,12 +45,12 @@ namespace AssetRipper.Tpk.ConsoleApp
 			WriteBlobToFile(blob, "test_brotli.tpk", TpkCompressionType.Lz4);
 			sw.Stop();
 			Console.WriteLine($"Lz4 compressed in {sw.Elapsed.TotalSeconds} seconds!");
-#if DEBUG
+
 			sw.Restart();
 			WriteBlobToFile(blob, "test_brotli.tpk", TpkCompressionType.Brotli);
 			sw.Stop();
 			Console.WriteLine($"Brotli compressed in {sw.Elapsed.TotalSeconds} seconds!");
-#endif
+
 			sw.Restart();
 			WriteBlobToFile(blob, "test_lzma.tpk", TpkCompressionType.Lzma);
 			sw.Stop();
@@ -59,7 +59,7 @@ namespace AssetRipper.Tpk.ConsoleApp
 
 		private static void MakeTpk(string inputDirectory, string uncompressedPath, string lz4Path, string lzmaPath, string brotliPath)
 		{
-			TpkTypeTreeBlob blob = TpkTypeTreeBlob.Create(inputDirectory);
+			TpkTypeTreeBlob blob = TpkTypeTreeBlobCreator.Create(inputDirectory);
 
 			WriteBlobToFile(blob, uncompressedPath, TpkCompressionType.None);
 			Console.WriteLine($"Uncompressed file saved to {Path.GetFullPath(uncompressedPath)}");

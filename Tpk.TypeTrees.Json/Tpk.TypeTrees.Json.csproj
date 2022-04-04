@@ -1,15 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<OutputType>Exe</OutputType>
 		<TargetFramework>net6.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>disable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<RootNamespace>AssetRipper.Tpk.ConsoleApp</RootNamespace>
+		<RootNamespace>AssetRipper.Tpk.TypeTrees.Json</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Tpk.TypeTrees.Json\Tpk.TypeTrees.Json.csproj" />
 	  <ProjectReference Include="..\Tpk\Tpk.csproj" />
 	</ItemGroup>
 
