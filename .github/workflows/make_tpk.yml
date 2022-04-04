@@ -28,11 +28,11 @@ jobs:
         path: TypeTreeDumps
      - name: Make files executable
        shell: bash
-       run: chmod +x ./Tpk.ConsoleApp/bin/Release/net6.0/Tpk.ConsoleApp
+       run: chmod +x ./Tpk.ConsoleApp/bin/Release/net6.0/AssetRipper.Tpk.ConsoleApp
      - name: Make tpk file
        shell: bash
-       run: ./Tpk.ConsoleApp/bin/Release/net6.0/Tpk.ConsoleApp ./TypeTreeDumps/InfoJson
-     - name: Upload uncompressed file
+       run: ./Tpk.ConsoleApp/bin/Release/net6.0/AssetRipper.Tpk.ConsoleApp ./TypeTreeDumps/InfoJson
+     - name: Upload Uncompressed file
        uses: actions/upload-artifact@v2
        with:
          name: uncompressed_file

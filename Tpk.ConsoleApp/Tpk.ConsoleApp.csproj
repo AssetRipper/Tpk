@@ -6,6 +6,7 @@
 		<ImplicitUsings>disable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<RootNamespace>AssetRipper.Tpk.ConsoleApp</RootNamespace>
+		<AssemblyName>AssetRipper.Tpk.ConsoleApp</AssemblyName>
 	</PropertyGroup>
 
 	<ItemGroup>

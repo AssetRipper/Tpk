@@ -5,6 +5,7 @@
 		<ImplicitUsings>disable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<RootNamespace>AssetRipper.Tpk.Tests</RootNamespace>
+		<AssemblyName>AssetRipper.Tpk.Tests</AssemblyName>
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
