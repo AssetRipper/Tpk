@@ -13,10 +13,10 @@ namespace AssetRipper.Tpk.ConsoleApp
 			try
 			{
 				Stopwatch sw = Stopwatch.StartNew();
-				//MakeTpk(args[0], "uncompressed.tpk", "lz4.tpk", "lzma.tpk");
+				MakeTpk(args[0], "uncompressed.tpk", "lz4.tpk", "lzma.tpk", "brotli.tpk");
 				//MakeTpk(InfoJsonPath, "classes.tpk");
-				TpkDataBlob blob = ReadTpk("test_lzma.tpk");
-				WriteTestTpks(blob);
+				//TpkDataBlob blob = ReadTpk("test_lzma.tpk");
+				//WriteTestTpks(blob);
 				sw.Stop();
 				Console.WriteLine($"Done in {sw.Elapsed.TotalSeconds} seconds!");
 			}
@@ -57,7 +57,7 @@ namespace AssetRipper.Tpk.ConsoleApp
 			Console.WriteLine($"Lzma compressed in {sw.Elapsed.TotalSeconds} seconds!");
 		}
 
-		private static void MakeTpk(string inputDirectory, string uncompressedPath, string lz4Path, string lzmaPath)
+		private static void MakeTpk(string inputDirectory, string uncompressedPath, string lz4Path, string lzmaPath, string brotliPath)
 		{
 			TpkTypeTreeBlob blob = TpkTypeTreeBlob.Create(inputDirectory);
 
@@ -69,6 +69,9 @@ namespace AssetRipper.Tpk.ConsoleApp
 
 			WriteBlobToFile(blob, lzmaPath, TpkCompressionType.Lzma);
 			Console.WriteLine($"Lzma file saved to {Path.GetFullPath(lzmaPath)}");
+
+			WriteBlobToFile(blob, brotliPath, TpkCompressionType.Brotli);
+			Console.WriteLine($"Brotli file saved to {Path.GetFullPath(brotliPath)}");
 		}
 
 		private static void WriteBlobToFile(TpkDataBlob blob, string outputPath, TpkCompressionType compressionType)

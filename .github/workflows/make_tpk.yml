@@ -50,4 +50,10 @@ jobs:
          name: lzma_file
          path: /home/runner/work/Tpk/Tpk/lzma.tpk
          if-no-files-found: error
+     - name: Upload Brotli file
+       uses: actions/upload-artifact@v2
+       with:
+         name: brotli_file
+         path: /home/runner/work/Tpk/Tpk/brotli.tpk
+         if-no-files-found: error
       
