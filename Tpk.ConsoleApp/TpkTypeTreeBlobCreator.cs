@@ -76,6 +76,24 @@ namespace AssetRipper.Tpk.ConsoleApp
 				}
 			}
 
+			foreach(TpkClassInformation tpkClassInfo in classDictionary.Values)
+			{
+				VersionClassPair[] pairs = tpkClassInfo.Classes.ToArray();
+				TpkUnityClass? previousClass = pairs[0].Value;
+				for(int i = 1; i < pairs.Length; i++)
+				{
+					VersionClassPair pair = pairs[i];
+					if(pair.Value == previousClass)
+					{
+						tpkClassInfo.Classes.Remove(pair);
+					}
+					else
+					{
+						previousClass = pair.Value;
+					}
+				}
+			}
+
 			blob.ClassInformation.AddRange(classDictionary.Values);
 
 			blob.CommonString.SetIndices(blob.StringBuffer, commonStrings);

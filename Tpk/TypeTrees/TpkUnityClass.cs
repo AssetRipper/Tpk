@@ -1,6 +1,6 @@
 ﻿namespace AssetRipper.Tpk.TypeTrees
 {
-	public sealed class TpkUnityClass
+	public sealed class TpkUnityClass : IEquatable<TpkUnityClass?>
 	{
 		/// <summary>
 		/// string
@@ -69,6 +69,39 @@
 			{
 				writer.Write(ReleaseRootNode);
 			}
+		}
+
+		public override bool Equals(object? obj)
+		{
+			return Equals(obj as TpkUnityClass);
+		}
+
+		public bool Equals(TpkUnityClass? other)
+		{
+			return other != null &&
+				   Name == other.Name &&
+				   Namespace == other.Namespace &&
+				   FullName == other.FullName &&
+				   Module == other.Module &&
+				   Base == other.Base &&
+				   Flags == other.Flags &&
+				   EditorRootNode == other.EditorRootNode &&
+				   ReleaseRootNode == other.ReleaseRootNode;
+		}
+
+		public override int GetHashCode()
+		{
+			return HashCode.Combine(Name, Namespace, FullName, Module, Base, Flags, EditorRootNode, ReleaseRootNode);
+		}
+
+		public static bool operator ==(TpkUnityClass? left, TpkUnityClass? right)
+		{
+			return EqualityComparer<TpkUnityClass>.Default.Equals(left, right);
+		}
+
+		public static bool operator !=(TpkUnityClass? left, TpkUnityClass? right)
+		{
+			return !(left == right);
 		}
 	}
 }
