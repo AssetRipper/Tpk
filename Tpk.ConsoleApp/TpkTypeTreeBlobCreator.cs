@@ -15,6 +15,7 @@ namespace AssetRipper.Tpk.ConsoleApp
 {
 	internal static class TpkTypeTreeBlobCreator
 	{
+
 		public static TpkTypeTreeBlob Create(string directoryPath)
 		{
 			return Create(GetOrderedFilePaths(directoryPath));
@@ -27,7 +28,7 @@ namespace AssetRipper.Tpk.ConsoleApp
 
 			byte latestCommonStringCount = 0;
 			List<string> commonStrings = new List<string>();
-			Dictionary<int, TpkUnityClass> latestUnityClassesDumped = new Dictionary<int, TpkUnityClass>();
+			Dictionary<int, string> latestUnityClassesDumped = new Dictionary<int, string>();
 			Dictionary<int, TpkClassInformation> classDictionary = new Dictionary<int, TpkClassInformation>();
 
 			foreach (string path in pathsOrderedByUnityVersion)
@@ -60,15 +61,16 @@ namespace AssetRipper.Tpk.ConsoleApp
 
 				foreach (UnityClass unityClass in info.Classes)
 				{
-					TpkUnityClass tpkUnityClass = ClassConversion.Convert(unityClass, blob.StringBuffer, blob.NodeBuffer);
-					if (!latestUnityClassesDumped.TryGetValue(unityClass.TypeID, out TpkUnityClass? cachedClass) || cachedClass != tpkUnityClass)
+					string dump = Dump(unityClass);
+					if (!latestUnityClassesDumped.TryGetValue(unityClass.TypeID, out string? cachedDump) || cachedDump != dump)
 					{
-						latestUnityClassesDumped[unityClass.TypeID] = tpkUnityClass;
+						latestUnityClassesDumped[unityClass.TypeID] = dump;
 						if (!classDictionary.TryGetValue(unityClass.TypeID, out TpkClassInformation? tpkClassInformation))
 						{
 							tpkClassInformation = new TpkClassInformation(unityClass.TypeID);
 							classDictionary.Add(unityClass.TypeID, tpkClassInformation);
 						}
+						TpkUnityClass tpkUnityClass = ClassConversion.Convert(unityClass, blob.StringBuffer, blob.NodeBuffer);
 						tpkClassInformation.Classes.Add(new VersionClassPair(version, tpkUnityClass));
 					}
 				}
@@ -86,6 +88,8 @@ namespace AssetRipper.Tpk.ConsoleApp
 
 			return blob;
 		}
+
+		private static string Dump(UnityClass unityClass) => JsonSerializer.Serialize(unityClass);
 
 		/// <summary>
 		/// Get the paths to the jsons in order
