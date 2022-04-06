@@ -1,6 +1,6 @@
 ﻿namespace AssetRipper.Tpk.TypeTrees
 {
-	public sealed class TpkUnityNode : IEquatable<TpkUnityNode>
+	public sealed class TpkUnityNode : IEquatable<TpkUnityNode?>
 	{
 		public ushort TypeName { get; set; }
 		public ushort Name { get; set; }
@@ -45,7 +45,19 @@
 
 		public override bool Equals(object? obj)
 		{
-			return obj is not null && obj is TpkUnityNode data && Equals(data);
+			return Equals(obj as TpkUnityNode);
+		}
+
+		public bool Equals(TpkUnityNode? other)
+		{
+			return other != null &&
+				   TypeName == other.TypeName &&
+				   Name == other.Name &&
+				   ByteSize == other.ByteSize &&
+				   Version == other.Version &&
+				   TypeFlags == other.TypeFlags &&
+				   MetaFlag == other.MetaFlag &&
+				   EqualityComparer<ushort[]>.Default.Equals(SubNodes, other.SubNodes);
 		}
 
 		public override int GetHashCode()
@@ -53,30 +65,14 @@
 			return HashCode.Combine(TypeName, Name, ByteSize, Version, TypeFlags, MetaFlag, SubNodes);
 		}
 
-		public bool Equals(TpkUnityNode? other)
+		public static bool operator ==(TpkUnityNode? left, TpkUnityNode? right)
 		{
-			return other is not null &&
-				TypeName == other.TypeName &&
-				Name == other.Name &&
-				ByteSize == other.ByteSize &&
-				Version == other.Version &&
-				TypeFlags == other.TypeFlags &&
-				MetaFlag == other.MetaFlag &&
-				ArrayEqual(SubNodes, other.SubNodes);
+			return EqualityComparer<TpkUnityNode>.Default.Equals(left, right);
 		}
 
-		private static bool ArrayEqual(ushort[] array1, ushort[] array2)
+		public static bool operator !=(TpkUnityNode? left, TpkUnityNode? right)
 		{
-			if (array1.Length != array2.Length)
-				return false;
-			for (int i = 0; i < array1.Length; i++)
-			{
-				if (array1[i] != array2[i])
-				{
-					return false;
-				}
-			}
-			return true;
+			return !(left == right);
 		}
 	}
 }
