@@ -29,7 +29,19 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 		public static UnityInfo ReadFromJsonFile(string jsonPath)
 		{
 			string text = File.ReadAllText(jsonPath);
-			return JsonSerializer.Deserialize<UnityInfo>(text) ?? throw new Exception($"Failed to deserialize {jsonPath}");
+			return FromJsonString(text) ?? throw new Exception($"Failed to deserialize {jsonPath}");
+		}
+
+		public string ToJsonString(bool indented = false)
+		{
+			return indented 
+				? JsonSerializer.Serialize(this, UnityInfoSerializerContextIndented.Default.UnityInfo)
+				: JsonSerializer.Serialize(this, UnityInfoSerializerContextNotIndented.Default.UnityInfo);
+		}
+
+		public static UnityInfo? FromJsonString(string jsonString)
+		{
+			return JsonSerializer.Deserialize(jsonString, UnityInfoSerializerContextIndented.Default.UnityInfo);
 		}
 	}
 }

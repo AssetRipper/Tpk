@@ -1,7 +1,6 @@
 ﻿using AssetRipper.Tpk.TypeTrees.Json;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using VersionClassPair = System.Collections.Generic.KeyValuePair<
 	AssetRipper.VersionUtilities.UnityVersion,
 	AssetRipper.Tpk.TypeTrees.TpkUnityClass?>;
@@ -61,7 +60,7 @@ namespace AssetRipper.Tpk.ConsoleApp
 
 				foreach (UnityClass unityClass in info.Classes)
 				{
-					string dump = Dump(unityClass);
+					string dump = unityClass.ToJsonString();
 					if (!latestUnityClassesDumped.TryGetValue(unityClass.TypeID, out string? cachedDump) || cachedDump != dump)
 					{
 						latestUnityClassesDumped[unityClass.TypeID] = dump;
@@ -106,8 +105,6 @@ namespace AssetRipper.Tpk.ConsoleApp
 
 			return blob;
 		}
-
-		private static string Dump(UnityClass unityClass) => JsonSerializer.Serialize(unityClass);
 
 		/// <summary>
 		/// Get the paths to the jsons in order

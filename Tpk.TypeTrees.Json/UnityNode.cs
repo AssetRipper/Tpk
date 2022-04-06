@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AssetRipper.Tpk.TypeTrees.Json
 {
@@ -66,6 +67,18 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 		private static string CloneString(string? @string)
 		{
 			return @string == null ? "" : new string(@string);
+		}
+
+		public string ToJsonString(bool indented = false)
+		{
+			return indented
+				? JsonSerializer.Serialize(this, UnityInfoSerializerContextIndented.Default.UnityNode)
+				: JsonSerializer.Serialize(this, UnityInfoSerializerContextNotIndented.Default.UnityNode);
+		}
+
+		public static UnityNode? FromJsonString(string jsonString)
+		{
+			return JsonSerializer.Deserialize(jsonString, UnityInfoSerializerContextIndented.Default.UnityNode);
 		}
 	}
 }
