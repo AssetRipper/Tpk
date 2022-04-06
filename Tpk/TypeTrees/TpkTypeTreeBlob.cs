@@ -6,7 +6,7 @@ namespace AssetRipper.Tpk.TypeTrees
 	{
 		public DateTime CreationTime { get; set; }
 		public List<UnityVersion> Versions { get; } = new();
-		public List<TpkClassInformation> ClassInfo { get; } = new();
+		public List<TpkClassInformation> ClassInformation { get; } = new();
 		public TpkCommonString CommonString { get; } = new();
 		public TpkUnityNodeBuffer NodeBuffer { get; } = new();
 		public TpkStringBuffer StringBuffer { get; } = new();
@@ -27,13 +27,13 @@ namespace AssetRipper.Tpk.TypeTrees
 			}
 
 			int classCount = reader.ReadInt32();
-			ClassInfo.Clear();
-			ClassInfo.Capacity = classCount;
+			ClassInformation.Clear();
+			ClassInformation.Capacity = classCount;
 			for(int i = 0; i < classCount; i++)
 			{
-				TpkClassInformation classInformation = new();
-				classInformation.Read(reader);
-				ClassInfo.Add(classInformation);
+				TpkClassInformation classInfo = new();
+				classInfo.Read(reader);
+				ClassInformation.Add(classInfo);
 			}
 
 			CommonString.Read(reader);
@@ -54,11 +54,11 @@ namespace AssetRipper.Tpk.TypeTrees
 				writer.Write(Versions[i]);
 			}
 
-			int classCount = ClassInfo.Count;
+			int classCount = ClassInformation.Count;
 			writer.Write(classCount);
 			for(int i = 0; i < classCount; i++)
 			{
-				ClassInfo[i].Write(writer);
+				ClassInformation[i].Write(writer);
 			}
 
 			CommonString.Write(writer);

@@ -29,17 +29,7 @@
 		/// </summary>
 		public ushort Base { get; set; }
 
-		/// <summary>
-		/// strings
-		/// </summary>
-		public ushort[] Derived { get; set; } = Array.Empty<ushort>();
-
-		/// <summary>
-		/// The count of all classes that descend from this class<br/>
-		/// It includes this class, so the count is always positive<br/>
-		/// However, some older unity versions don't generate this, so sometimes we have to set it in SharedState initialization
-		/// </summary>
-		public uint DescendantCount { get; set; }
+		//Derived and Descendent count are excluded from this format
 
 		//Size and TypeIndex are excluded from this format
 
@@ -58,13 +48,6 @@
 			FullName = reader.ReadUInt16();
 			Module = reader.ReadUInt16();
 			Base = reader.ReadUInt16();
-			int derivedCount = reader.ReadInt32();
-			Derived = new ushort[derivedCount];
-			for (int i = 0; i < derivedCount; i++)
-			{
-				Derived[i] = reader.ReadUInt16();
-			}
-			DescendantCount = reader.ReadUInt32();
 			Flags = (TpkUnityClassFlags)reader.ReadByte();
 			EditorRootNode = Flags.HasEditorRootNode() ? reader.ReadUInt16() : ushort.MaxValue;
 			ReleaseRootNode = Flags.HasReleaseRootNode() ? reader.ReadUInt16() : ushort.MaxValue;
@@ -77,13 +60,6 @@
 			writer.Write(FullName);
 			writer.Write(Module);
 			writer.Write(Base);
-			int derivedCount = Derived.Length;
-			writer.Write(derivedCount);
-			for (int i = 0;i < derivedCount; i++)
-			{
-				writer.Write(Derived[i]);
-			}
-			writer.Write(DescendantCount);
 			writer.Write((byte)Flags);
 			if (Flags.HasEditorRootNode())
 			{

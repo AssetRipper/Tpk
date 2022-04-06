@@ -12,13 +12,6 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 			result.FullName = stringBuffer.AddString(source.FullName);
 			result.Module = stringBuffer.AddString(source.Module);
 			result.Base = stringBuffer.AddString(source.Base);
-			int derivedCount = source.Derived.Count;
-			result.Derived = new ushort[derivedCount];
-			for (int i = 0; i < derivedCount; i++)
-			{
-				result.Derived[i] = stringBuffer.AddString(source.Derived[i]);
-			}
-			result.DescendantCount = source.DescendantCount;
 			result.Flags = GetFlags(source);
 			if (source.EditorRootNode != null)
 			{
@@ -40,12 +33,6 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 			result.Module = stringBuffer[source.Module];
 			//TypeID gets set elsewhere
 			result.Base = stringBuffer[source.Base];
-			result.Derived = new List<string>(source.Derived.Length);
-			for (int i = 0; i < source.Derived.Length; i++)
-			{
-				result.Derived.Add(stringBuffer[source.Derived[i]]);
-			}
-			result.DescendantCount = source.DescendantCount;
 			result.Size = -1;
 			//Type index is ignored
 			result.IsAbstract = source.Flags.IsAbstract();

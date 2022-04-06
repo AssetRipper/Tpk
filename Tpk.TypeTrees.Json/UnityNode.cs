@@ -48,7 +48,7 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 		/// <returns>The new node</returns>
 		public UnityNode DeepClone()
 		{
-			UnityNode? cloned = new UnityNode();
+			UnityNode cloned = new UnityNode();
 			cloned.TypeName = CloneString(TypeName);
 			cloned.originalTypeName = CloneString(originalTypeName);
 			cloned.Name = CloneString(Name);

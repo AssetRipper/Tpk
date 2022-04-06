@@ -76,7 +76,7 @@ namespace AssetRipper.Tpk.ConsoleApp
 				}
 			}
 
-			blob.ClassInfo.AddRange(classDictionary.Values);
+			blob.ClassInformation.AddRange(classDictionary.Values);
 
 			blob.CommonString.SetIndices(blob.StringBuffer, commonStrings);
 			//About 20k
