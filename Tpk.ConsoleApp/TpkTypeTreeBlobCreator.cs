@@ -27,7 +27,7 @@ namespace AssetRipper.Tpk.ConsoleApp
 
 			byte latestCommonStringCount = 0;
 			List<string> commonStrings = new List<string>();
-			Dictionary<int, TpkUnityClass> latestUnityClassesDumped = new Dictionary<int, TpkUnityClass>();
+			Dictionary<int, UnityClass> latestUnityClassesDumped = new Dictionary<int, UnityClass>();
 			Dictionary<int, TpkClassInformation> classDictionary = new Dictionary<int, TpkClassInformation>();
 
 			foreach (string path in pathsOrderedByUnityVersion)
@@ -60,15 +60,15 @@ namespace AssetRipper.Tpk.ConsoleApp
 
 				foreach (UnityClass unityClass in info.Classes)
 				{
-					TpkUnityClass tpkUnityClass = ClassConversion.Convert(unityClass, blob.StringBuffer, blob.NodeBuffer);
-					if (!latestUnityClassesDumped.TryGetValue(unityClass.TypeID, out TpkUnityClass? cachedClass) || cachedClass != tpkUnityClass)
+					if (!latestUnityClassesDumped.TryGetValue(unityClass.TypeID, out UnityClass? cachedClass) || !AreEqual(cachedClass, unityClass))
 					{
-						latestUnityClassesDumped[unityClass.TypeID] = tpkUnityClass;
+						latestUnityClassesDumped[unityClass.TypeID] = unityClass;
 						if (!classDictionary.TryGetValue(unityClass.TypeID, out TpkClassInformation? tpkClassInformation))
 						{
 							tpkClassInformation = new TpkClassInformation(unityClass.TypeID);
 							classDictionary.Add(unityClass.TypeID, tpkClassInformation);
 						}
+						TpkUnityClass tpkUnityClass = ClassConversion.Convert(unityClass, blob.StringBuffer, blob.NodeBuffer);
 						tpkClassInformation.Classes.Add(new VersionClassPair(version, tpkUnityClass));
 					}
 				}
@@ -114,6 +114,48 @@ namespace AssetRipper.Tpk.ConsoleApp
 			List<UnityVersion> orderedVersions = files.Select(pair => pair.Key).ToList();
 			orderedVersions.Sort();
 			return orderedVersions.Select(version => files[version]);
+		}
+
+		private static bool AreEqual(UnityClass left, UnityClass right)
+		{
+			return left.Name == right.Name &&
+				   left.Namespace == right.Namespace &&
+				   left.FullName == right.FullName &&
+				   left.Module == right.Module &&
+				   left.TypeID == right.TypeID &&
+				   left.Base == right.Base &&
+				   left.IsAbstract == right.IsAbstract &&
+				   left.IsSealed == right.IsSealed &&
+				   left.IsEditorOnly == right.IsEditorOnly &&
+				   left.IsReleaseOnly == right.IsReleaseOnly &&
+				   left.IsStripped == right.IsStripped &&
+				   AreEqual(left.EditorRootNode, right.EditorRootNode) &&
+				   AreEqual(left.ReleaseRootNode, right.ReleaseRootNode);
+		}
+
+		private static bool AreEqual(UnityNode? left, UnityNode? right)
+		{
+			if (left is null || right is null)
+				return left is null && right is null;
+
+			return left.TypeName == right.TypeName &&
+				   left.Name == right.Name &&
+				   left.Version == right.Version &&
+				   left.TypeFlags == right.TypeFlags &&
+				   left.MetaFlag == right.MetaFlag &&
+				   AreEqual(left.SubNodes, right.SubNodes);
+		}
+
+		private static bool AreEqual(List<UnityNode> left, List<UnityNode> right)
+		{
+			if(left.Count != right.Count)
+				return false;
+			for(int i = 0; i < left.Count; i++)
+			{
+				if(!AreEqual(left[i], right[i]))
+					return false;
+			}
+			return true;
 		}
 
 		private const string JsonExtension = ".json";
