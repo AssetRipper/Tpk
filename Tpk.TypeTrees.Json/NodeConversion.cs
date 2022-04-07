@@ -7,7 +7,7 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 		public static ushort Convert(UnityNode node, TpkStringBuffer stringBuffer, TpkUnityNodeBuffer nodeBuffer)
 		{
 			TpkUnityNode nodeData = new TpkUnityNode();
-			nodeData.TypeName = stringBuffer.AddString(node.TypeName);
+			nodeData.TypeName = stringBuffer.AddString(TypeNameFixer.GetFixedName(node.TypeName));
 			nodeData.Name = stringBuffer.AddString(node.Name);
 			nodeData.ByteSize = node.ByteSize;
 			nodeData.Version = node.Version;
