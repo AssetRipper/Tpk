@@ -96,15 +96,17 @@ namespace AssetRipper.Tpk.ConsoleApp
 			blob.ClassInformation.AddRange(classDictionary.Values);
 
 			blob.CommonString.SetIndices(blob.StringBuffer, commonStrings);
-			//About 20k
-			Console.WriteLine($"Node buffer has {blob.NodeBuffer.Count} entries");
-			//About 7k
-			Console.WriteLine($"String buffer has {blob.StringBuffer.Count} entries");
+			//About 19k / 65k
+			Console.WriteLine($"Node buffer has {blob.NodeBuffer.Count} entries, which is {GetUShortPercent(blob.NodeBuffer.Count)}% of its maximum {ushort.MaxValue} entries");
+			//About 7k / 65k
+			Console.WriteLine($"String buffer has {blob.StringBuffer.Count} entries, which is {GetUShortPercent(blob.StringBuffer.Count)}% of its maximum {ushort.MaxValue} entries");
 
 			blob.CreationTime = DateTime.Now.ToUniversalTime();
 
 			return blob;
 		}
+
+		private static int GetUShortPercent(int value) => value * 100 / ushort.MaxValue;
 
 		/// <summary>
 		/// Get the paths to the jsons in order
