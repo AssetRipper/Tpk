@@ -73,6 +73,16 @@ namespace AssetRipper.Tpk.ConsoleApp
 						tpkClassInformation.Classes.Add(new VersionClassPair(version, tpkUnityClass));
 					}
 				}
+
+				List<int> typeIds = info.Classes.Select(c => c.TypeID).ToList();
+				foreach (int unusedId in classDictionary.Keys.Where(id => !typeIds.Contains(id)))
+				{
+					if (!string.IsNullOrEmpty(latestUnityClassesDumped[unusedId]))
+					{
+						latestUnityClassesDumped[unusedId] = "";
+						classDictionary[unusedId].Classes.Add(new VersionClassPair(version, null));
+					}
+				}
 			}
 
 			foreach(TpkClassInformation tpkClassInfo in classDictionary.Values)
