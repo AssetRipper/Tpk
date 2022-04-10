@@ -7,20 +7,7 @@
 		/// </summary>
 		public ushort Name { get; set; }
 
-		/// <summary>
-		/// string
-		/// </summary>
-		public ushort Namespace { get; set; }
-
-		/// <summary>
-		/// string
-		/// </summary>
-		public ushort FullName { get; set; }
-
-		/// <summary>
-		/// string
-		/// </summary>
-		public ushort Module { get; set; }
+		//Namespace, FullName, and Module are excluded from this format
 
 		//TypeID excluded here because it's included elsewhere
 
@@ -44,9 +31,6 @@
 		public void Read(BinaryReader reader)
 		{
 			Name = reader.ReadUInt16();
-			Namespace = reader.ReadUInt16();
-			FullName = reader.ReadUInt16();
-			Module = reader.ReadUInt16();
 			Base = reader.ReadUInt16();
 			Flags = (TpkUnityClassFlags)reader.ReadByte();
 			EditorRootNode = Flags.HasEditorRootNode() ? reader.ReadUInt16() : ushort.MaxValue;
@@ -56,9 +40,6 @@
 		public void Write(BinaryWriter writer)
 		{
 			writer.Write(Name);
-			writer.Write(Namespace);
-			writer.Write(FullName);
-			writer.Write(Module);
 			writer.Write(Base);
 			writer.Write((byte)Flags);
 			if (Flags.HasEditorRootNode())
@@ -80,9 +61,6 @@
 		{
 			return other != null &&
 				   Name == other.Name &&
-				   Namespace == other.Namespace &&
-				   FullName == other.FullName &&
-				   Module == other.Module &&
 				   Base == other.Base &&
 				   Flags == other.Flags &&
 				   EditorRootNode == other.EditorRootNode &&
@@ -91,7 +69,7 @@
 
 		public override int GetHashCode()
 		{
-			return HashCode.Combine(Name, Namespace, FullName, Module, Base, Flags, EditorRootNode, ReleaseRootNode);
+			return HashCode.Combine(Name, Base, Flags, EditorRootNode, ReleaseRootNode);
 		}
 
 		public static bool operator ==(TpkUnityClass? left, TpkUnityClass? right)

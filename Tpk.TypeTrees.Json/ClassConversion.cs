@@ -8,9 +8,6 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 		{
 			TpkUnityClass result = new TpkUnityClass();
 			result.Name = stringBuffer.AddString(source.Name);
-			result.Namespace = stringBuffer.AddString(source.Namespace);
-			result.FullName = stringBuffer.AddString(source.FullName);
-			result.Module = stringBuffer.AddString(source.Module);
 			result.Base = stringBuffer.AddString(source.Base);
 			result.Flags = GetFlags(source);
 			if (source.EditorRootNode != null)
@@ -28,9 +25,9 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 		{
 			UnityClass result = new UnityClass();
 			result.Name = stringBuffer[source.Name];
-			result.Namespace = stringBuffer[source.Namespace];
-			result.FullName = stringBuffer[source.FullName];
-			result.Module = stringBuffer[source.Module];
+			result.Namespace = "";
+			result.FullName = result.Name;
+			result.Module = "";
 			//TypeID gets set elsewhere
 			result.Base = stringBuffer[source.Base];
 			result.Size = -1;
