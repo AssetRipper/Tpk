@@ -17,7 +17,7 @@ namespace AssetRipper.Tpk.Tests
 
 		private static TpkFile CreateTpkFile()
 		{
-			return new TpkFile(new TpkCollectionBlob(), TpkCompressionType.None);
+			return TpkFile.FromBlob(new TpkCollectionBlob(), TpkCompressionType.None);
 		}
 	}
 }

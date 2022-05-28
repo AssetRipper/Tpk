@@ -14,22 +14,39 @@ namespace AssetRipper.Tpk
 		public int DecompressedSize { get; private set; }
 		public byte[] CompressedBytes { get; private set; } = Array.Empty<byte>();
 
-		public TpkFile(BinaryReader reader)
+		private TpkFile()
 		{
-			Read(reader);
 		}
 
-		public TpkFile(byte[] uncompressedData, TpkCompressionType compressionType)
+		public static TpkFile FromFile(string path)
 		{
-			StoreData(uncompressedData, compressionType);
+			using FileStream stream = File.OpenRead(path);
+			return FromStream(stream);
 		}
 
-		public TpkFile(TpkDataBlob blob, TpkCompressionType compressionType)
+		public static TpkFile FromStream(Stream stream)
 		{
-			StoreDataBlob(blob, compressionType);
+			TpkFile file = new TpkFile();
+			using BinaryReader reader = new BinaryReader(stream);
+			file.Read(reader);
+			return file;
 		}
 
-		public void Read(BinaryReader reader)
+		public static TpkFile FromData(byte[] uncompressedData, TpkCompressionType compressionType)
+		{
+			TpkFile file = new TpkFile();
+			file.StoreData(uncompressedData, compressionType);
+			return file;
+		}
+
+		public static TpkFile FromBlob(TpkDataBlob blob, TpkCompressionType compressionType)
+		{
+			TpkFile file = new TpkFile();
+			file.StoreDataBlob(blob, compressionType);
+			return file;
+		}
+
+		private void Read(BinaryReader reader)
 		{
 			uint magic = reader.ReadUInt32();
 			if (magic != TpkMagicBytes)
@@ -56,7 +73,7 @@ namespace AssetRipper.Tpk
 			}
 		}
 
-		public void Write(BinaryWriter writer)
+		private void Write(BinaryWriter writer)
 		{
 			writer.Write(TpkMagicBytes);
 			writer.Write(TpkVersionNumber);
@@ -92,7 +109,7 @@ namespace AssetRipper.Tpk
 			//return DataType.ToBlob(data);
 		}
 
-		public void StoreDataBlob(TpkDataBlob blob, TpkCompressionType compressionType)
+		private void StoreDataBlob(TpkDataBlob blob, TpkCompressionType compressionType)
 		{
 			using MemoryStream memoryStream = new MemoryStream();
 			using BinaryWriter writer = new BinaryWriter(memoryStream);

@@ -30,9 +30,7 @@ namespace AssetRipper.Tpk.ConsoleApp
 		private static TpkDataBlob ReadTpk(string path)
 		{
 			Stopwatch sw = Stopwatch.StartNew();
-			using FileStream stream = File.OpenRead(path);
-			using BinaryReader reader = new BinaryReader(stream);
-			TpkFile file = new TpkFile(reader);
+			TpkFile file = TpkFile.FromFile(path);
 			TpkDataBlob blob = file.GetDataBlob();
 			sw.Stop();
 			Console.WriteLine($"Read blob in {sw.Elapsed.TotalSeconds} seconds!");
@@ -76,7 +74,7 @@ namespace AssetRipper.Tpk.ConsoleApp
 
 		private static void WriteBlobToFile(TpkDataBlob blob, string outputPath, TpkCompressionType compressionType)
 		{
-			TpkFile file = new TpkFile(blob, compressionType);
+			TpkFile file = TpkFile.FromBlob(blob, compressionType);
 			file.WriteToFile(outputPath);
 		}
 
@@ -86,15 +84,13 @@ namespace AssetRipper.Tpk.ConsoleApp
 			string fileNameNoExtension = Path.GetFileNameWithoutExtension(path);
 			if (extension == ".tpk")
 			{
-				using FileStream stream = File.OpenRead(path);
-				using BinaryReader reader = new BinaryReader(stream);
-				TpkFile file = new TpkFile(reader);
+				TpkFile file = TpkFile.FromFile(path);
 				File.WriteAllBytes($"{fileNameNoExtension}.json", file.GetDecompressedData());
 			}
 			else if (extension == ".json")
 			{
 				byte[] fileData = File.ReadAllBytes(path);
-				TpkFile file = new TpkFile(fileData, TpkCompressionType.Lz4);
+				TpkFile file = TpkFile.FromData(fileData, TpkCompressionType.Lz4);
 				file.WriteToFile($"{fileNameNoExtension}.tpk");
 			}
 			else
