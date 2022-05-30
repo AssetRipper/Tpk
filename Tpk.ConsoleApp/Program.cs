@@ -13,7 +13,7 @@ namespace AssetRipper.Tpk.ConsoleApp
 			try
 			{
 				Stopwatch sw = Stopwatch.StartNew();
-				MakeTpk(args[0], "uncompressed.tpk", "lz4.tpk", "lzma.tpk", "brotli.tpk");
+				MakeTpk(args[0], "uncompressed.tpk", "lz4.tpk", "lzma.tpk", "brotli.tpk", false);
 				//MakeTpk(InfoJsonPath, "classes.tpk");
 				//TpkDataBlob blob = ReadTpk("test_lzma.tpk");
 				//WriteTestTpks(blob);
@@ -55,9 +55,11 @@ namespace AssetRipper.Tpk.ConsoleApp
 			Console.WriteLine($"Lzma compressed in {sw.Elapsed.TotalSeconds} seconds!");
 		}
 
-		private static void MakeTpk(string inputDirectory, string uncompressedPath, string lz4Path, string lzmaPath, string brotliPath)
+		private static void MakeTpk(string inputDirectory, string uncompressedPath, string lz4Path, string lzmaPath, string brotliPath, bool isZipFile = false)
 		{
-			TpkTypeTreeBlob blob = TpkTypeTreeBlobCreator.Create(inputDirectory);
+			TpkTypeTreeBlob blob = isZipFile 
+				? TpkTypeTreeBlobCreator.CreateFromZipFile(inputDirectory)
+				: TpkTypeTreeBlobCreator.CreateFromDirectory(inputDirectory);
 
 			WriteBlobToFile(blob, uncompressedPath, TpkCompressionType.None);
 			Console.WriteLine($"Uncompressed file saved to {Path.GetFullPath(uncompressedPath)}");

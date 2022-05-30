@@ -10,6 +10,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="SharpZipLib" Version="1.3.3" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <ProjectReference Include="..\Tpk.TypeTrees.Json\Tpk.TypeTrees.Json.csproj" />
 	  <ProjectReference Include="..\Tpk\Tpk.csproj" />
 	</ItemGroup>

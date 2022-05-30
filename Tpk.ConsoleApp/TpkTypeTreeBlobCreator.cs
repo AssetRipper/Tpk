@@ -14,9 +14,14 @@ namespace AssetRipper.Tpk.ConsoleApp
 {
 	internal static class TpkTypeTreeBlobCreator
 	{
-		public static TpkTypeTreeBlob Create(string directoryPath)
+		public static TpkTypeTreeBlob CreateFromDirectory(string directoryPath)
 		{
 			return Create(GetOrderedFilePaths(directoryPath));
+		}
+
+		public static TpkTypeTreeBlob CreateFromZipFile(string zipFilePath)
+		{
+			return Create(ZipFileReader.ReadUnityInfoFromZipFile(zipFilePath));
 		}
 
 		private static TpkTypeTreeBlob Create(IEnumerable<string> pathsOrderedByUnityVersion)

@@ -43,5 +43,10 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 		{
 			return JsonSerializer.Deserialize(jsonString, UnityInfoSerializerContextIndented.Default.UnityInfo);
 		}
+
+		public static UnityInfo? FromStream(Stream utf8JsonStream)
+		{
+			return JsonSerializer.Deserialize(utf8JsonStream, UnityInfoSerializerContextIndented.Default.UnityInfo);
+		}
 	}
 }
