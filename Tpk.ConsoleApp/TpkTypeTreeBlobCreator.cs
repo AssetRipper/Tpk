@@ -14,13 +14,17 @@ namespace AssetRipper.Tpk.ConsoleApp
 {
 	internal static class TpkTypeTreeBlobCreator
 	{
-
 		public static TpkTypeTreeBlob Create(string directoryPath)
 		{
 			return Create(GetOrderedFilePaths(directoryPath));
 		}
 
 		private static TpkTypeTreeBlob Create(IEnumerable<string> pathsOrderedByUnityVersion)
+		{
+			return Create(pathsOrderedByUnityVersion.Select(path => UnityInfo.ReadFromJsonFile(path)));
+		}
+
+		private static TpkTypeTreeBlob Create(IEnumerable<UnityInfo> infosOrderedByUnityVersion)
 		{
 			TpkTypeTreeBlob blob = new TpkTypeTreeBlob();
 			blob.CommonString.VersionInformation.Add(new VersionBytePair(UnityVersion.MinVersion, 0));
@@ -30,10 +34,9 @@ namespace AssetRipper.Tpk.ConsoleApp
 			Dictionary<int, string> latestUnityClassesDumped = new Dictionary<int, string>();
 			Dictionary<int, TpkClassInformation> classDictionary = new Dictionary<int, TpkClassInformation>();
 
-			foreach (string path in pathsOrderedByUnityVersion)
+			foreach (UnityInfo info in infosOrderedByUnityVersion)
 			{
-				Console.WriteLine(path);
-				UnityInfo info = UnityInfo.ReadFromJsonFile(path);
+				Console.WriteLine(info.Version);
 				UnityVersion version = UnityVersion.Parse(info.Version);
 				blob.Versions.Add(version);
 
