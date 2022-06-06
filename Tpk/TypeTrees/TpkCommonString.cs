@@ -2,6 +2,9 @@
 
 namespace AssetRipper.Tpk.TypeTrees
 {
+	/// <summary>
+	/// Handles storage of the common type tree strings and their offsets, ie AABB
+	/// </summary>
 	public sealed class TpkCommonString
 	{
 		/// <summary>

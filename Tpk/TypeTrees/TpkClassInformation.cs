@@ -4,9 +4,20 @@
 
 namespace AssetRipper.Tpk.TypeTrees
 {
+	/// <summary>
+	/// Tracks changes in a single class id
+	/// </summary>
 	public class TpkClassInformation
 	{
+		/// <summary>
+		/// The class id number for this class set
+		/// </summary>
 		public int ID { get; private set; }
+		/// <summary>
+		/// Minimum version : Class<br/>
+		/// These sequential versions form ranges. The class at index n is valid for version n to version n+1 exclusive.<br/>
+		/// If the class is null, it is not present in that range.
+		/// </summary>
 		public List<VersionClassPair> Classes { get; } = new();
 
 		public TpkClassInformation() { }
