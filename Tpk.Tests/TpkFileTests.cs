@@ -9,10 +9,10 @@ namespace AssetRipper.Tpk.Tests
 		{
 			TpkFile file = CreateTpkFile();
 			byte[] data = file.WriteToMemory();
-			Assert.AreEqual((byte)'C', data[0]);
-			Assert.AreEqual((byte)'L', data[1]);
-			Assert.AreEqual((byte)'P', data[2]);
-			Assert.AreEqual((byte)'K', data[3]);
+			Assert.AreEqual((byte)'T', data[0]);
+			Assert.AreEqual((byte)'P', data[1]);
+			Assert.AreEqual((byte)'K', data[2]);
+			Assert.AreEqual((byte)'*', data[3]);
 		}
 
 		private static TpkFile CreateTpkFile()
