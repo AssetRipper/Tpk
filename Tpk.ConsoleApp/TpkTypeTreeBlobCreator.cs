@@ -32,7 +32,7 @@ namespace AssetRipper.Tpk.ConsoleApp
 		private static TpkTypeTreeBlob Create(IEnumerable<UnityInfo> infosOrderedByUnityVersion)
 		{
 			TpkTypeTreeBlob blob = new TpkTypeTreeBlob();
-			blob.CommonString.VersionInformation.Add(new VersionBytePair(UnityVersion.MinVersion, 0));
+			blob.CommonString.Add(UnityVersion.MinVersion, 0);
 
 			byte latestCommonStringCount = 0;
 			List<string> commonStrings = new List<string>();
@@ -48,7 +48,7 @@ namespace AssetRipper.Tpk.ConsoleApp
 				if (info.Strings.Count != latestCommonStringCount)
 				{
 					latestCommonStringCount = (byte)info.Strings.Count;
-					blob.CommonString.VersionInformation.Add(new VersionBytePair(version, latestCommonStringCount));
+					blob.CommonString.Add(version, latestCommonStringCount);
 				}
 
 				for (int i = 0; i < info.Strings.Count; i++)
