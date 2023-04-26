@@ -1,4 +1,8 @@
-﻿using System.Text.Json;
+﻿using AssetRipper.HashAlgorithms;
+using System.Buffers;
+using System.Buffers.Binary;
+using System.Text;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace AssetRipper.Tpk.TypeTrees.Json
@@ -79,6 +83,47 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 		public static UnityNode? FromJsonString(string jsonString)
 		{
 			return JsonSerializer.Deserialize(jsonString, UnityInfoSerializerContextIndented.Default.UnityNode);
+		}
+
+		/// <summary>
+		/// Computes the hash of the node and all its subnodes.
+		/// </summary>
+		/// <remarks>
+		/// This is used in m_OldTypeHash.
+		/// </remarks>
+		/// <returns>A 16-byte array containing the hash.</returns>
+		public byte[] ComputeHash()
+		{
+			MD4 md4 = new();
+			TransformUnityNodeAndChildren(md4, this);
+			return md4.ComputeHash(Array.Empty<byte>());
+
+			static void TransformUnityNodeAndChildren(MD4 md4, UnityNode node)
+			{
+				TransformString(md4, node.TypeName);
+				TransformString(md4, node.Name);
+				TransformInt32(md4, node.ByteSize);
+				TransformInt32(md4, node.TypeFlags);
+				TransformInt32(md4, node.Version);
+				TransformInt32(md4, (int)(node.MetaFlag & 0x4000));
+
+				for (int i = 0; i < node.SubNodes.Count; i++)
+				{
+					TransformUnityNodeAndChildren(md4, node.SubNodes[i]);
+				}
+			}
+			static void TransformString(MD4 md4, string value)
+			{
+				byte[] data = Encoding.UTF8.GetBytes(value);
+				md4.TransformBlock(data, 0, data.Length, null, default);
+			}
+			static void TransformInt32(MD4 md4, int value)
+			{
+				byte[] data = ArrayPool<byte>.Shared.Rent(sizeof(int));
+				BinaryPrimitives.WriteInt32LittleEndian(data, value);
+				md4.TransformBlock(data, 0, sizeof(int), null, default);
+				ArrayPool<byte>.Shared.Return(data);
+			}
 		}
 	}
 }

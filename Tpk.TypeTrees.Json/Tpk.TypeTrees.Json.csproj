@@ -10,7 +10,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Tpk\Tpk.csproj" />
+		<PackageReference Include="AssetRipper.HashAlgorithms" Version="1.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Tpk\Tpk.csproj" />
 	</ItemGroup>
 
 </Project>

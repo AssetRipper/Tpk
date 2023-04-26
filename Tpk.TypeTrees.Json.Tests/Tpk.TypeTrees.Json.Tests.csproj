@@ -1,11 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>disable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<RootNamespace>AssetRipper.Tpk.Tests</RootNamespace>
-		<AssemblyName>AssetRipper.Tpk.Tests</AssemblyName>
+		<RootNamespace>AssetRipper.Tpk.TypeTrees.Json.Tests</RootNamespace>
+		<AssemblyName>AssetRipper.Tpk.TypeTrees.Json.Tests</AssemblyName>
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
@@ -20,7 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Tpk\Tpk.csproj" />
+		<ProjectReference Include="..\Tpk.TypeTrees.Json\Tpk.TypeTrees.Json.csproj" />
 	</ItemGroup>
 
 </Project>
