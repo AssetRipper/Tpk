@@ -1,5 +1,5 @@
 ﻿using AssetRipper.Tpk.TypeTrees;
-using AssetRipper.VersionUtilities;
+using AssetRipper.Primitives;
 using NUnit.Framework;
 
 namespace AssetRipper.Tpk.Tests.TypeTrees

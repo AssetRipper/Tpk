@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using AssetRipper.Tpk.TypeTrees.Json;
-using AssetRipper.VersionUtilities;
+using AssetRipper.Primitives;
 using ICSharpCode.SharpZipLib.Zip;
 
 namespace AssetRipper.Tpk.ConsoleApp

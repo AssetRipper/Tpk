@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using VersionClassPair = System.Collections.Generic.KeyValuePair<
-	AssetRipper.VersionUtilities.UnityVersion,
+	AssetRipper.Primitives.UnityVersion,
 	AssetRipper.Tpk.TypeTrees.TpkUnityClass?>;
 using VersionBytePair = System.Collections.Generic.KeyValuePair<
-	AssetRipper.VersionUtilities.UnityVersion,
+	AssetRipper.Primitives.UnityVersion,
 	byte>;
-using AssetRipper.VersionUtilities;
+using AssetRipper.Primitives;
 using AssetRipper.Tpk.TypeTrees;
 
 namespace AssetRipper.Tpk.ConsoleApp
