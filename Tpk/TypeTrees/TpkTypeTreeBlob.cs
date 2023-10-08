@@ -1,4 +1,5 @@
-﻿using AssetRipper.Tpk.Shared;
+﻿using AssetRipper.Tpk.Extensions;
+using AssetRipper.Tpk.Shared;
 
 namespace AssetRipper.Tpk.TypeTrees
 {

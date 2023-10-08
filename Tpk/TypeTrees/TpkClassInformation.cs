@@ -1,4 +1,5 @@
-﻿using VersionClassPair = System.Collections.Generic.KeyValuePair<
+﻿using AssetRipper.Tpk.Extensions;
+using VersionClassPair = System.Collections.Generic.KeyValuePair<
 	AssetRipper.Primitives.UnityVersion,
 	AssetRipper.Tpk.TypeTrees.TpkUnityClass?>;
 

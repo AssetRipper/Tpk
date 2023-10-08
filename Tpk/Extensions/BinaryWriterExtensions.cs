@@ -1,4 +1,4 @@
-﻿namespace AssetRipper.Tpk.TypeTrees;
+﻿namespace AssetRipper.Tpk.Extensions;
 
 /// <summary>
 /// Unity version extension methods for <see cref="BinaryWriter"/>
