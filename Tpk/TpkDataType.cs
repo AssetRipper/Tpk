@@ -1,4 +1,5 @@
-﻿using AssetRipper.Tpk.TypeTrees;
+﻿using AssetRipper.Tpk.EngineAssets;
+using AssetRipper.Tpk.TypeTrees;
 
 namespace AssetRipper.Tpk
 {
@@ -40,6 +41,7 @@ namespace AssetRipper.Tpk
 				TpkDataType.Collection => new TpkCollectionBlob(),
 				TpkDataType.FileSystem => new TpkFileSystemBlob(),
 				TpkDataType.Json => new TpkJsonBlob(),
+				TpkDataType.EngineAssets => new TpkEngineAssetsBlob(),
 				_ => throw new NotSupportedException($"Data type {dataType} not supported"),
 			};
 		}
