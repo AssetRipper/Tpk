@@ -1,22 +1,24 @@
-﻿using AssetRipper.Tpk.TypeTrees.Json;
+﻿using AssetRipper.Primitives;
+using AssetRipper.Tpk.TypeTrees;
+using AssetRipper.Tpk.TypeTrees.Json;
 using System.Collections.Generic;
 using System.Linq;
 using VersionClassPair = System.Collections.Generic.KeyValuePair<
 	AssetRipper.Primitives.UnityVersion,
 	AssetRipper.Tpk.TypeTrees.TpkUnityClass?>;
-using VersionBytePair = System.Collections.Generic.KeyValuePair<
-	AssetRipper.Primitives.UnityVersion,
-	byte>;
-using AssetRipper.Primitives;
-using AssetRipper.Tpk.TypeTrees;
 
 namespace AssetRipper.Tpk.ConsoleApp
 {
 	internal static class TpkTypeTreeBlobCreator
 	{
+		public static TpkTypeTreeBlob CreateFromPath(string path, bool isZipFile)
+		{
+			return isZipFile ? CreateFromZipFile(path) : CreateFromDirectory(path);
+		}
+
 		public static TpkTypeTreeBlob CreateFromDirectory(string directoryPath)
 		{
-			return Create(GetOrderedFilePaths(directoryPath));
+			return Create(JsonFileSorter.GetOrderedFilePaths(directoryPath));
 		}
 
 		public static TpkTypeTreeBlob CreateFromZipFile(string zipFilePath)
@@ -114,7 +116,7 @@ namespace AssetRipper.Tpk.ConsoleApp
 			blob.ClassInformation.AddRange(classDictionary.Values);
 
 			blob.CommonString.SetIndices(blob.StringBuffer, commonStrings);
-			//About 19k / 65k
+			//About 21k / 65k
 			Console.WriteLine($"Node buffer has {blob.NodeBuffer.Count} entries, which is {GetUShortPercent(blob.NodeBuffer.Count)}% of its maximum {ushort.MaxValue} entries");
 			//About 7k / 65k
 			Console.WriteLine($"String buffer has {blob.StringBuffer.Count} entries, which is {GetUShortPercent(blob.StringBuffer.Count)}% of its maximum {ushort.MaxValue} entries");
@@ -125,36 +127,5 @@ namespace AssetRipper.Tpk.ConsoleApp
 		}
 
 		private static int GetUShortPercent(int value) => value * 100 / ushort.MaxValue;
-
-		/// <summary>
-		/// Get the paths to the jsons in order
-		/// </summary>
-		/// <param name="directoryPath">The directory containing the struct dumps</param>
-		/// <returns>An array of absolute file paths ordered by Unity version</returns>
-		/// <exception cref="ArgumentException"></exception>
-		private static IEnumerable<string> GetOrderedFilePaths(string directoryPath)
-		{
-			DirectoryInfo directory = new DirectoryInfo(directoryPath);
-			if (!directory.Exists)
-			{
-				throw new ArgumentException(nameof(directoryPath));
-			}
-
-			Dictionary<UnityVersion, string> files = new Dictionary<UnityVersion, string>();
-			foreach (FileInfo file in directory.GetFiles())
-			{
-				if (file.Extension == JsonExtension)
-				{
-					string fileNameWithoutExtension = file.Name.Substring(0, file.Name.Length - JsonExtension.Length);
-					UnityVersion version = UnityVersion.Parse(fileNameWithoutExtension);
-					files.Add(version, file.FullName);
-				}
-			}
-			List<UnityVersion> orderedVersions = files.Select(pair => pair.Key).ToList();
-			orderedVersions.Sort();
-			return orderedVersions.Select(version => files[version]);
-		}
-
-		private const string JsonExtension = ".json";
 	}
 }

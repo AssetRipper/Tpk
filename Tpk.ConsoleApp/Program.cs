@@ -1,22 +1,27 @@
-﻿using AssetRipper.Tpk.TypeTrees;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace AssetRipper.Tpk.ConsoleApp
 {
 	internal class Program
 	{
-		//private const string InfoJsonPath = @"F:\TypeTreeDumps\InfoJson";
-		//private const string InfoJsonPath = @"TestFolder";
-
 		static void Main(string[] args)
 		{
 			try
 			{
 				Stopwatch sw = Stopwatch.StartNew();
-				MakeTpk(args[0], "uncompressed.tpk", "lz4.tpk", "lzma.tpk", "brotli.tpk", false);
-				//MakeTpk(InfoJsonPath, "classes.tpk");
-				//TpkDataBlob blob = ReadTpk("test_lzma.tpk");
-				//WriteTestTpks(blob);
+
+				TpkDataBlob blob;
+				if (args[0] is "--engine-assets")
+				{
+					blob = TpkEngineAssetsBlobCreator.CreateFromDirectory(args[1]);
+				}
+				else
+				{
+					blob = TpkTypeTreeBlobCreator.CreateFromPath(args[1], false);
+				}
+
+				MakeTpk(blob, "uncompressed.tpk", "lz4.tpk", "lzma.tpk", "brotli.tpk");
+
 				sw.Stop();
 				Console.WriteLine($"Done in {sw.Elapsed.TotalSeconds} seconds!");
 			}
@@ -25,6 +30,12 @@ namespace AssetRipper.Tpk.ConsoleApp
 				Console.WriteLine(ex.ToString());
 			}
 			Console.ReadLine();
+		}
+
+		private static void SpeedTest()
+		{
+			TpkDataBlob blob = ReadTpk("test_lzma.tpk");
+			WriteTestTpks(blob);
 		}
 
 		private static TpkDataBlob ReadTpk(string path)
@@ -55,12 +66,8 @@ namespace AssetRipper.Tpk.ConsoleApp
 			Console.WriteLine($"Lzma compressed in {sw.Elapsed.TotalSeconds} seconds!");
 		}
 
-		private static void MakeTpk(string inputDirectory, string uncompressedPath, string lz4Path, string lzmaPath, string brotliPath, bool isZipFile = false)
+		private static void MakeTpk(TpkDataBlob blob, string uncompressedPath, string lz4Path, string lzmaPath, string brotliPath)
 		{
-			TpkTypeTreeBlob blob = isZipFile 
-				? TpkTypeTreeBlobCreator.CreateFromZipFile(inputDirectory)
-				: TpkTypeTreeBlobCreator.CreateFromDirectory(inputDirectory);
-
 			WriteBlobToFile(blob, uncompressedPath, TpkCompressionType.None);
 			Console.WriteLine($"Uncompressed file saved to {Path.GetFullPath(uncompressedPath)}");
 
@@ -78,27 +85,6 @@ namespace AssetRipper.Tpk.ConsoleApp
 		{
 			TpkFile file = TpkFile.FromBlob(blob, compressionType);
 			file.WriteToFile(outputPath);
-		}
-
-		private static void Convert(string path)
-		{
-			string extension = Path.GetExtension(path);
-			string fileNameNoExtension = Path.GetFileNameWithoutExtension(path);
-			if (extension == ".tpk")
-			{
-				TpkFile file = TpkFile.FromFile(path);
-				File.WriteAllBytes($"{fileNameNoExtension}.json", file.GetDecompressedData());
-			}
-			else if (extension == ".json")
-			{
-				byte[] fileData = File.ReadAllBytes(path);
-				TpkFile file = TpkFile.FromData(fileData, TpkCompressionType.Lz4);
-				file.WriteToFile($"{fileNameNoExtension}.tpk");
-			}
-			else
-			{
-				throw new Exception($"Cannot handle {extension}");
-			}
 		}
 	}
 }

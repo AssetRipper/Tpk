@@ -35,17 +35,17 @@ jobs:
      - name: Build
        run: dotnet build /p:Configuration=Release
        working-directory: ./Tpk.ConsoleApp/
-     - name: Checkout TypeTreeDumps Repository
+     - name: Checkout DocumentationDumps Repository
        uses: actions/checkout@v4
        with:
-        repository: 'AssetRipper/TypeTreeDumps'
-        path: TypeTreeDumps
+        repository: 'AssetRipper/DocumentationDumps'
+        path: DocumentationDumps
      - name: Make files executable
        shell: bash
        run: chmod +x ./Tpk.ConsoleApp/bin/Release/net6.0/AssetRipper.Tpk.ConsoleApp
      - name: Make tpk file
        shell: bash
-       run: ./Tpk.ConsoleApp/bin/Release/net6.0/AssetRipper.Tpk.ConsoleApp --type-tree ./TypeTreeDumps/InfoJson
+       run: ./Tpk.ConsoleApp/bin/Release/net6.0/AssetRipper.Tpk.ConsoleApp --engine-assets ./DocumentationDumps/EngineAssets
      - name: Upload Uncompressed file
        uses: actions/upload-artifact@v3
        with:
