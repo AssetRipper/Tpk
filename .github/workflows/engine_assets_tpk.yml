@@ -1,4 +1,4 @@
-name: MakeTpk
+name: Engine Assets Tpk
 
 on:
    push:

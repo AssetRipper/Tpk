@@ -1,4 +1,4 @@
-name: MakeTpk
+name: Type Tree Tpk
 
 on:
    push:
