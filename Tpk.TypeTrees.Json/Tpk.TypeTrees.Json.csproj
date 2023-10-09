@@ -5,12 +5,35 @@
 		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>disable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<IsTrimmable>true</IsTrimmable>
 		<RootNamespace>AssetRipper.Tpk.TypeTrees.Json</RootNamespace>
 		<AssemblyName>AssetRipper.Tpk.TypeTrees.Json</AssemblyName>
+		
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<Authors>ds5678</Authors>
+		<Company>AssetRipper</Company>
+		<Version>1.0.0</Version>
+		<AssemblyVersion>$(Version)</AssemblyVersion>
+		<PackageId>AssetRipper.Tpk.TypeTrees.Json</PackageId>
+		<PackageTags>C#</PackageTags>
+		<RepositoryUrl>https://github.com/AssetRipper/Tpk</RepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryType>git</RepositoryType>
+		<PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
+		<Copyright>Copyright (c) 2023 ds5678</Copyright>
+		<Description>Library for type tree serialization.</Description>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>1591</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="AssetRipper.HashAlgorithms" Version="1.0.0" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>
