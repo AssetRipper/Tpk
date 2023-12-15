@@ -47,25 +47,25 @@ jobs:
        shell: bash
        run: ./Tpk.ConsoleApp/bin/Release/net6.0/AssetRipper.Tpk.ConsoleApp --type-tree ./TypeTreeDumps/InfoJson
      - name: Upload Uncompressed file
-       uses: actions/upload-artifact@v3
+       uses: actions/upload-artifact@v4
        with:
          name: uncompressed_file
          path: ./uncompressed.tpk
          if-no-files-found: error
      - name: Upload Lz4 file
-       uses: actions/upload-artifact@v3
+       uses: actions/upload-artifact@v4
        with:
          name: lz4_file
          path: ./lz4.tpk
          if-no-files-found: error
      - name: Upload Lzma file
-       uses: actions/upload-artifact@v3
+       uses: actions/upload-artifact@v4
        with:
          name: lzma_file
          path: ./lzma.tpk
          if-no-files-found: error
      - name: Upload Brotli file
-       uses: actions/upload-artifact@v3
+       uses: actions/upload-artifact@v4
        with:
          name: brotli_file
          path: ./brotli.tpk
