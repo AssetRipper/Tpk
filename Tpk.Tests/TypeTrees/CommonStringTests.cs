@@ -1,5 +1,5 @@
-﻿using AssetRipper.Tpk.TypeTrees;
-using AssetRipper.Primitives;
+﻿using AssetRipper.Primitives;
+using AssetRipper.Tpk.TypeTrees;
 using NUnit.Framework;
 
 namespace AssetRipper.Tpk.Tests.TypeTrees
@@ -16,18 +16,21 @@ namespace AssetRipper.Tpk.Tests.TypeTrees
 		public static void CountIsCorrectForEmptyCommonString()
 		{
 			TpkCommonString commonString = new();
-			Assert.AreEqual(0, commonString.GetCount(Unity5));
+			Assert.That(commonString.GetCount(Unity5), Is.EqualTo(0));
 		}
 
 		[Test]
 		public static void CountIsCorrectForNormalUse()
 		{
 			TpkCommonString commonString = MakeCommonString();
-			Assert.AreEqual(5, commonString.GetCount(Unity3));
-			Assert.AreEqual(5, commonString.GetCount(Unity4));
-			Assert.AreEqual(5, commonString.GetCount(Unity5));
-			Assert.AreEqual(10, commonString.GetCount(Unity6));
-			Assert.AreEqual(10, commonString.GetCount(Unity7));
+			Assert.Multiple(() =>
+			{
+				Assert.That(commonString.GetCount(Unity3), Is.EqualTo(5));
+				Assert.That(commonString.GetCount(Unity4), Is.EqualTo(5));
+				Assert.That(commonString.GetCount(Unity5), Is.EqualTo(5));
+				Assert.That(commonString.GetCount(Unity6), Is.EqualTo(10));
+				Assert.That(commonString.GetCount(Unity7), Is.EqualTo(10));
+			});
 		}
 
 		private static TpkCommonString MakeCommonString()

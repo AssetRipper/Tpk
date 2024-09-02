@@ -14,7 +14,7 @@ namespace AssetRipper.Tpk.Tests
 			if (compressedData.Length == 0)
 				Assert.Fail("Compressed data cannot be empty");
 			byte[] decompressedData = BrotliHandler.Decompress(compressedData);
-			Assert.AreEqual(randomData, decompressedData);
+			Assert.That(decompressedData, Is.EqualTo(randomData));
 		}
 
 		[Test]
@@ -24,7 +24,7 @@ namespace AssetRipper.Tpk.Tests
 			if (compressedData.Length == 0)
 				Assert.Fail("Compressed data cannot be empty");
 			byte[] decompressedData = Lz4Handler.Decompress(compressedData, randomData.Length);
-			Assert.AreEqual(randomData, decompressedData);
+			Assert.That(decompressedData, Is.EqualTo(randomData));
 		}
 
 		[Test]
@@ -34,7 +34,7 @@ namespace AssetRipper.Tpk.Tests
 			if (compressedData.Length == 0)
 				Assert.Fail("Compressed data cannot be empty");
 			byte[] decompressedData = LzmaHandler.Decompress(compressedData, randomData.Length);
-			Assert.AreEqual(randomData, decompressedData);
+			Assert.That(decompressedData, Is.EqualTo(randomData));
 		}
 	}
 }

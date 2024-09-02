@@ -1,0 +1,7 @@
+
+[*.{cs,vb}]
+
+tab_width = 4
+indent_size = 4
+end_of_line = lf
+indent_style = tab

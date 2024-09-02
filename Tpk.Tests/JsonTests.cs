@@ -11,7 +11,7 @@ namespace AssetRipper.Tpk.Tests
 			originalBlob.Text = RandomUtils.RandomString(557);
 			byte[] writtenData = originalBlob.ToBinary();
 			TpkJsonBlob readBlob = TpkDataBlob.FromBinary<TpkJsonBlob>(writtenData);
-			Assert.AreEqual(originalBlob.Text, readBlob.Text);
+			Assert.That(readBlob.Text, Is.EqualTo(originalBlob.Text));
 		}
 
 		[Test]
@@ -20,7 +20,7 @@ namespace AssetRipper.Tpk.Tests
 			TpkJsonBlob originalBlob = new TpkJsonBlob();
 			byte[] writtenData = originalBlob.ToBinary();
 			TpkJsonBlob readBlob = TpkDataBlob.FromBinary<TpkJsonBlob>(writtenData);
-			Assert.AreEqual(originalBlob.Text, readBlob.Text);
+			Assert.That(readBlob.Text, Is.EqualTo(originalBlob.Text));
 		}
 	}
 }

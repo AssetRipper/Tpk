@@ -19,9 +19,12 @@ public class EngineAssetsTests
 		originalBlob.Data.Add(new KeyValuePair<UnityVersion, string>(new UnityVersion(4), RandomUtils.RandomString()));
 		byte[] writtenData = originalBlob.ToBinary();
 		TpkEngineAssetsBlob readBlob = TpkDataBlob.FromBinary<TpkEngineAssetsBlob>(writtenData);
-		Assert.AreEqual(originalBlob.CreationTime, readBlob.CreationTime);
-		Assert.AreEqual(originalBlob.Versions, readBlob.Versions);
-		Assert.AreEqual(originalBlob.Data, readBlob.Data);
+		Assert.Multiple(() =>
+		{
+			Assert.That(readBlob.CreationTime, Is.EqualTo(originalBlob.CreationTime));
+			Assert.That(readBlob.Versions, Is.EqualTo(originalBlob.Versions));
+			Assert.That(readBlob.Data, Is.EqualTo(originalBlob.Data));
+		});
 	}
 
 	[Test]
@@ -30,8 +33,11 @@ public class EngineAssetsTests
 		TpkEngineAssetsBlob originalBlob = new();
 		byte[] writtenData = originalBlob.ToBinary();
 		TpkEngineAssetsBlob readBlob = TpkDataBlob.FromBinary<TpkEngineAssetsBlob>(writtenData);
-		Assert.AreEqual(originalBlob.CreationTime, readBlob.CreationTime);
-		Assert.AreEqual(originalBlob.Versions, readBlob.Versions);
-		Assert.AreEqual(originalBlob.Data, readBlob.Data);
+		Assert.Multiple(() =>
+		{
+			Assert.That(readBlob.CreationTime, Is.EqualTo(originalBlob.CreationTime));
+			Assert.That(readBlob.Versions, Is.EqualTo(originalBlob.Versions));
+			Assert.That(readBlob.Data, Is.EqualTo(originalBlob.Data));
+		});
 	}
 }

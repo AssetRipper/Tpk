@@ -10,7 +10,7 @@ namespace AssetRipper.Tpk.Tests
 			TpkFileSystemBlob originalBlob = BlobCreator.MakeRandomFileSystemBlob();
 			byte[] writtenData = originalBlob.ToBinary();
 			TpkFileSystemBlob readBlob = TpkDataBlob.FromBinary<TpkFileSystemBlob>(writtenData);
-			Assert.AreEqual(originalBlob.Files, readBlob.Files);
+			Assert.That(readBlob.Files, Is.EqualTo(originalBlob.Files));
 		}
 	}
 }
