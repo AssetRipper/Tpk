@@ -42,10 +42,10 @@ jobs:
         path: DocumentationDumps
      - name: Make files executable
        shell: bash
-       run: chmod +x ./Tpk.ConsoleApp/bin/Release/net6.0/AssetRipper.Tpk.ConsoleApp
+       run: chmod +x ./Tpk.ConsoleApp/bin/Release/net9.0/AssetRipper.Tpk.ConsoleApp
      - name: Make tpk file
        shell: bash
-       run: ./Tpk.ConsoleApp/bin/Release/net6.0/AssetRipper.Tpk.ConsoleApp --engine-assets ./DocumentationDumps/EngineAssets
+       run: ./Tpk.ConsoleApp/bin/Release/net9.0/AssetRipper.Tpk.ConsoleApp --engine-assets ./DocumentationDumps/EngineAssets
      - name: Upload Uncompressed file
        uses: actions/upload-artifact@v4
        with:
