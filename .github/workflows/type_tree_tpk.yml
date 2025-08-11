@@ -27,7 +27,7 @@ jobs:
      runs-on: ubuntu-latest
      steps:
      - name: Checkout Tpk Repository
-       uses: actions/checkout@v4
+       uses: actions/checkout@v5
      - name: Setup .NET
        uses: actions/setup-dotnet@v5
        with:
@@ -36,7 +36,7 @@ jobs:
        run: dotnet build /p:Configuration=Release
        working-directory: ./Tpk.ConsoleApp/
      - name: Checkout TypeTreeDumps Repository
-       uses: actions/checkout@v4
+       uses: actions/checkout@v5
        with:
         repository: 'AssetRipper/TypeTreeDumps'
         path: TypeTreeDumps
