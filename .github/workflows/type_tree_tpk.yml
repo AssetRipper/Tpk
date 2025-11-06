@@ -39,9 +39,7 @@ jobs:
        uses: actions/checkout@v5
        with:
         repository: 'AssetRipper/TypeTreeDumps'
-        ref: "52338156816f1bd83f891d57353e3c5ac7d18119"
         sparse-checkout: 'InfoJson'
-        fetch-depth: 1
         path: TypeTreeDumps
      - name: Make files executable
        shell: bash
