@@ -9,9 +9,6 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 {
 	public sealed class UnityNode
 	{
-		/// <summary>
-		/// The unique type name used in the <see cref = "SharedState"/> dictionaries
-		/// </summary>
 		public string TypeName { get => typeName; set => typeName = value ?? ""; }
 		/// <summary>
 		/// The original type name as obtained from the json file

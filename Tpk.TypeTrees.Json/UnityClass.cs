@@ -43,7 +43,7 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 		/// <summary>
 		/// The count of all classes that descend from this class<br/>
 		/// It includes this class, so the count is always positive<br/>
-		/// However, some older unity versions don't generate this, so sometimes we have to set it in SharedState initialization
+		/// However, some older unity versions don't generate this, so sometimes it needs to be set manually.
 		/// </summary>
 		public uint DescendantCount { get; set; }
 		/// <summary>
