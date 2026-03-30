@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="License.md" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/Solution Items/workflows/">
+    <File Path=".github/workflows/engine_assets_tpk.yml" />
+    <File Path=".github/workflows/test.yml" />
+    <File Path=".github/workflows/type_tree_tpk.yml" />
+  </Folder>
+  <Project Path="Tpk.ConsoleApp/Tpk.ConsoleApp.csproj" />
+  <Project Path="Tpk.Tests/Tpk.Tests.csproj" />
+  <Project Path="Tpk.TypeTrees.Json.Tests/Tpk.TypeTrees.Json.Tests.csproj" />
+  <Project Path="Tpk.TypeTrees.Json/Tpk.TypeTrees.Json.csproj" />
+  <Project Path="Tpk/Tpk.csproj" />
+</Solution>
