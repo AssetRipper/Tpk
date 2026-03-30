@@ -9,7 +9,7 @@ namespace AssetRipper.Tpk.Compression
 			LzmaEncoderProperties properties = new LzmaEncoderProperties(false, 1 << 25, 256);
 			using MemoryStream inputStream = new MemoryStream(uncompressedBytes);
 			using MemoryStream outputStream = new MemoryStream();
-			using LzmaStream lzmaStream = new LzmaStream(properties, false, outputStream);
+			using LzmaStream lzmaStream = LzmaStream.Create(properties, false, outputStream);
 			outputStream.Write(lzmaStream.Properties);
 			inputStream.CopyTo(lzmaStream);
 			lzmaStream.Close();
@@ -25,7 +25,7 @@ namespace AssetRipper.Tpk.Compression
 			using MemoryStream inputStream = new MemoryStream(compressedBytes);
 			inputStream.Position = 5;
 			using MemoryStream outputStream = new MemoryStream();
-			using LzmaStream lzmaStream = new LzmaStream(properties, inputStream, compressedBytes.Length - 5, decompressedSize);
+			using LzmaStream lzmaStream = LzmaStream.Create(properties, inputStream, compressedBytes.Length - 5, decompressedSize);
 			lzmaStream.CopyTo(outputStream);
 			return outputStream.ToArray();
 		}
@@ -38,7 +38,7 @@ namespace AssetRipper.Tpk.Compression
 			byte[] properties = new Span<byte>(compressedBytes, 0, 5).ToArray();
 			MemoryStream inputStream = new MemoryStream(compressedBytes);
 			inputStream.Position = 5;
-			return new LzmaStream(properties, inputStream, compressedBytes.Length - 5, decompressedSize);
+			return LzmaStream.Create(properties, inputStream, compressedBytes.Length - 5, decompressedSize);
 		}
 	}
 }
