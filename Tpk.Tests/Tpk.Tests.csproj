@@ -1,9 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
-		<ImplicitUsings>disable</ImplicitUsings>
-		<Nullable>enable</Nullable>
 		<RootNamespace>AssetRipper.Tpk.Tests</RootNamespace>
 		<AssemblyName>AssetRipper.Tpk.Tests</AssemblyName>
 		<IsPackable>false</IsPackable>

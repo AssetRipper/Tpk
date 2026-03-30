@@ -1,29 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
-		<LangVersion>latest</LangVersion>
-		<ImplicitUsings>disable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-		<IsTrimmable>true</IsTrimmable>
 		<RootNamespace>AssetRipper.Tpk.TypeTrees.Json</RootNamespace>
 		<AssemblyName>AssetRipper.Tpk.TypeTrees.Json</AssemblyName>
-		
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-		<Authors>ds5678</Authors>
-		<Company>AssetRipper</Company>
-		<Version>1.1.0</Version>
-		<AssemblyVersion>$(Version)</AssemblyVersion>
+
 		<PackageId>AssetRipper.Tpk.TypeTrees.Json</PackageId>
 		<PackageTags>C#</PackageTags>
-		<RepositoryUrl>https://github.com/AssetRipper/Tpk</RepositoryUrl>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<RepositoryType>git</RepositoryType>
-		<PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
-		<Copyright>Copyright (c) 2025 ds5678</Copyright>
 		<Description>Library for type tree serialization.</Description>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>1591</NoWarn>
 	</PropertyGroup>

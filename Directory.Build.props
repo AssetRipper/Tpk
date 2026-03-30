@@ -1,0 +1,19 @@
+<Project>
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsAotCompatible>true</IsAotCompatible>
+		<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+		
+		<Authors>ds5678</Authors>
+		<Company>AssetRipper</Company>
+		<VersionPrefix>1.1.0</VersionPrefix>
+		<RepositoryUrl>https://github.com/AssetRipper/Tpk</RepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryType>git</RepositoryType>
+		<PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
+		<Copyright>Copyright (c) ds5678</Copyright>
+	</PropertyGroup>
+</Project>
