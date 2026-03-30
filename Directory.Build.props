@@ -9,7 +9,7 @@
 		
 		<Authors>ds5678</Authors>
 		<Company>AssetRipper</Company>
-		<VersionPrefix>1.1.0</VersionPrefix>
+		<VersionPrefix>1.2.0</VersionPrefix>
 		<RepositoryUrl>https://github.com/AssetRipper/Tpk</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
