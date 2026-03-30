@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using AssetRipper.Primitives;
 using AssetRipper.Tpk.TypeTrees.Json;
-using AssetRipper.Primitives;
-using ICSharpCode.SharpZipLib.Zip;
+using SharpCompress.Archives;
+using SharpCompress.Archives.Zip;
+using SharpCompress.Writers.Zip;
+using System.Collections.Generic;
 
 namespace AssetRipper.Tpk.ConsoleApp
 {
@@ -17,17 +19,16 @@ namespace AssetRipper.Tpk.ConsoleApp
 			List<UnityInfo> list = new();
 
 			using FileStream fileStream = File.OpenRead(zipFilePath);
-			using ZipInputStream zipInputStream = new ZipInputStream(fileStream);
-			ZipEntry entry;
-			while ((entry = zipInputStream.GetNextEntry()) is not null)
+			using IWritableArchive<ZipWriterOptions> archive = ZipArchive.OpenArchive(fileStream);
+			foreach (var entry in archive.Entries)
 			{
-				if(entry.IsFile && entry.Name.EndsWith(".json", StringComparison.Ordinal))
+				if (!entry.IsDirectory && (entry.Key ?? "").EndsWith(".json", StringComparison.Ordinal))
 				{
 					using MemoryStream unzippedFileStream = new MemoryStream();
-					zipInputStream.CopyTo(unzippedFileStream);
+					entry.WriteTo(unzippedFileStream);
 					unzippedFileStream.Position = 0;
 					UnityInfo? info = UnityInfo.FromStream(unzippedFileStream);
-					if(info is not null)
+					if (info is not null)
 					{
 						list.Add(info);
 					}
