@@ -10,7 +10,7 @@
 		public short Version { get; set; }
 		public byte TypeFlags { get; set; }
 		public uint MetaFlag { get; set; }
-		public ushort[] SubNodes { get; set; } = Array.Empty<ushort>();
+		public ushort[] SubNodes { get; set; } = [];
 
 		public void Read(BinaryReader reader)
 		{
@@ -62,21 +62,7 @@
 				Version == other.Version &&
 				TypeFlags == other.TypeFlags &&
 				MetaFlag == other.MetaFlag &&
-				ArrayEqual(SubNodes, other.SubNodes);
-		}
-
-		private static bool ArrayEqual(ushort[] array1, ushort[] array2)
-		{
-			if (array1.Length != array2.Length)
-				return false;
-			for (int i = 0; i < array1.Length; i++)
-			{
-				if (array1[i] != array2[i])
-				{
-					return false;
-				}
-			}
-			return true;
+				SubNodes.SequenceEqual(other.SubNodes);
 		}
 	}
 }

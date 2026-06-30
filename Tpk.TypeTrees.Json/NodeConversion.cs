@@ -26,15 +26,17 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 
 		public static UnityNode Convert(TpkUnityNode nodeData, TpkStringBuffer stringBuffer, TpkUnityNodeBuffer nodeBuffer, byte level, int index, out int lastIndexUsed)
 		{
-			UnityNode result = new UnityNode();
-			result.TypeName = stringBuffer[nodeData.TypeName];
-			result.Name = stringBuffer[nodeData.Name];
-			result.Level = level;
-			result.ByteSize = nodeData.ByteSize;
-			result.Index = index;
-			result.Version = nodeData.Version;
-			result.TypeFlags = nodeData.TypeFlags;
-			result.MetaFlag = nodeData.MetaFlag;
+			UnityNode result = new()
+			{
+				TypeName = stringBuffer[nodeData.TypeName],
+				Name = stringBuffer[nodeData.Name],
+				Level = level,
+				ByteSize = nodeData.ByteSize,
+				Index = index,
+				Version = nodeData.Version,
+				TypeFlags = nodeData.TypeFlags,
+				MetaFlag = nodeData.MetaFlag,
+			};
 
 			byte levelPlus = unchecked((byte)(level + 1U));
 			lastIndexUsed = index;

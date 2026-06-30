@@ -8,7 +8,7 @@
 		/// <summary>
 		/// Name : Blob
 		/// </summary>
-		public List<KeyValuePair<string, TpkDataBlob>> Blobs { get; } = new List<KeyValuePair<string, TpkDataBlob>>();
+		public List<KeyValuePair<string, TpkDataBlob>> Blobs { get; } = [];
 
 		public override TpkDataType DataType => TpkDataType.Collection;
 

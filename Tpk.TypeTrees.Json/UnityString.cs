@@ -1,13 +1,14 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 namespace AssetRipper.Tpk.TypeTrees.Json
 {
-	public sealed class UnityString
+	public sealed record class UnityString
 	{
-		private string @string = "";
-
 		public uint Index { get; set; }
-		public string String { get => @string; set => @string = value ?? ""; }
+
+		[AllowNull]
+		public string String { get; set => field = value ?? ""; } = "";
 
 		public string ToJsonString(bool indented = false)
 		{

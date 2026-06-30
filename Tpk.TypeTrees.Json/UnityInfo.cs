@@ -1,30 +1,30 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 namespace AssetRipper.Tpk.TypeTrees.Json
 {
 	public sealed class UnityInfo
 	{
-		private string version = "";
-		private List<UnityString> strings = new();
-		private List<UnityClass> classes = new();
-
+		[AllowNull]
 		public string Version
 		{
-			get => version;
-			set => version = value ?? "";
-		}
+			get;
+			set => field = value ?? "";
+		} = "";
 
+		[AllowNull]
 		public List<UnityString> Strings
 		{
-			get => strings;
-			set => strings = value ?? new();
-		}
+			get;
+			set => field = value ?? new();
+		} = new();
 
+		[AllowNull]
 		public List<UnityClass> Classes
 		{
-			get => classes;
-			set => classes = value ?? new();
-		}
+			get;
+			set => field = value ?? new();
+		} = new();
 
 		public static UnityInfo ReadFromJsonFile(string jsonPath)
 		{

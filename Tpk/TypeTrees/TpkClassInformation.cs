@@ -21,7 +21,9 @@ namespace AssetRipper.Tpk.TypeTrees
 		/// </summary>
 		public List<VersionClassPair> Classes { get; } = new();
 
-		public TpkClassInformation() { }
+		public TpkClassInformation()
+		{
+		}
 
 		public TpkClassInformation(int id)
 		{

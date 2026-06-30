@@ -1,33 +1,31 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace AssetRipper.Tpk.TypeTrees.Json
 {
 	public sealed class UnityClass
 	{
-		private string name = "";
-		private string @namespace = "";
-		private string fullName = "";
-		private string module = "";
-		private string @base = "";
-		private List<string> derived = new();
-
 		/// <summary>
 		/// The name of the class not including the namespace
 		/// </summary>
-		public string Name { get => name; set => name = value ?? ""; }
+		[AllowNull]
+		public string Name { get; set => field = value ?? ""; } = "";
 		/// <summary>
 		/// The namespace of the class if it exists
 		/// </summary>
-		public string Namespace { get => @namespace; set => @namespace = value ?? ""; }
+		[AllowNull]
+		public string Namespace { get; set => field = value ?? ""; } = "";
 		/// <summary>
 		/// The full name of the class including the namespace but not an assembly specification
 		/// </summary>
-		public string FullName { get => fullName; set => fullName = value ?? ""; }
+		[AllowNull]
+		public string FullName { get; set => field = value ?? ""; } = "";
 		/// <summary>
 		/// The module containing the class
 		/// </summary>
-		public string Module { get => module; set => module = value ?? ""; }
+		[AllowNull]
+		public string Module { get; set => field = value ?? ""; } = "";
 		/// <summary>
 		/// The unique number used to identify the class
 		/// </summary>
@@ -35,11 +33,13 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 		/// <summary>
 		/// The name of the base class if it exists. Namespace not included
 		/// </summary>
-		public string Base { get => @base; set => @base = value ?? ""; }
+		[AllowNull]
+		public string Base { get; set => field = value ?? ""; } = "";
 		/// <summary>
 		/// The names of the classes that directly derive from this. Namespaces not included
 		/// </summary>
-		public List<string> Derived { get => derived; set => derived = value ?? new(); }
+		[AllowNull]
+		public List<string> Derived { get; set => field = value ?? []; } = [];
 		/// <summary>
 		/// The count of all classes that descend from this class<br/>
 		/// It includes this class, so the count is always positive<br/>
@@ -81,7 +81,9 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 		/// <summary>
 		/// The constructor used in json deserialization
 		/// </summary>
-		public UnityClass() { }
+		public UnityClass()
+		{
+		}
 
 		/// <summary>
 		/// The constructor used to make dependent class definitions

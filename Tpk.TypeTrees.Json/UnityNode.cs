@@ -1,6 +1,7 @@
 ﻿using AssetRipper.HashAlgorithms;
 using System.Buffers;
 using System.Buffers.Binary;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -9,21 +10,25 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 {
 	public sealed class UnityNode
 	{
-		public string TypeName { get => typeName; set => typeName = value ?? ""; }
+		[AllowNull]
+		public string TypeName { get; set => field = value ?? ""; } = "";
 		/// <summary>
 		/// The original type name as obtained from the json file
 		/// </summary>
 		[JsonIgnore]
+		[AllowNull]
 		public string OriginalTypeName
 		{
 			get => string.IsNullOrEmpty(originalTypeName) ? TypeName : originalTypeName;
 			set => originalTypeName = value ?? "";
 		}
-		public string Name { get => name; set => name = value ?? ""; }
+		[AllowNull]
+		public string Name { get; set => field = value ?? ""; } = "";
 		/// <summary>
 		/// The original name as obtained from the json file
 		/// </summary>
 		[JsonIgnore]
+		[AllowNull]
 		public string OriginalName
 		{
 			get => string.IsNullOrEmpty(originalName) ? Name : originalName;
@@ -35,13 +40,11 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 		public short Version { get; set; }
 		public byte TypeFlags { get; set; }
 		public uint MetaFlag { get; set; }
-		public List<UnityNode> SubNodes { get => subNodes; set => subNodes = value ?? new(); }
+		[AllowNull]
+		public List<UnityNode> SubNodes { get; set => field = value ?? []; } = [];
 
 		private string originalTypeName = "";
 		private string originalName = "";
-		private string typeName = "";
-		private string name = "";
-		private List<UnityNode> subNodes = new();
 
 		/// <summary>
 		/// Deep clones a node and all its subnodes<br/>
@@ -50,24 +53,20 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 		/// <returns>The new node</returns>
 		public UnityNode DeepClone()
 		{
-			UnityNode cloned = new UnityNode();
-			cloned.TypeName = CloneString(TypeName);
-			cloned.originalTypeName = CloneString(originalTypeName);
-			cloned.Name = CloneString(Name);
-			cloned.originalName = CloneString(originalName);
-			cloned.Level = Level;
-			cloned.ByteSize = ByteSize;
-			cloned.Index = Index;
-			cloned.Version = Version;
-			cloned.TypeFlags = TypeFlags;
-			cloned.MetaFlag = MetaFlag;
-			cloned.SubNodes = SubNodes.ConvertAll(x => x.DeepClone());
-			return cloned;
-		}
-
-		private static string CloneString(string? @string)
-		{
-			return @string == null ? "" : new string(@string);
+			return new UnityNode
+			{
+				TypeName = TypeName,
+				originalTypeName = originalTypeName,
+				Name = Name,
+				originalName = originalName,
+				Level = Level,
+				ByteSize = ByteSize,
+				Index = Index,
+				Version = Version,
+				TypeFlags = TypeFlags,
+				MetaFlag = MetaFlag,
+				SubNodes = SubNodes.ConvertAll(x => x.DeepClone()),
+			};
 		}
 
 		public string ToJsonString(bool indented = false)

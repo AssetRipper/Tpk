@@ -44,7 +44,7 @@ namespace AssetRipper.Tpk.TypeTrees
 					return VersionInformation[i - 1].Value;
 				}
 			}
-			return VersionInformation[VersionInformation.Count - 1].Value;
+			return VersionInformation[^1].Value;
 		}
 
 		public string[] GetStrings(TpkStringBuffer buffer)

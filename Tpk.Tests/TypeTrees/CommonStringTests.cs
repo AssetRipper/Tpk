@@ -9,14 +9,14 @@ namespace AssetRipper.Tpk.Tests.TypeTrees
 		private static UnityVersion Unity3 => new UnityVersion(3, 0, 0, UnityVersionType.Final, 1);
 		private static UnityVersion Unity4 => new UnityVersion(4, 0, 0, UnityVersionType.Final, 1);
 		private static UnityVersion Unity5 => new UnityVersion(5, 0, 0, UnityVersionType.Final, 1);
-		private static UnityVersion Unity6 => new UnityVersion(6, 0, 0, UnityVersionType.Final, 1);
-		private static UnityVersion Unity7 => new UnityVersion(7, 0, 0, UnityVersionType.Final, 1);
+		private static UnityVersion Unity6 => new UnityVersion(6000, 0, 0, UnityVersionType.Final, 1);
+		private static UnityVersion Unity7 => new UnityVersion(7000, 0, 0, UnityVersionType.Final, 1);
 
 		[Test]
 		public static void CountIsCorrectForEmptyCommonString()
 		{
 			TpkCommonString commonString = new();
-			Assert.That(commonString.GetCount(Unity5), Is.EqualTo(0));
+			Assert.That(commonString.GetCount(Unity5), Is.Zero);
 		}
 
 		[Test]
