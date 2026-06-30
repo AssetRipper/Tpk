@@ -47,14 +47,6 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 		/// </summary>
 		public uint DescendantCount { get; set; }
 		/// <summary>
-		/// The size in bytes of one object. Doesn't include alignments. May be wildly inaccurate, especially for classes with variable size.
-		/// </summary>
-		public int Size { get; set; }
-		/// <summary>
-		/// The zero based index of this class in the list of acquired classes. Doesn't mean much.
-		/// </summary>
-		public uint TypeIndex { get; set; }
-		/// <summary>
 		/// Is the class abstract?
 		/// </summary>
 		public bool IsAbstract { get; set; }
@@ -102,7 +94,6 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 			TypeID = -1;
 			Derived = new List<string>();
 			DescendantCount = 1;
-			Size = mainRootNode.ByteSize;
 			IsAbstract = false;
 			IsSealed = true;
 			IsEditorOnly = releaseRootNode == null;

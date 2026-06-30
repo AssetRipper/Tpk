@@ -30,8 +30,6 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 			result.Module = "";
 			//TypeID gets set elsewhere
 			result.Base = stringBuffer[source.Base];
-			result.Size = -1;
-			//Type index is ignored
 			result.IsAbstract = source.Flags.IsAbstract();
 			result.IsSealed = source.Flags.IsSealed();
 			result.IsEditorOnly = source.Flags.IsEditorOnly();

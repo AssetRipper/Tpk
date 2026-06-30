@@ -18,8 +18,6 @@
 
 		//Derived and Descendent count are excluded from this format
 
-		//Size and TypeIndex are excluded from this format
-
 		/// <summary>
 		/// 8 boolean values packed into 1 byte
 		/// </summary>
