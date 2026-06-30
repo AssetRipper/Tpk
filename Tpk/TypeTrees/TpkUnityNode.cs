@@ -4,9 +4,7 @@
 	{
 		public ushort TypeName { get; set; }
 		public ushort Name { get; set; }
-		//Level is redundant
 		public int ByteSize { get; set; }
-		//Index is redundant
 		public short Version { get; set; }
 		public byte TypeFlags { get; set; }
 		public uint MetaFlag { get; set; }

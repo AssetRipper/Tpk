@@ -39,11 +39,11 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 			result.IsStripped = source.Flags.IsStripped();
 			if (source.EditorRootNode != ushort.MaxValue)
 			{
-				result.EditorRootNode = NodeConversion.Convert(nodeBuffer[source.EditorRootNode], stringBuffer, nodeBuffer, 0, 0, out var _);
+				result.EditorRootNode = NodeConversion.Convert(nodeBuffer[source.EditorRootNode], stringBuffer, nodeBuffer);
 			}
 			if (source.ReleaseRootNode != ushort.MaxValue)
 			{
-				result.ReleaseRootNode = NodeConversion.Convert(nodeBuffer[source.ReleaseRootNode], stringBuffer, nodeBuffer, 0, 0, out var _);
+				result.ReleaseRootNode = NodeConversion.Convert(nodeBuffer[source.ReleaseRootNode], stringBuffer, nodeBuffer);
 			}
 			return result;
 		}

@@ -34,9 +34,7 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 			get => string.IsNullOrEmpty(originalName) ? Name : originalName;
 			set => originalName = value ?? "";
 		}
-		public byte Level { get; set; }
 		public int ByteSize { get; set; }
-		public int Index { get; set; }
 		public short Version { get; set; }
 		public byte TypeFlags { get; set; }
 		public uint MetaFlag { get; set; }
@@ -59,9 +57,7 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 				originalTypeName = originalTypeName,
 				Name = Name,
 				originalName = originalName,
-				Level = Level,
 				ByteSize = ByteSize,
-				Index = Index,
 				Version = Version,
 				TypeFlags = TypeFlags,
 				MetaFlag = MetaFlag,
