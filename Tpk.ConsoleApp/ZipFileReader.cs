@@ -14,9 +14,9 @@ namespace AssetRipper.Tpk.ConsoleApp
 		/// </summary>
 		/// <param name="zipFilePath"></param>
 		/// <returns>A list ordered by Unity version</returns>
-		public static IEnumerable<UnityInfo> ReadUnityInfoFromZipFile(string zipFilePath)
+		public static IEnumerable<(UnityVersion Version, UnityInfo Info)> ReadUnityInfoFromZipFile(string zipFilePath)
 		{
-			List<UnityInfo> list = new();
+			List<(UnityVersion Version, UnityInfo Info)> list = new();
 
 			using FileStream fileStream = File.OpenRead(zipFilePath);
 			using IWritableArchive<ZipWriterOptions> archive = ZipArchive.OpenArchive(fileStream);
@@ -24,37 +24,22 @@ namespace AssetRipper.Tpk.ConsoleApp
 			{
 				if (!entry.IsDirectory && (entry.Key ?? "").EndsWith(".json", StringComparison.Ordinal))
 				{
+					string versionString = Path.GetFileNameWithoutExtension(entry.Key ?? "");
+					UnityVersion version = UnityVersion.Parse(versionString);
 					using MemoryStream unzippedFileStream = new MemoryStream();
 					entry.WriteTo(unzippedFileStream);
 					unzippedFileStream.Position = 0;
 					UnityInfo? info = UnityInfo.FromStream(unzippedFileStream);
 					if (info is not null)
 					{
-						list.Add(info);
+						list.Add((version, info));
 					}
 				}
 			}
 
-			list.Sort(CompareUnityInfo);
+			list.Sort((a, b) => a.Version.CompareTo(b.Version));
 
 			return list;
-		}
-
-		/// <summary>
-		/// Compare two UnityInfo by their versions
-		/// </summary>
-		/// <param name="a"></param>
-		/// <param name="b"></param>
-		/// <returns>
-		/// Less than zero: a precedes b<br />
-		/// Zero: equivalent position<br />
-		/// Greater than zero: a follows b
-		/// </returns>
-		private static int CompareUnityInfo(UnityInfo a, UnityInfo b)
-		{
-			UnityVersion versionA = UnityVersion.Parse(a.Version);
-			UnityVersion versionB = UnityVersion.Parse(b.Version);
-			return versionA.CompareTo(versionB);
 		}
 	}
 }

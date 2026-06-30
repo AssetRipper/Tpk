@@ -28,10 +28,16 @@ namespace AssetRipper.Tpk.ConsoleApp
 
 		private static TpkTypeTreeBlob Create(IEnumerable<string> pathsOrderedByUnityVersion)
 		{
-			return Create(pathsOrderedByUnityVersion.Select(path => UnityInfo.ReadFromJsonFile(path)));
+			return Create(pathsOrderedByUnityVersion.Select(path =>
+			{
+				string versionString = Path.GetFileNameWithoutExtension(path);
+				UnityVersion version = UnityVersion.Parse(versionString);
+				UnityInfo info = UnityInfo.ReadFromJsonFile(path);
+				return (version, info);
+			}));
 		}
 
-		private static TpkTypeTreeBlob Create(IEnumerable<UnityInfo> infosOrderedByUnityVersion)
+		private static TpkTypeTreeBlob Create(IEnumerable<(UnityVersion Version, UnityInfo Info)> infosOrderedByUnityVersion)
 		{
 			TpkTypeTreeBlob blob = new TpkTypeTreeBlob();
 			blob.CommonString.Add(UnityVersion.MinVersion, 0);
@@ -41,10 +47,9 @@ namespace AssetRipper.Tpk.ConsoleApp
 			Dictionary<int, string> latestUnityClassesDumped = new Dictionary<int, string>();
 			Dictionary<int, TpkClassInformation> classDictionary = new Dictionary<int, TpkClassInformation>();
 
-			foreach (UnityInfo info in infosOrderedByUnityVersion)
+			foreach ((UnityVersion version, UnityInfo? info) in infosOrderedByUnityVersion)
 			{
-				Console.WriteLine(info.Version);
-				UnityVersion version = UnityVersion.Parse(info.Version);
+				Console.WriteLine(version.ToString());
 				blob.Versions.Add(version);
 
 				if (info.Strings.Count != latestCommonStringCount)

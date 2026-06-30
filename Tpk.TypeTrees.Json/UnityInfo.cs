@@ -6,13 +6,6 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 	public sealed class UnityInfo
 	{
 		[AllowNull]
-		public string Version
-		{
-			get;
-			set => field = value ?? "";
-		} = "";
-
-		[AllowNull]
 		public List<UnityString> Strings
 		{
 			get;
