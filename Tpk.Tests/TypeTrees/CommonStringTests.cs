@@ -23,14 +23,14 @@ namespace AssetRipper.Tpk.Tests.TypeTrees
 		public static void CountIsCorrectForNormalUse()
 		{
 			TpkCommonString commonString = MakeCommonString();
-			Assert.Multiple(() =>
+			using (Assert.EnterMultipleScope())
 			{
 				Assert.That(commonString.GetCount(Unity3), Is.EqualTo(5));
 				Assert.That(commonString.GetCount(Unity4), Is.EqualTo(5));
 				Assert.That(commonString.GetCount(Unity5), Is.EqualTo(5));
 				Assert.That(commonString.GetCount(Unity6), Is.EqualTo(10));
 				Assert.That(commonString.GetCount(Unity7), Is.EqualTo(10));
-			});
+			}
 		}
 
 		private static TpkCommonString MakeCommonString()
