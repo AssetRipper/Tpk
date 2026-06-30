@@ -7,10 +7,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="SharpCompress" Version="0.47.4" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<ProjectReference Include="..\Tpk.TypeTrees.Json\Tpk.TypeTrees.Json.csproj" />
 		<ProjectReference Include="..\Tpk\Tpk.csproj" />
 	</ItemGroup>
