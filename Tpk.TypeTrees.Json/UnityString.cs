@@ -13,13 +13,13 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 		public string ToJsonString(bool indented = false)
 		{
 			return indented
-				? JsonSerializer.Serialize(this, UnityInfoSerializerContextIndented.Default.UnityString)
-				: JsonSerializer.Serialize(this, UnityInfoSerializerContextNotIndented.Default.UnityString);
+				? JsonSerializer.Serialize(this, UnityInfoSerializerContext.WriteIndentedContext.UnityString)
+				: JsonSerializer.Serialize(this, UnityInfoSerializerContext.Default.UnityString);
 		}
 
 		public static UnityString? FromJsonString(string jsonString)
 		{
-			return JsonSerializer.Deserialize(jsonString, UnityInfoSerializerContextIndented.Default.UnityString);
+			return JsonSerializer.Deserialize(jsonString, UnityInfoSerializerContext.Default.UnityString);
 		}
 	}
 }

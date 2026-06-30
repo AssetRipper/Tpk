@@ -72,13 +72,13 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 		public string ToJsonString(bool indented = false)
 		{
 			return indented
-				? JsonSerializer.Serialize(this, UnityInfoSerializerContextIndented.Default.UnityNode)
-				: JsonSerializer.Serialize(this, UnityInfoSerializerContextNotIndented.Default.UnityNode);
+				? JsonSerializer.Serialize(this, UnityInfoSerializerContext.WriteIndentedContext.UnityNode)
+				: JsonSerializer.Serialize(this, UnityInfoSerializerContext.Default.UnityNode);
 		}
 
 		public static UnityNode? FromJsonString(string jsonString)
 		{
-			return JsonSerializer.Deserialize(jsonString, UnityInfoSerializerContextIndented.Default.UnityNode);
+			return JsonSerializer.Deserialize(jsonString, UnityInfoSerializerContext.Default.UnityNode);
 		}
 
 		/// <summary>

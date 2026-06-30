@@ -35,18 +35,18 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 		public string ToJsonString(bool indented = false)
 		{
 			return indented 
-				? JsonSerializer.Serialize(this, UnityInfoSerializerContextIndented.Default.UnityInfo)
-				: JsonSerializer.Serialize(this, UnityInfoSerializerContextNotIndented.Default.UnityInfo);
+				? JsonSerializer.Serialize(this, UnityInfoSerializerContext.WriteIndentedContext.UnityInfo)
+				: JsonSerializer.Serialize(this, UnityInfoSerializerContext.Default.UnityInfo);
 		}
 
 		public static UnityInfo? FromJsonString(string jsonString)
 		{
-			return JsonSerializer.Deserialize(jsonString, UnityInfoSerializerContextIndented.Default.UnityInfo);
+			return JsonSerializer.Deserialize(jsonString, UnityInfoSerializerContext.Default.UnityInfo);
 		}
 
 		public static UnityInfo? FromStream(Stream utf8JsonStream)
 		{
-			return JsonSerializer.Deserialize(utf8JsonStream, UnityInfoSerializerContextIndented.Default.UnityInfo);
+			return JsonSerializer.Deserialize(utf8JsonStream, UnityInfoSerializerContext.Default.UnityInfo);
 		}
 	}
 }
