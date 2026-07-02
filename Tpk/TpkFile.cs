@@ -6,7 +6,7 @@ namespace AssetRipper.Tpk
 	public sealed class TpkFile
 	{
 		public const uint TpkMagicBytes = 0x2A4B5054; // TPK* in binary
-		public const byte TpkVersionNumber = 1;
+		public const byte TpkVersionNumber = 2;
 
 		public TpkCompressionType CompressionType { get; private set; }
 		public TpkDataType DataType { get; private set; }

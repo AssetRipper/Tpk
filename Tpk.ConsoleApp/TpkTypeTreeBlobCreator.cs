@@ -1,4 +1,5 @@
 ﻿using AssetRipper.Primitives;
+using AssetRipper.Tpk.Shared;
 using AssetRipper.Tpk.TypeTrees;
 using AssetRipper.Tpk.TypeTrees.Json;
 using System.Collections.Generic;
@@ -40,37 +41,25 @@ namespace AssetRipper.Tpk.ConsoleApp
 		private static TpkTypeTreeBlob Create(IEnumerable<(UnityVersion Version, UnityInfo Info)> infosOrderedByUnityVersion)
 		{
 			TpkTypeTreeBlob blob = new TpkTypeTreeBlob();
-			blob.CommonString.Add(UnityVersion.MinVersion, 0);
 
-			byte latestCommonStringCount = 0;
-			List<string> commonStrings = new List<string>();
-			Dictionary<int, string> latestUnityClassesDumped = new Dictionary<int, string>();
-			Dictionary<int, TpkClassInformation> classDictionary = new Dictionary<int, TpkClassInformation>();
+			List<TpkCommonString.Entry> commonStrings = [];
+			Dictionary<int, string> latestUnityClassesDumped = [];
+			Dictionary<int, TpkClassInformation> classDictionary = [];
 
 			foreach ((UnityVersion version, UnityInfo? info) in infosOrderedByUnityVersion)
 			{
 				Console.WriteLine(version.ToString());
 				blob.Versions.Add(version);
 
-				if (info.Strings.Count != latestCommonStringCount)
+				if (!Same(info.Strings, commonStrings, blob.StringBuffer))
 				{
-					latestCommonStringCount = (byte)info.Strings.Count;
-					blob.CommonString.Add(version, latestCommonStringCount);
-				}
-
-				for (int i = 0; i < info.Strings.Count; i++)
-				{
-					if (i < commonStrings.Count)
+					commonStrings.Clear();
+					commonStrings.EnsureCapacity(commonStrings.Count);
+					foreach (UnityString unityString in info.Strings)
 					{
-						if (info.Strings[i].String != commonStrings[i])
-						{
-							throw new Exception($"String inequality at index {i} for version {version}");
-						}
+						commonStrings.Add(new TpkCommonString.Entry((ushort)unityString.Index, unityString.String, blob.StringBuffer));
 					}
-					else
-					{
-						commonStrings.Add(info.Strings[i].String);
-					}
+					blob.CommonString.Add(version, commonStrings.ToArray());
 				}
 
 				foreach (UnityClass unityClass in info.Classes)
@@ -120,8 +109,7 @@ namespace AssetRipper.Tpk.ConsoleApp
 
 			blob.ClassInformation.AddRange(classDictionary.Values);
 
-			blob.CommonString.SetIndices(blob.StringBuffer, commonStrings);
-			//About 21k / 65k
+			//About 23k / 65k
 			Console.WriteLine($"Node buffer has {blob.NodeBuffer.Count} entries, which is {GetUShortPercent(blob.NodeBuffer.Count)}% of its maximum {ushort.MaxValue} entries");
 			//About 7k / 65k
 			Console.WriteLine($"String buffer has {blob.StringBuffer.Count} entries, which is {GetUShortPercent(blob.StringBuffer.Count)}% of its maximum {ushort.MaxValue} entries");
@@ -129,6 +117,22 @@ namespace AssetRipper.Tpk.ConsoleApp
 			blob.CreationTime = DateTime.Now.ToUniversalTime();
 
 			return blob;
+		}
+
+		private static bool Same(List<UnityString> jsonStrings, List<TpkCommonString.Entry> tpkEntries, TpkStringBuffer stringBuffer)
+		{
+			if (jsonStrings.Count != tpkEntries.Count)
+			{
+				return false;
+			}
+			for (int i = 0; i < jsonStrings.Count; i++)
+			{
+				if (jsonStrings[i].String != tpkEntries[i].ToString(stringBuffer))
+				{
+					return false;
+				}
+			}
+			return true;
 		}
 
 		private static int GetUShortPercent(int value) => value * 100 / ushort.MaxValue;

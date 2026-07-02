@@ -9,33 +9,51 @@ namespace AssetRipper.Tpk.TypeTrees
 	public sealed class TpkCommonString
 	{
 		/// <summary>
-		/// Unity version : string count<br/>
-		/// Sequential by ascending Unity version
+		/// An entry in <see cref="TpkCommonString"/>
 		/// </summary>
-		public List<KeyValuePair<UnityVersion, byte>> VersionInformation { get; } = new();
-		public List<ushort> StringBufferIndices { get; } = new();
-
-		public void Add(UnityVersion version, byte count)
+		/// <param name="Offset">The byte offset of the string</param>
+		/// <param name="String">The index of the string in <see cref="TpkStringBuffer"/></param>
+		public readonly record struct Entry(ushort Offset, ushort String)
 		{
-			VersionInformation.Add(new KeyValuePair<UnityVersion, byte>(version, count));
-		}
-
-		public void SetIndices(TpkStringBuffer buffer, List<string> strings)
-		{
-			int count = strings.Count;
-			StringBufferIndices.Clear();
-			StringBufferIndices.Capacity = count;
-			for (int i = 0; i < count; i++)
+			public Entry(ushort offset, string @string, TpkStringBuffer buffer) : this(offset, buffer.AddString(@string))
 			{
-				StringBufferIndices.Add(buffer.AddString(strings[i]));
+			}
+
+			public string ToString(TpkStringBuffer buffer)
+			{
+				return buffer[String];
+			}
+
+			public static Entry Read(BinaryReader reader)
+			{
+				ushort offset = reader.ReadUInt16();
+				ushort stringIndex = reader.ReadUInt16();
+				return new Entry(offset, stringIndex);
+			}
+
+			public void Write(BinaryWriter writer)
+			{
+				writer.Write(Offset);
+				writer.Write(String);
 			}
 		}
 
-		public byte GetCount(UnityVersion exactVersion)
+		/// <summary>
+		/// Unity version : string count<br/>
+		/// Sequential by ascending Unity version
+		/// </summary>
+		public List<KeyValuePair<UnityVersion, Entry[]>> VersionInformation { get; } = new();
+
+		public void Add(UnityVersion version, Entry[] entries)
+		{
+			VersionInformation.Add(new KeyValuePair<UnityVersion, Entry[]>(version, entries));
+		}
+
+		public Entry[] GetEntries(UnityVersion exactVersion)
 		{
 			if (VersionInformation.Count == 0)
 			{
-				return 0;
+				return [];
 			}
 			for (int i = 1; i < VersionInformation.Count; i++)
 			{
@@ -47,17 +65,6 @@ namespace AssetRipper.Tpk.TypeTrees
 			return VersionInformation[^1].Value;
 		}
 
-		public string[] GetStrings(TpkStringBuffer buffer)
-		{
-			int length = StringBufferIndices.Count;
-			string[] strings = new string[length];
-			for (int i = 0; i < length; i++)
-			{
-				strings[i] = buffer[StringBufferIndices[i]];
-			}
-			return strings;
-		}
-
 		public void Read(BinaryReader reader)
 		{
 			int versionCount = reader.ReadInt32();
@@ -66,15 +73,13 @@ namespace AssetRipper.Tpk.TypeTrees
 			for (int i = 0; i < versionCount; i++)
 			{
 				UnityVersion version = reader.ReadUnityVersion();
-				byte stringCount = reader.ReadByte();
-				VersionInformation.Add(new KeyValuePair<UnityVersion, byte>(version, stringCount));
-			}
-			int indicesCount = reader.ReadInt32();
-			StringBufferIndices.Clear();
-			StringBufferIndices.Capacity = indicesCount;
-			for (int j = 0; j < indicesCount; j++)
-			{
-				StringBufferIndices.Add(reader.ReadUInt16());
+				int entryCount = reader.ReadInt32();
+				Entry[] entries = new Entry[entryCount];
+				for (int j = 0; j < entryCount; j++)
+				{
+					entries[j] = Entry.Read(reader);
+				}
+				VersionInformation.Add(new KeyValuePair<UnityVersion, Entry[]>(version, entries));
 			}
 		}
 
@@ -84,12 +89,12 @@ namespace AssetRipper.Tpk.TypeTrees
 			for (int i = 0; i < VersionInformation.Count; i++)
 			{
 				writer.Write(VersionInformation[i].Key);
-				writer.Write(VersionInformation[i].Value);
-			}
-			writer.Write(StringBufferIndices.Count);
-			for (int i = 0; i < StringBufferIndices.Count; i++)
-			{
-				writer.Write(StringBufferIndices[i]);
+				Entry[] entries = VersionInformation[i].Value;
+				writer.Write(entries.Length);
+				for (int j = 0; j < entries.Length; j++)
+				{
+					entries[j].Write(writer);
+				}
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 ﻿using AssetRipper.Primitives;
 using AssetRipper.Tpk.TypeTrees;
 using NUnit.Framework;
+using System.IO;
 
 namespace AssetRipper.Tpk.Tests.TypeTrees
 {
@@ -16,7 +17,7 @@ namespace AssetRipper.Tpk.Tests.TypeTrees
 		public static void CountIsCorrectForEmptyCommonString()
 		{
 			TpkCommonString commonString = new();
-			Assert.That(commonString.GetCount(Unity5), Is.Zero);
+			Assert.That(commonString.GetEntries(Unity5), Is.Empty);
 		}
 
 		[Test]
@@ -25,19 +26,38 @@ namespace AssetRipper.Tpk.Tests.TypeTrees
 			TpkCommonString commonString = MakeCommonString();
 			using (Assert.EnterMultipleScope())
 			{
-				Assert.That(commonString.GetCount(Unity3), Is.EqualTo(5));
-				Assert.That(commonString.GetCount(Unity4), Is.EqualTo(5));
-				Assert.That(commonString.GetCount(Unity5), Is.EqualTo(5));
-				Assert.That(commonString.GetCount(Unity6), Is.EqualTo(10));
-				Assert.That(commonString.GetCount(Unity7), Is.EqualTo(10));
+				Assert.That(commonString.GetEntries(Unity3), Has.Length.EqualTo(5));
+				Assert.That(commonString.GetEntries(Unity4), Has.Length.EqualTo(5));
+				Assert.That(commonString.GetEntries(Unity5), Has.Length.EqualTo(5));
+				Assert.That(commonString.GetEntries(Unity6), Has.Length.EqualTo(10));
+				Assert.That(commonString.GetEntries(Unity7), Has.Length.EqualTo(10));
 			}
+		}
+
+		[Test]
+		public static void ReadingAndWritingUseSameBytes()
+		{
+			TpkCommonString commonString = MakeCommonString();
+			MemoryStream stream = new();
+			BinaryWriter writer = new(stream);
+			commonString.Write(writer);
+			writer.Flush();
+			int bytesWritten = (int)stream.Length;
+
+			stream.Position = 0;
+			BinaryReader reader = new(stream);
+			TpkCommonString readCommonString = new();
+			readCommonString.Read(reader);
+			int bytesRead = (int)stream.Position;
+
+			Assert.That(bytesRead, Is.EqualTo(bytesWritten));
 		}
 
 		private static TpkCommonString MakeCommonString()
 		{
 			TpkCommonString commonString = new();
-			commonString.Add(Unity4, 5);
-			commonString.Add(Unity6, 10);
+			commonString.Add(Unity4, new TpkCommonString.Entry[5]);
+			commonString.Add(Unity6, new TpkCommonString.Entry[10]);
 			return commonString;
 		}
 	}
