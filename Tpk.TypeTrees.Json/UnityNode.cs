@@ -69,7 +69,7 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 		{
 			return indented
 				? JsonSerializer.Serialize(this, UnityInfoSerializerContext.WriteIndentedContext.UnityNode)
-				: JsonSerializer.Serialize(this, UnityInfoSerializerContext.Default.UnityNode);
+				: JsonSerializer.Serialize(this, UnityInfoSerializerContext.WriteNotIndentedContext.UnityNode);
 		}
 
 		public static UnityNode? FromJsonString(string jsonString)

@@ -29,7 +29,7 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 		{
 			return indented 
 				? JsonSerializer.Serialize(this, UnityInfoSerializerContext.WriteIndentedContext.UnityInfo)
-				: JsonSerializer.Serialize(this, UnityInfoSerializerContext.Default.UnityInfo);
+				: JsonSerializer.Serialize(this, UnityInfoSerializerContext.WriteNotIndentedContext.UnityInfo);
 		}
 
 		public static UnityInfo? FromJsonString(string jsonString)

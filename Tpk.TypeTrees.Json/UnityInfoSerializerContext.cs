@@ -1,23 +1,31 @@
-﻿using System.Text.Json;
+﻿using System.Text.Encodings.Web;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace AssetRipper.Tpk.TypeTrees.Json
 {
-	[JsonSourceGenerationOptions(WriteIndented = false)]
+	[JsonSourceGenerationOptions(IndentCharacter = '\t', IndentSize = 1)]
 	[JsonSerializable(typeof(UnityInfo))]
 	internal sealed partial class UnityInfoSerializerContext : JsonSerializerContext
 	{
-		public static JsonSerializerOptions WriteIndentedOptions { get; }
 		public static UnityInfoSerializerContext WriteIndentedContext { get; }
+		public static UnityInfoSerializerContext WriteNotIndentedContext { get; }
 
 		static UnityInfoSerializerContext()
 		{
-
-			WriteIndentedOptions = new JsonSerializerOptions(s_defaultOptions)
+			JsonSerializerOptions WriteIndentedOptions = new(s_defaultOptions)
 			{
-				WriteIndented = true
+				WriteIndented = true,
+				Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
 			};
 			WriteIndentedContext = new UnityInfoSerializerContext(WriteIndentedOptions);
+
+			JsonSerializerOptions WriteNotIndentedOptions = new(s_defaultOptions)
+			{
+				WriteIndented = false,
+				Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+			};
+			WriteNotIndentedContext = new UnityInfoSerializerContext(WriteNotIndentedOptions);
 		}
 	}
 }

@@ -147,7 +147,7 @@ namespace AssetRipper.Tpk.TypeTrees.Json
 		{
 			return indented
 				? JsonSerializer.Serialize(this, UnityInfoSerializerContext.WriteIndentedContext.UnityClass)
-				: JsonSerializer.Serialize(this, UnityInfoSerializerContext.Default.UnityClass);
+				: JsonSerializer.Serialize(this, UnityInfoSerializerContext.WriteNotIndentedContext.UnityClass);
 		}
 
 		public static UnityClass? FromJsonString(string jsonString)
