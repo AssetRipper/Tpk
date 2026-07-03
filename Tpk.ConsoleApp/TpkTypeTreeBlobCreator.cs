@@ -109,7 +109,7 @@ namespace AssetRipper.Tpk.ConsoleApp
 
 			blob.ClassInformation.AddRange(classDictionary.Values);
 
-			//About 23k / 65k
+			//About 26k / 65k
 			Console.WriteLine($"Node buffer has {blob.NodeBuffer.Count} entries, which is {GetUShortPercent(blob.NodeBuffer.Count)}% of its maximum {ushort.MaxValue} entries");
 			//About 7k / 65k
 			Console.WriteLine($"String buffer has {blob.StringBuffer.Count} entries, which is {GetUShortPercent(blob.StringBuffer.Count)}% of its maximum {ushort.MaxValue} entries");
